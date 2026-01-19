@@ -43,7 +43,8 @@ async function fetchImageUrl(breed: string, type: string, breedName: string): Pr
     try {
       const dogCeoKey = getDogCeoKey(breed, breedName);
       const res = await fetch(`https://dog.ceo/api/breed/${dogCeoKey}/images/random`);
-      const data = await res.json();
+      type DogCeoResponse = { status: string; message?: string };
+      const data = await res.json() as DogCeoResponse;
       if (data.status === 'success' && data.message) return data.message;
     } catch {}
   }
