@@ -83,8 +83,9 @@ export async function GET(req: NextRequest) {
   }
   // Otherwise, fetch and save
   const imageUrl = await fetchImageUrl(breed, type, breedName);
-  if (typeof imageUrl === 'string') {
+  if (imageUrl) {
     try {
+      // imageUrl is guaranteed to be a string here
       const imgRes = await fetch(imageUrl);
       if (!imgRes.ok) throw new Error('Image fetch failed');
       const arrayBuffer = await imgRes.arrayBuffer();
