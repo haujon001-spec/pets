@@ -1,0 +1,3 @@
+aibreeds-demo.com, www.aibreeds-demo.com {
+  reverse_proxy localhost:3000
+}
