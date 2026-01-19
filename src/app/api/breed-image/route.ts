@@ -83,9 +83,8 @@ export async function GET(req: NextRequest) {
   }
   // Otherwise, fetch and save
   const imageUrl = await fetchImageUrl(breed, type, breedName);
-  if (imageUrl) {
+  if (imageUrl !== null) {
     try {
-      // imageUrl is guaranteed to be a string here
       const imgRes = await fetch(imageUrl);
       if (!imgRes.ok) throw new Error('Image fetch failed');
       const arrayBuffer = await imgRes.arrayBuffer();
@@ -99,8 +98,7 @@ export async function GET(req: NextRequest) {
     }
   } else {
     console.warn(`[breed-image] No image found for ${breedName} (${type}), using placeholder.`);
+    const placeholder = type === 'dog' ? '/breeds/placeholder_dog.jpg' : '/breeds/placeholder_cat.jpg';
+    return NextResponse.json({ imageUrl: placeholder });
   }
-  // Fallback to placeholder
-  const placeholder = type === 'dog' ? '/breeds/placeholder_dog.jpg' : '/breeds/placeholder_cat.jpg';
-  return NextResponse.json({ imageUrl: placeholder });
 }
