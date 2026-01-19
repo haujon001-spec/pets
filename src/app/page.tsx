@@ -29,6 +29,7 @@ export default function Home() {
   const [answer, setAnswer] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
   const [suggestedBreed, setSuggestedBreed] = useState<string>("");
+  const [breedImage, setBreedImage] = useState<string>("");
 
   useEffect(() => {
     fetch("/api/chatbot")
@@ -38,6 +39,40 @@ export default function Home() {
         setBreedFAQs(data.breedFAQs || []);
       });
   }, []);
+
+  // Dynamic breed image fetch logic using new API route
+  useEffect(() => {
+    async function fetchBreedImage() {
+      let breed: BreedInfo | undefined = undefined;
+      if (selectedBreed) {
+        breed = breeds.find(b => b.id === selectedBreed);
+      } else if (typedBreed && suggestedBreed) {
+        breed = breeds.find(b => b.name === suggestedBreed);
+      }
+      if (!breed) {
+        setBreedImage("");
+        return;
+      }
+      // Use new API route for breed image fetching and caching
+      try {
+        const params = new URLSearchParams({
+          breedId: breed.id,
+          petType: breed.petType,
+          breedName: breed.name,
+        });
+        const res = await fetch(`/api/breed-image?${params.toString()}`);
+        const data = await res.json();
+        if (data && data.imageUrl) {
+          setBreedImage(data.imageUrl);
+        } else {
+          setBreedImage(breed.petType === "dog" ? "/breeds/placeholder_dog.jpg" : "/breeds/placeholder_cat.jpg");
+        }
+      } catch {
+        setBreedImage(breed.petType === "dog" ? "/breeds/placeholder_dog.jpg" : "/breeds/placeholder_cat.jpg");
+      }
+    }
+    fetchBreedImage();
+  }, [selectedBreed, typedBreed, suggestedBreed, breeds]);
 
   // Fuzzy search for breed name correction and prefill
   useEffect(() => {
@@ -176,30 +211,37 @@ export default function Home() {
           </div>
         </div>
         {answer && (
-          <div className="w-full max-w-xl card" style={{ background: 'var(--accent)', color: 'var(--text)' }}>
-            <strong>Answer:</strong> {answer}
-            {/* Show breed info for the selected breed only */}
-            {(() => {
-              let breed: BreedInfo | undefined = undefined;
-              if (selectedBreed) {
-                breed = breeds.find(b => b.id === selectedBreed);
-              } else if (typedBreed && suggestedBreed) {
-                breed = breeds.find(b => b.name === suggestedBreed);
-              }
-              if (breed) {
-                return (
-                  <div className="mt-4">
-                    <h3 className="text-2xl font-bold mb-2" style={{ color: 'var(--primary)' }}>{breed.name}</h3>
-                    <p><strong>Temperament:</strong> {breed.temperament}</p>
-                    <p><strong>Lifespan:</strong> {breed.lifespan}</p>
-                    <p><strong>Description:</strong> {breed.description}</p>
-                    {breed.origin && <p><strong>Origin:</strong> {breed.origin}</p>}
-                    {breed.traits && <p><strong>Traits:</strong> {breed.traits.join(", ")}</p>}
-                  </div>
-                );
-              }
-              return null;
-            })()}
+          <div className="w-full max-w-xl card flex" style={{ background: 'var(--accent)', color: 'var(--text)' }}>
+            <div className="flex-1">
+              <strong>Answer:</strong> {answer}
+              {/* Show breed info for the selected breed only */}
+              {(() => {
+                let breed: BreedInfo | undefined = undefined;
+                if (selectedBreed) {
+                  breed = breeds.find(b => b.id === selectedBreed);
+                } else if (typedBreed && suggestedBreed) {
+                  breed = breeds.find(b => b.name === suggestedBreed);
+                }
+                if (breed) {
+                  return (
+                    <div className="mt-4">
+                      <h3 className="text-2xl font-bold mb-2" style={{ color: 'var(--primary)' }}>{breed.name}</h3>
+                      <p><strong>Temperament:</strong> {breed.temperament}</p>
+                      <p><strong>Lifespan:</strong> {breed.lifespan}</p>
+                      <p><strong>Description:</strong> {breed.description}</p>
+                      {breed.origin && <p><strong>Origin:</strong> {breed.origin}</p>}
+                      {breed.traits && <p><strong>Traits:</strong> {breed.traits.join(", ")}</p>}
+                    </div>
+                  );
+                }
+                return null;
+              })()}
+            </div>
+            <div className="flex-shrink-0 ml-6 flex items-center justify-center">
+              {breedImage && (
+                <img src={breedImage} alt="Breed" style={{ width: 180, height: 180, objectFit: "cover", borderRadius: 16, boxShadow: "0 2px 16px #0002" }} />
+              )}
+            </div>
           </div>
         )}
       </div>
