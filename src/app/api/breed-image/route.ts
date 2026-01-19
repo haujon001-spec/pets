@@ -70,7 +70,7 @@ export async function GET(req: NextRequest) {
   // Accept both new and old param names for compatibility
   const breed = searchParams.get('breedId') || searchParams.get('breed');
   const type = searchParams.get('petType') || searchParams.get('type');
-  const breedName = searchParams.get('breedName') || breed;
+  const breedName = searchParams.get('breedName') || breed || '';
   if (!breed || !type) {
     return NextResponse.json({ error: 'Missing breed or type' }, { status: 400 });
   }
