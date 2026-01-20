@@ -1,0 +1,16 @@
+# Add production environment file to .gitignore
+.env.production
+
+# Add staging environment file to .gitignore
+.env.staging
+
+# Backup files
+*.backup.*
+backups/
+
+# Docker build artifacts
+*.tar.gz
+
+# Logs
+logs/
+*.log

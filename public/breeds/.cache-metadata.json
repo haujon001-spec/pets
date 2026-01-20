@@ -1,0 +1,27 @@
+{
+  "frenchbulldog.jpg": {
+    "fetchedAt": "2026-01-20T12:19:30.251Z",
+    "sourceUrl": "https://images.dog.ceo/breeds/bulldog-boston/n02096585_1645.jpg",
+    "expiresAt": "2026-01-27T12:19:30.251Z"
+  },
+  "chartreux.jpg": {
+    "fetchedAt": "2026-01-20T12:22:00.955Z",
+    "sourceUrl": "https://cdn2.thecatapi.com/images/j6oFGLpRG.jpg",
+    "expiresAt": "2026-01-27T12:22:00.955Z"
+  },
+  "americanshorthair.jpg": {
+    "fetchedAt": "2026-01-20T12:22:13.521Z",
+    "sourceUrl": "https://cdn2.thecatapi.com/images/JFPROfGtQ.jpg",
+    "expiresAt": "2026-01-27T12:22:13.521Z"
+  },
+  "birman.jpg": {
+    "fetchedAt": "2026-01-20T12:24:40.324Z",
+    "sourceUrl": "https://cdn2.thecatapi.com/images/HOrX5gwLS.jpg",
+    "expiresAt": "2026-01-27T12:24:40.324Z"
+  },
+  "doberman.jpg": {
+    "fetchedAt": "2026-01-20T12:25:32.879Z",
+    "sourceUrl": "https://images.dog.ceo/breeds/doberman/n02107142_30.jpg",
+    "expiresAt": "2026-01-27T12:25:32.879Z"
+  }
+}

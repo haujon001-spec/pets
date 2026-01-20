@@ -46,35 +46,47 @@ export default function Home() {
   useEffect(() => {
     async function fetchBreedImage() {
       let breed: BreedInfo | undefined = undefined;
-      if (selectedBreed) {
+      let customBreedName: string | undefined = undefined;
+      let currentPetType: 'dog' | 'cat' = petType;
+      
+      // First, try to find breed in database
+      if (selectedBreed && selectedBreed !== 'other') {
         breed = breeds.find(b => b.id === selectedBreed);
       } else if (typedBreed && suggestedBreed) {
         breed = breeds.find(b => b.name === suggestedBreed);
+      } else if (selectedBreed === 'other' && typedBreed) {
+        // User typed a custom breed name - use it directly
+        customBreedName = typedBreed;
       }
-      if (!breed) {
+      
+      // Clear image if no breed specified
+      if (!breed && !customBreedName) {
         setBreedImage("");
         return;
       }
+      
       // Use new API route for breed image fetching and caching
       try {
         const params = new URLSearchParams({
-          breedId: breed.id,
-          petType: breed.petType,
-          breedName: breed.name,
+          breedId: breed?.id || 'custom',
+          petType: breed?.petType || currentPetType,
+          breedName: breed?.name || customBreedName || '',
         });
         const res = await fetch(`/api/breed-image?${params.toString()}`);
         const data = await res.json();
         if (data && data.imageUrl) {
           setBreedImage(data.imageUrl);
         } else {
-          setBreedImage(breed.petType === "dog" ? "/breeds/placeholder_dog.jpg" : "/breeds/placeholder_cat.jpg");
+          const fallbackPetType = breed?.petType || currentPetType;
+          setBreedImage(fallbackPetType === "dog" ? "/breeds/placeholder_dog.jpg" : "/breeds/placeholder_cat.jpg");
         }
       } catch {
-        setBreedImage(breed.petType === "dog" ? "/breeds/placeholder_dog.jpg" : "/breeds/placeholder_cat.jpg");
+        const fallbackPetType = breed?.petType || currentPetType;
+        setBreedImage(fallbackPetType === "dog" ? "/breeds/placeholder_dog.jpg" : "/breeds/placeholder_cat.jpg");
       }
     }
     fetchBreedImage();
-  }, [selectedBreed, typedBreed, suggestedBreed, breeds]);
+  }, [selectedBreed, typedBreed, suggestedBreed, breeds, petType]);
 
   // Fuzzy search for breed name correction and prefill
   useEffect(() => {
@@ -139,7 +151,10 @@ export default function Home() {
         </div>
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
         <div className="card">
-          <label className="block mb-2 text-lg font-semibold" style={{ color: 'var(--primary)' }}>Select or Type Breed:</label>
+          <label className="block mb-2 text-lg font-semibold" style={{ color: 'var(--primary)' }}>
+            Select or Type Breed:
+            <span className="text-sm font-normal text-gray-600 ml-2">(or choose "Type custom breed" to enter your own)</span>
+          </label>
           <select
             className="w-full p-3 rounded-xl border border-primary text-lg mb-2"
             value={selectedBreed}
@@ -156,35 +171,44 @@ export default function Home() {
             {breeds.filter(b => b.petType === petType).sort((a, b) => a.name.localeCompare(b.name)).map(breed => (
               <option key={breed.id} value={breed.id}>{breed.name}</option>
             ))}
-            <option value="other">Other</option>
+            <option value="other">✏️ Type custom breed name</option>
           </select>
           {selectedBreed === "other" && (
             <>
               <input
-                className="w-full p-3 rounded-xl border border-primary mb-1 text-lg"
+                className="w-full p-3 rounded-xl border border-primary mb-1 text-lg focus:ring-2 focus:ring-orange-400"
                 type="text"
                 value={typedBreed}
                 onChange={e => setTypedBreed(e.target.value)}
-                placeholder="Type your breed name..."
-                autoComplete="on"
+                placeholder={`Type any ${petType} breed name (e.g., ${petType === 'dog' ? 'Australian Shepherd, Pitbull' : 'Ragdoll, Persian'})`}
+                autoComplete="off"
+                autoFocus
               />
               {typedBreed && suggestedBreed && suggestedBreed.toLowerCase() !== typedBreed.toLowerCase() && (
-                <div className="text-sm text-orange-700 mt-1 flex items-center gap-2">
-                  Did you mean: <span className="font-semibold">{suggestedBreed}</span>?
+                <div className="text-sm text-orange-700 mt-2 p-2 bg-orange-50 rounded-lg flex items-center gap-2">
+                  💡 Did you mean: <span className="font-semibold">{suggestedBreed}</span>?
                   <button
                     type="button"
-                    className="ml-2 px-2 py-1 rounded bg-orange-200 hover:bg-orange-300 text-orange-900 text-xs"
+                    className="ml-auto px-3 py-1 rounded-lg bg-orange-400 hover:bg-orange-500 text-white text-xs font-semibold transition-colors"
                     onClick={() => setTypedBreed(suggestedBreed)}
                   >
                     Use this
                   </button>
                 </div>
               )}
+              {typedBreed && !suggestedBreed && (
+                <div className="text-sm text-gray-600 mt-2 p-2 bg-gray-50 rounded-lg">
+                  ℹ️ No exact match found. The AI will do its best to answer about "{typedBreed}".
+                </div>
+              )}
             </>
           )}
         </div>
         <div className="card">
-          <label className="block mb-2 text-lg font-semibold" style={{ color: 'var(--primary)' }}>Ask a question about this breed:</label>
+          <label className="block mb-2 text-lg font-semibold" style={{ color: 'var(--primary)' }}>
+            Ask a question about this breed:
+            <span className="text-sm font-normal text-gray-600 ml-2">(or write your own custom question)</span>
+          </label>
           <select
             className="w-full p-3 rounded-xl border border-primary mb-2 text-lg"
             value={question}
@@ -194,29 +218,36 @@ export default function Home() {
             {breedFAQs.map((faq, idx) => (
               <option key={idx} value={faq}>{faq}</option>
             ))}
-            <option value="other">Other</option>
+            <option value="other">✏️ Ask custom question</option>
           </select>
           {question === "other" && (
             <input
-              className="w-full p-3 rounded-xl border border-primary mb-2 text-lg"
+              className="w-full p-3 rounded-xl border border-primary mb-2 text-lg focus:ring-2 focus:ring-orange-400"
               type="text"
               value={customQuestion || ""}
               onChange={e => setCustomQuestion(e.target.value)}
-              placeholder="Type your question about this breed..."
+              placeholder="Ask anything! (e.g., Are they good with kids? Training difficulty? Exercise needs?)"
+              autoFocus
             />
           )}
           <button
-            className="px-6 py-2 rounded-xl font-semibold shadow transition-all duration-200"
+            className="px-6 py-2 rounded-xl font-semibold shadow transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
             style={{ background: 'var(--primary)', color: '#fff' }}
             onClick={handleAsk}
-            disabled={loading || !question || (!selectedBreed && !typedBreed)}
+            disabled={
+              loading || 
+              !question || 
+              (question === "other" && !customQuestion?.trim()) ||
+              (!selectedBreed && !typedBreed) ||
+              (selectedBreed === "other" && !typedBreed?.trim())
+            }
           >
-            {loading ? "Asking..." : "Ask"}
+            {loading ? "🤔 Asking..." : "Ask"}
           </button>
           <div className="text-xs mt-2 flex items-center gap-2">
             <span className="inline-block w-2 h-2 rounded-full bg-green-500"></span>
             <span className="text-gray-600">
-              Answers provided by AI using multi-provider LLM system (Together AI, Hugging Face, or OpenRouter). For informational purposes only.
+              Answers provided by AI using multi-provider LLM system (Together AI or OpenRouter). For informational purposes only.
             </span>
           </div>
         </div>

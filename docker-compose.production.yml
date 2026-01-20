@@ -1,0 +1,92 @@
+version: '3.8'
+
+# ============================================================
+# Docker Compose Configuration - Production Environment
+# ============================================================
+# This configuration is for live production deployment
+# ============================================================
+
+services:
+  # ============================================================
+  # Next.js Application
+  # ============================================================
+  app:
+    image: aibreeds:production-latest
+    build:
+      context: .
+      dockerfile: Dockerfile.prod
+      args:
+        NODE_ENV: production
+    container_name: aibreeds-app
+    restart: unless-stopped
+    ports:
+      - "3000:3000"
+    environment:
+      - NODE_ENV=production
+    env_file:
+      - .env.production
+    volumes:
+      # Persist cached images
+      - ./public/breeds:/app/public/breeds
+      # Persist logs
+      - ./logs:/app/logs
+    networks:
+      - aibreeds-network
+    healthcheck:
+      test: ["CMD", "node", "-e", "require('http').get('http://localhost:3000/api/health', (r) => {process.exit(r.statusCode === 200 ? 0 : 1)})"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+    labels:
+      - "com.aibreeds.environment=production"
+      - "com.aibreeds.service=app"
+    deploy:
+      resources:
+        limits:
+          cpus: '2'
+          memory: 2G
+        reservations:
+          cpus: '1'
+          memory: 1G
+
+  # ============================================================
+  # Caddy Reverse Proxy (SSL/TLS)
+  # ============================================================
+  caddy:
+    image: caddy:2-alpine
+    container_name: aibreeds-caddy
+    restart: unless-stopped
+    ports:
+      - "80:80"
+      - "443:443"
+      - "443:443/udp"  # HTTP/3
+    volumes:
+      - ./Caddyfile:/etc/caddy/Caddyfile:ro
+      - caddy_data:/data
+      - caddy_config:/config
+    networks:
+      - aibreeds-network
+    depends_on:
+      app:
+        condition: service_healthy
+    labels:
+      - "com.aibreeds.environment=production"
+      - "com.aibreeds.service=caddy"
+
+# ============================================================
+# Networks
+# ============================================================
+networks:
+  aibreeds-network:
+    driver: bridge
+    name: aibreeds-production
+
+# ============================================================
+# Volumes
+# ============================================================
+volumes:
+  caddy_data:
+    name: aibreeds-caddy-data
+  caddy_config:
+    name: aibreeds-caddy-config

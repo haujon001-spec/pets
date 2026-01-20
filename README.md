@@ -4,9 +4,11 @@ This project is a modern Next.js web portal dedicated to dog and cat breeds, fea
 
 ## Features
 - **Breed Information:** Comprehensive profiles for dog and cat breeds (temperament, lifespan, description, origin, traits).
-- **AI Chatbot:** Users can ask questions about breeds and receive AI-generated answers.
+- **AI Chatbot:** Multi-provider LLM system with automatic fallback for reliable Q&A.
+- **Dynamic Image Fetching:** Automatic breed image fetching with caching and compression.
 - **User Question Capture:** All questions and answers are structured for future analytics and content expansion.
 - **Modern UI:** Built with Next.js, TypeScript, Tailwind CSS, and App Router.
+- **Production-Ready Deployment:** Docker-based deployment with automated scripts and health monitoring.
 
 ## Project Structure
 - `src/models/breed.ts`: Data models for pet breeds and user questions. 
@@ -51,9 +53,10 @@ For detailed instructions, troubleshooting, and multiple provider setup, see [do
 - Data models and API logic are documented for clarity and future extension.
 
 ## Next Steps
-- Implement persistent storage for user questions and analytics.
-- Expand breed database and improve AI integration.
-- Prepare for mobile app extension.
+- **Phase 4:** Internationalization & Mobile Optimization (0/15 tasks)
+- **Phase 5:** GitHub Workflow & Monitoring (0/17 tasks)
+- See [projectplan.md](projectplan.md) for complete roadmap
+- See [docs/DEPLOYMENT.md](docs/DEPLOYMENT.md) for deployment guide
 
 ## Breed Data and FAQ
 
@@ -123,7 +126,52 @@ You can check out [the Next.js GitHub repository](https://github.com/vercel/next
 The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
 
 Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Deployment
 
+### VPS Deployment (Production)
+
+This project includes a complete deployment infrastructure for VPS deployment with Docker and Caddy:
+
+- **Multi-stage Docker builds** for optimized image size
+- **Automated deployment scripts** with health checks and rollback
+- **Environment-specific configurations** (staging, production)
+- **Health monitoring** endpoint for uptime tracking
+- **Backup and restore** automation
+- **Zero-downtime deployments** with automatic health verification
+
+**Quick deployment:**
+```bash
+# Deploy to staging
+npm run deploy:staging
+
+# Deploy to production
+npm run deploy:production
+
+# Rollback if needed
+npm run deploy:rollback [timestamp]
+```
+
+For complete deployment guide, see [docs/DEPLOYMENT.md](docs/DEPLOYMENT.md).
+
+For implementation details, see [docs/phase3-implementation.md](docs/phase3-implementation.md).
+
+## Cache Management
+
+The application includes intelligent image caching with automatic expiration:
+
+```bash
+# Clean up expired cached images
+npm run cache:cleanup
+
+# Pre-cache top 40 popular breeds
+npm run cache:precache
+```
+
+For details, see [scripts/README.md](scripts/README.md).
+
+---
+
+## 
 ## LLM Integration - Multi-Provider System
 
 The chatbot uses an intelligent multi-provider LLM system with automatic fallback for maximum reliability, especially in regions where certain APIs may be blocked (e.g., Hong Kong).

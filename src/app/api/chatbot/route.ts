@@ -12,11 +12,16 @@ import { llmRouter } from '@/lib/llm-router';
 async function getAIAnswer(
   question: string, 
   breedId?: string, 
-  petType?: 'dog' | 'cat'
+  petType?: 'dog' | 'cat',
+  customBreedName?: string
 ): Promise<{ answer: string; provider: string; latencyMs: number }> {
   // Find breed context if provided
   let breedName: string | undefined;
-  if (breedId) {
+  
+  // Use custom breed name if provided, otherwise look up from breedId
+  if (customBreedName) {
+    breedName = customBreedName;
+  } else if (breedId && breedId !== 'other') {
     const breed = breeds.find(b => b.id === breedId);
     if (breed) {
       breedName = breed.name;
@@ -73,7 +78,7 @@ export async function POST(request: NextRequest) {
   }
   
   // Get AI answer using multi-provider router
-  const { answer, provider, latencyMs } = await getAIAnswer(question, resolvedBreedId, petType);
+  const { answer, provider, latencyMs } = await getAIAnswer(question, resolvedBreedId, petType, breedName);
   
   const userQuestion: UserQuestion = {
     id: Date.now().toString(),

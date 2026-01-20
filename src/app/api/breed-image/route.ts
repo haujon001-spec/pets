@@ -3,12 +3,80 @@ import fs from 'fs';
 import path from 'path';
 import fetch from 'node-fetch';
 import Fuse from 'fuse.js';
+import sharp from 'sharp';
 
 const breedsDir = path.join(process.cwd(), 'public', 'breeds');
+const cacheMetadataFile = path.join(process.cwd(), 'public', 'breeds', '.cache-metadata.json');
+const CACHE_TTL_DAYS = 7; // Cache images for 7 days
 
 // Cache for API breed lists (to avoid repeated fetches)
 let dogCeoBreedsCache: string[] | null = null;
 let catApiBreedsCache: { id: string; name: string }[] | null = null;
+
+// Cache metadata structure
+interface CacheMetadata {
+  [filename: string]: {
+    fetchedAt: string;
+    sourceUrl: string;
+    expiresAt: string;
+  };
+}
+
+/**
+ * Load cache metadata from file
+ */
+function loadCacheMetadata(): CacheMetadata {
+  try {
+    if (fs.existsSync(cacheMetadataFile)) {
+      const data = fs.readFileSync(cacheMetadataFile, 'utf-8');
+      return JSON.parse(data);
+    }
+  } catch (err) {
+    console.error('[breed-image] Failed to load cache metadata:', err);
+  }
+  return {};
+}
+
+/**
+ * Save cache metadata to file
+ */
+function saveCacheMetadata(metadata: CacheMetadata): void {
+  try {
+    fs.writeFileSync(cacheMetadataFile, JSON.stringify(metadata, null, 2));
+  } catch (err) {
+    console.error('[breed-image] Failed to save cache metadata:', err);
+  }
+}
+
+/**
+ * Check if cached image is expired
+ */
+function isCacheExpired(filename: string): boolean {
+  const metadata = loadCacheMetadata();
+  const entry = metadata[filename];
+  
+  if (!entry) return true;
+  
+  const expiresAt = new Date(entry.expiresAt);
+  return expiresAt < new Date();
+}
+
+/**
+ * Update cache metadata for a file
+ */
+function updateCacheMetadata(filename: string, sourceUrl: string): void {
+  const metadata = loadCacheMetadata();
+  const now = new Date();
+  const expiresAt = new Date(now.getTime() + CACHE_TTL_DAYS * 24 * 60 * 60 * 1000);
+  
+  metadata[filename] = {
+    fetchedAt: now.toISOString(),
+    sourceUrl,
+    expiresAt: expiresAt.toISOString(),
+  };
+  
+  saveCacheMetadata(metadata);
+}
 
 /**
  * Fetch all available breeds from Dog CEO API
@@ -310,11 +378,20 @@ export async function GET(req: NextRequest) {
   }
   const localPath = path.join(breedsDir, `${breed}.jpg`);
   const publicPath = `/breeds/${breed}.jpg`;
-  // If file exists locally, return its path
+  const filename = `${breed}.jpg`;
+  
+  // Check if file exists locally and is not expired
   if (fs.existsSync(localPath)) {
-    console.log(`[breed-image] Found local image for ${breed}: ${publicPath}`);
-    return NextResponse.json({ imageUrl: publicPath });
+    if (!isCacheExpired(filename)) {
+      console.log(`[breed-image] Found local image for ${breed}: ${publicPath}`);
+      return NextResponse.json({ imageUrl: publicPath });
+    } else {
+      console.log(`[breed-image] Cache expired for ${breed}, refetching...`);
+      // Remove expired file
+      fs.unlinkSync(localPath);
+    }
   }
+  
   // Otherwise, fetch and save
   const imageUrl = await fetchImageUrl(breed, type, breedName);
   if (imageUrl !== null) {
@@ -322,7 +399,20 @@ export async function GET(req: NextRequest) {
       const imgRes = await fetch(imageUrl);
       if (!imgRes.ok) throw new Error('Image fetch failed');
       const arrayBuffer = await imgRes.arrayBuffer();
-      fs.writeFileSync(localPath, Buffer.from(arrayBuffer));
+      const buffer = Buffer.from(arrayBuffer);
+      
+      // Compress and optimize image using sharp
+      await sharp(buffer)
+        .resize(800, 800, { // Resize to max 800x800 while maintaining aspect ratio
+          fit: 'inside',
+          withoutEnlargement: true,
+        })
+        .jpeg({ quality: 85 }) // Convert to JPEG with 85% quality
+        .toFile(localPath);
+      
+      // Update cache metadata
+      updateCacheMetadata(filename, imageUrl);
+      
       console.log(`[breed-image] Successfully fetched and cached image for ${breedName} (${type}): ${imageUrl}`);
       return NextResponse.json({ imageUrl: publicPath });
     } catch (err) {
