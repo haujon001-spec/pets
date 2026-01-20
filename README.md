@@ -19,14 +19,32 @@ This project is a modern Next.js web portal dedicated to dog and cat breeds, fea
   - Displays breed info, allows breed selection, and provides chatbot interface.
   - Handles user input and displays AI answers.
 
-## How to Test
-1. Run the development server:
+## Quick Start
+
+**New to this project?** See [docs/QUICKSTART.md](docs/QUICKSTART.md) for 5-minute setup guide.
+
+### Basic Setup
+1. **Get a free API key** (Groq recommended):
+   - Visit https://console.groq.com/keys
+   - Sign up and create API key
+
+2. **Configure environment:**
+   ```bash
+   cp .env.example .env.local
+   # Edit .env.local and add your API key
+   ```
+
+3. **Run the development server:**
    ```bash
    npm run dev
    ```
-2. Open your browser at `http://localhost:3000`.
-3. Select a pet type (dog or cat), choose a breed, and ask questions using the chatbot interface.
-4. View breed information and AI-generated answers.
+
+4. **Test the chatbot:**
+   - Open http://localhost:3000
+   - Select a pet type and breed
+   - Ask a question!
+
+For detailed instructions, troubleshooting, and multiple provider setup, see [docs/QUICKSTART.md](docs/QUICKSTART.md) and [docs/llm-providers-guide.md](docs/llm-providers-guide.md).
 
 ## Comments & Code Documentation
 - All major files include comments explaining their purpose and key logic.
@@ -106,16 +124,82 @@ The easiest way to deploy your Next.js app is to use the [Vercel Platform](https
 
 Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
 
-## LLM Integration (OpenRouter.ai)
+## LLM Integration - Multi-Provider System
 
-- The chatbot now uses OpenRouter.ai to provide real AI answers.
-- The API key is read from the environment variable `OPENROUTER_API_KEY`.
-- To use your own key, set it in your environment or in a `.env.local` file:
-  ```env
-  OPENROUTER_API_KEY=sk-...yourkey...
-  ```
-- The API route sends the user's question (and breed context) to OpenRouter's GPT-3.5-turbo model.
-- The system prompt ensures answers are concise and accurate for pet breed information.
-- If the API call fails, a helpful error message is returned.
+The chatbot uses an intelligent multi-provider LLM system with automatic fallback for maximum reliability, especially in regions where certain APIs may be blocked (e.g., Hong Kong).
+
+### Supported Providers (in priority order):
+
+1. **Groq** (FREE) - Fast Llama 3.3 70B inference, generous free tier
+2. **Together AI** (FREE) - Multiple open-source models
+3. **Hugging Face** (FREE) - Access to many models via Inference API
+4. **Cohere** (FREE) - Command models with good performance
+5. **OpenRouter** (PAID) - Fallback option, pay-per-use
+
+### Quick Setup
+
+1. **Copy the environment template:**
+   ```bash
+   cp .env.example .env.local
+   ```
+
+2. **Sign up for at least one provider** (Groq recommended for Hong Kong):
+   - [Groq Console](https://console.groq.com/keys) - Get free API key
+   - [Together AI](https://api.together.xyz/settings/api-keys)
+   - [Hugging Face](https://huggingface.co/settings/tokens)
+   - [Cohere](https://dashboard.cohere.com/api-keys)
+   - [OpenRouter](https://openrouter.ai/keys) - Optional, paid
+
+3. **Add your API key(s) to `.env.local`:**
+   ```env
+   GROQ_API_KEY=your_groq_api_key_here
+   TOGETHER_API_KEY=your_together_api_key_here
+   # Add others as needed...
+   ```
+
+4. **Optional: Customize provider order:**
+   ```env
+   LLM_PROVIDER_ORDER=groq,together,huggingface,cohere,openrouter
+   ```
+
+### How It Works
+
+- The system tries providers in order until one succeeds
+- If a provider fails (network error, blocked, rate limit), it automatically tries the next
+- Response headers indicate which provider was used: `X-LLM-Provider`
+- Server logs show the fallback chain for debugging
+- You only need ONE provider configured, but more = better reliability
+
+### For Hong Kong Users
+
+⚠️ **Important:** OpenAI and Claude APIs are often blocked or unavailable in Hong Kong.
+
+✅ **Recommended providers that work well in HK:**
+- Groq (primary choice)
+- Together AI
+- Hugging Face
+
+The multi-provider system ensures your chatbot keeps working even if specific providers are blocked in your region.
+
+### Testing Your Setup
+
+1. Start the dev server: `npm run dev`
+2. Open http://localhost:3000
+3. Ask a question in the chatbot
+4. Check the server console logs to see which provider answered
+5. Look for: `✅ LLM Response from Groq in 850ms`
+
+### Troubleshooting
+
+**"No LLM providers configured"** error:
+- Check that at least one API key is set in `.env.local`
+- Verify the key is valid by testing at the provider's website
+- Restart the dev server after adding keys
+
+**All providers failing:**
+- Check your internet connection
+- Verify API keys are correct (no extra spaces)
+- Test provider accessibility from your region
+- Check server logs for specific error messages
 
 ---

@@ -3,44 +3,53 @@ import { NextRequest, NextResponse } from 'next/server';
 import { BreedInfo, UserQuestion } from '@/models/breed';
 import { dogBreeds, catBreeds, breedFAQs } from '@/models/breedData';
 import Fuse from 'fuse.js';
+import { llmRouter } from '@/lib/llm-router';
 
-// Real AI integration using OpenRouter.ai
-const OPENROUTER_API_KEY = process.env.OPENROUTER_API_KEY || '<YOUR_OPENROUTER_API_KEY_HERE>';
-const OPENROUTER_API_URL = 'https://openrouter.ai/api/v1/chat/completions';
-
-async function getAIAnswer(question: string, breedId?: string): Promise<string> {
-  // Compose a prompt for the LLM
-  let prompt = question;
+/**
+ * Get AI answer using multi-provider LLM router
+ * Automatically falls back through configured providers
+ */
+async function getAIAnswer(
+  question: string, 
+  breedId?: string, 
+  petType?: 'dog' | 'cat'
+): Promise<{ answer: string; provider: string; latencyMs: number }> {
+  // Find breed context if provided
+  let breedName: string | undefined;
   if (breedId) {
     const breed = breeds.find(b => b.id === breedId);
     if (breed) {
-      prompt = `About the breed ${breed.name}: ${question}`;
+      breedName = breed.name;
     }
   }
+
   try {
-    const response = await fetch(OPENROUTER_API_URL, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${OPENROUTER_API_KEY}`,
+    const response = await llmRouter.route({
+      prompt: question,
+      systemPrompt: 'You are a helpful assistant for pet breed information. Answer concisely and accurately.',
+      maxTokens: 256,
+      temperature: 0.7,
+      context: {
+        breedName,
+        petType,
       },
-      body: JSON.stringify({
-        model: 'openai/gpt-3.5-turbo',
-        messages: [
-          { role: 'system', content: 'You are a helpful assistant for pet breed information. Answer concisely and accurately.' },
-          { role: 'user', content: prompt },
-        ],
-        max_tokens: 256,
-        temperature: 0.7,
-      }),
     });
-    if (!response.ok) {
-      throw new Error(`OpenRouter API error: ${response.status}`);
-    }
-    const data = await response.json();
-    return data.choices?.[0]?.message?.content || 'Sorry, I could not find an answer.';
+
+    console.log(`✅ LLM Response from ${response.provider} in ${response.latencyMs}ms`);
+    console.log(`   Attempts: ${response.totalAttempts}, Providers tried: ${response.attempts.map(a => a.provider).join(' → ')}`);
+
+    return {
+      answer: response.content,
+      provider: response.provider,
+      latencyMs: response.latencyMs,
+    };
   } catch (err: any) {
-    return `Error fetching AI answer: ${err.message}`;
+    console.error('❌ All LLM providers failed:', err.message);
+    return {
+      answer: `I apologize, but I'm temporarily unable to answer questions. Please try again later. (${err.message})`,
+      provider: 'none',
+      latencyMs: 0,
+    };
   }
 }
 
@@ -54,14 +63,18 @@ const fuse = new Fuse(breeds, { keys: ['name'], threshold: 0.3 });
 export async function POST(request: NextRequest) {
   const { question, breedId, petType, breedName } = await request.json();
   let resolvedBreedId = breedId;
-  // If breedId is not provided but breedName is, try to correct it
+  
+  // If breedId is not provided but breedName is, try to correct it with fuzzy search
   if (!breedId && breedName) {
     const result = fuse.search(breedName);
     if (result.length > 0) {
       resolvedBreedId = result[0].item.id;
     }
   }
-  const answer = await getAIAnswer(question, resolvedBreedId);
+  
+  // Get AI answer using multi-provider router
+  const { answer, provider, latencyMs } = await getAIAnswer(question, resolvedBreedId, petType);
+  
   const userQuestion: UserQuestion = {
     id: Date.now().toString(),
     breedId: resolvedBreedId,
@@ -71,8 +84,22 @@ export async function POST(request: NextRequest) {
     timestamp: new Date().toISOString(),
     answeredByAI: true,
   };
+  
   // TODO: Save userQuestion to database or file
-  return NextResponse.json({ answer, userQuestion });
+  
+  return NextResponse.json({ 
+    answer, 
+    userQuestion,
+    metadata: {
+      provider,
+      latencyMs,
+    }
+  }, {
+    headers: {
+      'X-LLM-Provider': provider,
+      'X-Response-Time': `${latencyMs}ms`,
+    }
+  });
 }
 
 export async function GET() {
