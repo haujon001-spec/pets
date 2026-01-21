@@ -2,10 +2,10 @@
 # Production Domain Configuration
 
 aibreeds-demo.com, www.aibreeds-demo.com {
-  reverse_proxy localhost:3000
+  reverse_proxy app:3000
 }
 
 # For IP-only access (development):
 # 159.223.63.117 {
-#   reverse_proxy localhost:3000
+#   reverse_proxy app:3000
 # }
