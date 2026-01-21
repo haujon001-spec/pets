@@ -1,177 +1,249 @@
-# Pet Breed Info Portal
+# AI Pet Breeds Portal 🐕🐈
 
-This project is a modern Next.js web portal dedicated to dog and cat breeds, featuring an AI-powered chatbot for interactive Q&A. It is designed for scalability and future mobile app extension.
+A modern, production-ready Next.js web portal for dog and cat breeds with **AI-powered chatbot**, **10-language support**, and **mobile-first design**.
 
-## Features
-- **Breed Information:** Comprehensive profiles for dog and cat breeds (temperament, lifespan, description, origin, traits).
-- **AI Chatbot:** Multi-provider LLM system with automatic fallback for reliable Q&A.
-- **Dynamic Image Fetching:** Automatic breed image fetching with caching and compression.
-- **User Question Capture:** All questions and answers are structured for future analytics and content expansion.
-- **Modern UI:** Built with Next.js, TypeScript, Tailwind CSS, and App Router.
-- **Production-Ready Deployment:** Docker-based deployment with automated scripts and health monitoring.
+**Live Site**: https://aibreeds-demo.com  
+**Last Updated**: January 21, 2026  
+**Status**: ✅ Phase 4 Complete | 🔄 Phase 5 In Planning
 
-## Project Structure
-- `src/models/breed.ts`: Data models for pet breeds and user questions. 
-  - `BreedInfo`: Interface for breed details.
-  - `UserQuestion`: Interface for capturing user questions and answers.
-- `src/app/api/chatbot/route.ts`: API route for chatbot interactions.
-  - Handles GET (breed info) and POST (chatbot Q&A) requests.
-  - Simulates AI response and structures user question data for analytics.
-- `src/app/page.tsx`: Main portal UI.
-  - Displays breed info, allows breed selection, and provides chatbot interface.
-  - Handles user input and displays AI answers.
+## ✨ Features
 
-## Quick Start
+### Core Features
+- **🤖 AI Chatbot**: Multi-provider LLM system with intelligent fallback (Groq, Together AI, OpenRouter)
+- **🌍 10 Languages**: Full internationalization - English, Spanish, French, German, Chinese, Portuguese, Arabic, Japanese, Russian, Italian
+- **📱 Mobile-First**: Responsive design with touch-optimized UI (min 44px tap targets)
+- **🗂️ 61 Breeds**: Comprehensive profiles for 31 dog + 30 cat breeds
+- **🖼️ Smart Images**: Automatic breed image fetching with caching and compression
+- **⚡ Production-Ready**: Docker deployment with health checks, rollback, and monitoring
 
-**New to this project?** See [docs/QUICKSTART.md](docs/QUICKSTART.md) for 5-minute setup guide.
+### Technical Features
+- **Multi-Provider LLM**: Automatic fallback across 5 LLM providers
+- **RTL Support**: Right-to-left layout for Arabic
+- **Cookie Persistence**: Language preference saved across sessions
+- **Health Monitoring**: `/api/health` endpoint with status tracking
+- **Zero-Downtime Deployment**: Blue-green deployment strategy
+- **Environment Segregation**: Separate dev, staging, production configs
 
-### Basic Setup
-1. **Get a free API key** (Groq recommended):
-   - Visit https://console.groq.com/keys
-   - Sign up and create API key
+## 🏗️ Project Structure
 
-2. **Configure environment:**
-   ```bash
-   cp .env.example .env.local
-   # Edit .env.local and add your API key
-   ```
-
-3. **Run the development server:**
-   ```bash
-   npm run dev
-   ```
-
-4. **Test the chatbot:**
-   - Open http://localhost:3000
-   - Select a pet type and breed
-   - Ask a question!
-
-For detailed instructions, troubleshooting, and multiple provider setup, see [docs/QUICKSTART.md](docs/QUICKSTART.md) and [docs/llm-providers-guide.md](docs/llm-providers-guide.md).
-
-## Comments & Code Documentation
-- All major files include comments explaining their purpose and key logic.
-- Data models and API logic are documented for clarity and future extension.
-
-## Next Steps
-- **Phase 4:** Internationalization & Mobile Optimization (0/15 tasks)
-- **Phase 5:** GitHub Workflow & Monitoring (0/17 tasks)
-- See [projectplan.md](projectplan.md) for complete roadmap
-- See [docs/DEPLOYMENT.md](docs/DEPLOYMENT.md) for deployment guide
-
-## Breed Data and FAQ
-
-- The breed data is defined in `src/models/breedData.ts`.
-- This file contains the top 30 dog and cat breeds, each with:
-  - `id`, `name`, `petType`, `temperament`, `lifespan`, `description`, `origin`, `imageUrl`, `traits`.
-- Breed images are stored in `/public/breeds/` and referenced by `imageUrl`.
-- The `breedFAQs` array contains the most frequently asked questions, shown as quick-select buttons in the UI.
-- The API and UI use this data for breed selection, FAQ display, and breed info cards.
-- If a breed is not found, users can type a breed name and the system will suggest the closest match using fuzzy search (Fuse.js).
-
-### Example Breed Entry
-```ts
-{
-  id: 'labrador',
-  name: 'Labrador Retriever',
-  petType: 'dog',
-  temperament: 'Gentle, Intelligent, Outgoing',
-  lifespan: '10-12 years',
-  description: 'Labradors are friendly, outgoing, and high-spirited companions.',
-  origin: 'Canada',
-  imageUrl: '/breeds/labrador.jpg',
-  traits: ['Family-friendly', 'Active', 'Trainable'],
-}
+```
+vscode_2/
+├── src/
+│   ├── app/
+│   │   ├── api/
+│   │   │   ├── chatbot/route.ts      # LLM router with multi-provider fallback
+│   │   │   ├── breed-image/route.ts  # Image fetching with caching
+│   │   │   └── health/route.ts       # Health check endpoint
+│   │   ├── layout.tsx                # Root layout with i18n provider
+│   │   └── page.tsx                  # Main UI (mobile-first responsive)
+│   ├── components/
+│   │   └── LanguageSwitcher.tsx     # Globe icon language selector (10 languages)
+│   ├── models/
+│   │   ├── breed.ts                  # TypeScript interfaces
+│   │   └── breedData.ts             # 61 breed definitions
+│   ├── lib/
+│   │   ├── llm-providers.ts         # 5 LLM provider implementations
+│   │   └── llm-router.ts            # Intelligent routing & fallback
+│   └── i18n/
+│       └── request.ts                # Server-side locale detection
+├── messages/                         # Translation files (10 languages)
+│   ├── en.json, es.json, fr.json, de.json, zh.json
+│   ├── pt.json, ar.json, ja.json, ru.json, it.json
+├── scripts/                          # Deployment automation
+│   ├── deploy-vps.sh                # VPS deployment with health checks
+│   ├── rollback-vps.sh              # One-command rollback
+│   ├── backup.sh, restore.sh        # Backup automation
+│   └── setup-production-env.sh      # Environment setup
+├── docs/                             # Comprehensive documentation
+│   ├── phase1-implementation-summary.md
+│   ├── phase2-implementation-complete.md
+│   ├── phase3-implementation.md
+│   ├── phase4-implementation.md
+│   └── DEPLOYMENT.md
+├── docker-compose.yml               # Production orchestration
+├── docker-compose.staging.yml       # Staging configuration
+├── Dockerfile.prod                  # Multi-stage optimized build
+└── Caddyfile                        # HTTPS reverse proxy config
 ```
 
-### FAQ Example
-```ts
-'What is the temperament of this breed?'
+**Key Technologies**:
+- **Framework**: Next.js 16.1.3, React 19, TypeScript
+- **Styling**: Tailwind CSS with mobile breakpoints
+- **i18n**: next-intl v3.x with cookie persistence
+- **LLM**: Multi-provider system (Groq, Together AI, OpenRouter, etc.)
+- **Deployment**: Docker, Caddy, Let's Encrypt SSL
+- **Monitoring**: Health checks, automated rollback
+
+## 🚀 Quick Start
+
+### Prerequisites
+- Node.js 20+ (required for Next.js 16)
+- npm or yarn
+- Free LLM API key (Groq or Together AI recommended)
+
+### 1. Install Dependencies
+```bash
+npm install
 ```
 
----
+### 2. Configure Environment
+```bash
+# Copy environment template
+cp .env.example .env.local
 
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Get a free API key from:
+# - Groq: https://console.groq.com/keys (recommended)
+# - Together AI: https://api.together.xyz/settings/api-keys
 
-## Getting Started
+# Edit .env.local and add your key:
+# TOGETHER_API_KEY=your_key_here
+```
 
-First, run the development server:
-
+### 3. Run Development Server
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### 4. Test the Application
+- Open http://localhost:3000
+- Select a language from globe icon 🌐
+- Choose a pet type and breed
+- Ask questions in the chatbot!
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+**Detailed Setup**: See [docs/QUICKSTART.md](docs/QUICKSTART.md) for complete guide
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## 📊 Project Status
 
-## Learn More
+**Progress**: 4/6 Phases Complete (67%)
 
-To learn more about Next.js, take a look at the following resources:
+| Phase | Status | Completion Date | Documentation |
+|-------|--------|----------------|---------------|
+| Phase 1: LLM Multi-Provider | ✅ Complete | Jan 20, 2026 | [docs/phase1-implementation-summary.md](docs/phase1-implementation-summary.md) |
+| Phase 2: Image Search & Cache | ✅ Complete | Jan 20, 2026 | [docs/phase2-implementation-complete.md](docs/phase2-implementation-complete.md) |
+| Phase 3: Deployment & Rollback | ✅ Complete | Jan 20, 2026 | [docs/phase3-implementation.md](docs/phase3-implementation.md) |
+| Phase 4: i18n & Mobile | ✅ Complete | Jan 21, 2026 | [docs/phase4-implementation.md](docs/phase4-implementation.md) |
+| Phase 5: Automated Deployment | 🔄 In Planning | - | [projectplan.md](projectplan.md#phase-5) |
+| Phase 6: GitHub Workflow | ⏳ Pending | - | [projectplan.md](projectplan.md#phase-6) |
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+**Recent Updates**:
+- ✅ HTTPS enabled with Let's Encrypt SSL
+- ✅ Git workflow fixed (develop → staging → main)
+- ✅ Environment variable deployment strategy documented
+- ✅ All branches synced and ready for Phase 3 workflow
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+**Production Site**: https://aibreeds-demo.com (Live with 10 languages, HTTPS, mobile-optimized)
 
-## Deploy on Vercel
+## 🌍 Internationalization
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+The application supports **10 languages** with full translation coverage:
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
-Deployment
+- 🇺🇸 **English** (en) - Default
+- 🇪🇸 **Spanish** (es) - Español
+- 🇫🇷 **French** (fr) - Français
+- 🇩🇪 **German** (de) - Deutsch
+- 🇨🇳 **Chinese** (zh) - 中文
+- 🇵🇹 **Portuguese** (pt) - Português
+- 🇸🇦 **Arabic** (ar) - العربية (RTL support)
+- 🇯🇵 **Japanese** (ja) - 日本語
+- 🇷🇺 **Russian** (ru) - Русский
+- 🇮🇹 **Italian** (it) - Italiano
 
-### VPS Deployment (Production)
+**What's Translated**:
+- All UI labels and buttons
+- 61 breed names (31 dogs + 30 cats)
+- 10 predefined questions
+- Error messages and feedback
+- Metadata (title, description)
 
-This project includes a complete deployment infrastructure for VPS deployment with Docker and Caddy:
+**Global Reach**: 1.15+ billion native speakers across 6 continents
 
-- **Multi-stage Docker builds** for optimized image size
-- **Automated deployment scripts** with health checks and rollback
-- **Environment-specific configurations** (staging, production)
-- **Health monitoring** endpoint for uptime tracking
-- **Backup and restore** automation
-- **Zero-downtime deployments** with automatic health verification
+**Usage**: Click the 🌐 globe icon in the top-right corner to switch languages. Your preference is saved via cookies.
 
-**Quick deployment:**
-```bash
-# Deploy to staging
-npm run deploy:staging
+## 🔒 Security & Environment
 
-# Deploy to production
-npm run deploy:production
+**Environment Variables Management**:
+- `.env` files are **never** committed to Git (blocked by `.gitignore`)
+- `.env.production.template` provides structure with placeholders for Git commits
+- Real API keys deployed separately to VPS via secure methods (scp, manual creation)
+- See [DEPLOYMENT-WORKFLOW.md](DEPLOYMENT-WORKFLOW.md) for complete environment deployment strategy
 
-# Rollback if needed
-npm run deploy:rollback [timestamp]
-```
-
-For complete deployment guide, see [docs/DEPLOYMENT.md](docs/DEPLOYMENT.md).
-
-For implementation details, see [docs/phase3-implementation.md](docs/phase3-implementation.md).
-
-## Cache Management
-
-The application includes intelligent image caching with automatic expiration:
-
-```bash
-# Clean up expired cached images
-npm run cache:cleanup
-
-# Pre-cache top 40 popular breeds
-npm run cache:precache
-```
-
-For details, see [scripts/README.md](scripts/README.md).
+**API Keys Required**:
+- `TOGETHER_API_KEY` - Together AI (primary LLM provider, free tier)
+- `OPENROUTER_API_KEY` - OpenRouter (fallback LLM provider, paid)
+- `HUGGINGFACE_API_KEY` - HuggingFace (image generation, optional)
 
 ---
 
-## 
+## 🚀 Deployment
+
+**Production**: [https://aibreeds-demo.com](https://aibreeds-demo.com)
+
+**Infrastructure**:
+- VPS: DigitalOcean Ubuntu (159.223.63.117)
+- Docker: Multi-container setup (Next.js app + Caddy reverse proxy)
+- SSL: Let's Encrypt (auto-renewal via Caddy)
+- Node.js: 20.20.0 (required for Next.js 16+)
+
+**Deployment Workflow**:
+1. **Development**: Work on `develop` branch at localhost:3000
+2. **Staging**: Merge to `staging` branch, test on VPS via IP
+3. **Production**: Merge to `main` branch, deploy to https://aibreeds-demo.com
+
+For complete deployment guide, see:
+- [DEPLOYMENT-WORKFLOW.md](DEPLOYMENT-WORKFLOW.md) - Environment variable strategy
+- [GIT-WORKFLOW.md](GIT-WORKFLOW.md) - Branch workflow (develop → staging → main)
+- [scripts/setup-production-env.sh](scripts/setup-production-env.sh) - One-time VPS setup
+
+---
+
+## 📚 Documentation
+
+- [TODO.md](TODO.md) - Current development tasks
+- [docs/plan-projectRecapAndNextSteps.md](docs/plan-projectRecapAndNextSteps.md) - Project planning
+- [docs/phase4-implementation.md](docs/phase4-implementation.md) - Internationalization & Mobile optimization details
+- [DEPLOYMENT-WORKFLOW.md](DEPLOYMENT-WORKFLOW.md) - Environment deployment strategy
+- [GIT-WORKFLOW.md](GIT-WORKFLOW.md) - Git branch workflow guide
+
+---
+
+## 🤝 Contributing
+
+This project follows a three-tier branch strategy:
+
+1. **develop**: Local development (localhost:3000)
+2. **staging**: VPS testing (IP access)
+3. **main**: Production (https://aibreeds-demo.com)
+
+See [GIT-WORKFLOW.md](GIT-WORKFLOW.md) for detailed workflow instructions.
+
+---
+
+## 📄 License
+
+This project is for demonstration purposes.
+
+---
+
+**Last Updated**: January 21, 2025  
+**Current Phase**: Phase 4 Complete (Internationalization & Mobile) | Phase 5 In Planning (Automated Deployment)
+
+📱 Mobile Optimization
+
+**Mobile-First Responsive Design**:
+- Touch targets: Minimum 44x44px (WCAG 2.1 Level AA)
+- Responsive breakpoints: sm (640px), md (768px), lg (1024px), xl (1280px)
+- No horizontal scrolling on any device
+- Optimized font sizes (16px minimum for readability)
+- Scrollable dropdowns for mobile
+- RTL layout support for Arabic
+
+**Tested On**:
+- iPhone SE (4.7"), iPhone 15 Pro (6.1")
+- Android Pixel 7 (6.3")
+- iPad (10.2")
+- Desktop browsers (Chrome, Firefox, Safari, Edge)
+
+---
 ## LLM Integration - Multi-Provider System
 
 The chatbot uses an intelligent multi-provider LLM system with automatic fallback for maximum reliability, especially in regions where certain APIs may be blocked (e.g., Hong Kong).
