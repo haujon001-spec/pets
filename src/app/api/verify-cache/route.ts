@@ -103,7 +103,7 @@ export async function POST(request: NextRequest) {
         const answer = verifyData.answer;
         
         // Parse JSON from response
-        const jsonMatch = answer.match(/\{[^}]+\}/);
+        const jsonMatch = answer.match(/\{[\s\S]*\}/);
         if (!jsonMatch) {
           results.push({
             filename,

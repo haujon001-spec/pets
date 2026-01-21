@@ -119,7 +119,7 @@ Be strict - only return true if you're confident this is actually a ${breedName}
     const answer = data.answer;
     
     // Parse JSON from response
-    const jsonMatch = answer.match(/\{[^}]+\}/);
+    const jsonMatch = answer.match(/\{[\s\S]*\}/);
     if (!jsonMatch) {
       console.warn('[breed-image] ⚠️ Vision response not in expected format');
       return { isCorrect: true, confidence: 50, reasoning: 'Could not parse verification response' };
