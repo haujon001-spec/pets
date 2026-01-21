@@ -115,7 +115,7 @@ Be strict - only return true if you're confident this is actually a ${breedName}
       throw new Error(`Vision API failed: ${response.status}`);
     }
 
-    const data = await response.json();
+    const data = await response.json() as { answer: string };
     const answer = data.answer;
     
     // Parse JSON from response

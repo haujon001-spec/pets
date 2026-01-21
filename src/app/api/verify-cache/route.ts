@@ -99,7 +99,7 @@ export async function POST(request: NextRequest) {
           throw new Error(`Vision API failed: ${verifyResponse.status}`);
         }
         
-        const verifyData = await verifyResponse.json();
+        const verifyData = await verifyResponse.json() as { answer: string };
         const answer = verifyData.answer;
         
         // Parse JSON from response
