@@ -1,11 +1,12 @@
 # VPS IP: 159.223.63.117
-# Production Domain Configuration
+# Production Domain Configuration with HTTPS
 
-aibreeds-demo.com, www.aibreeds-demo.com {
+# Main domain with automatic HTTPS
+aibreeds-demo.com {
   reverse_proxy app:3000
 }
 
-# For IP-only access (development):
-# 159.223.63.117 {
-#   reverse_proxy app:3000
-# }
+# IP address access (HTTP only)
+http://159.223.63.117 {
+  reverse_proxy app:3000
+}
