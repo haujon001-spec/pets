@@ -2,6 +2,21 @@
 
 ## Known Issues - To Be Addressed Later
 
+### Missing Placeholder Images (404 Errors)
+- **Status**: Non-critical - UI cosmetic issue
+- **Issue**: Decorative background images referenced in page.tsx don't exist
+  - `/breeds/labrador.jpg` - 404 error (referenced in background)
+  - `/breeds/mainecoon.jpg` - 404 error (referenced in background)
+  - `/breeds/siamese.jpg` - 404 error (referenced in background)
+- **Impact**: Console shows 404 errors and "not a valid image" warnings, but app functions normally
+- **Root Cause**: Background decoration images in `page.tsx` reference local files that were never created
+- **Action Needed**:
+  1. Either remove the decorative Image components from page.tsx
+  2. Or create/download placeholder images for these breeds
+  3. Or fetch them dynamically using the breed-image API on initial load
+- **Priority**: Low (doesn't affect functionality, only creates console noise)
+- **Detected**: January 21, 2026 - Phase 4 Mobile Optimization testing
+
 ### Hugging Face LLM Provider Not Working
 - **Status**: Blocked - API deprecated
 - **Issue**: Hugging Face deprecated their old Inference API endpoint

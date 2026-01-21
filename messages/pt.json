@@ -1,0 +1,122 @@
+{
+  "app": {
+    "title": "AI Breeds",
+    "subtitle": "Portal de Informações sobre Raças de Animais",
+    "description": "Faça perguntas sobre diferentes raças de animais e obtenha respostas alimentadas por IA com imagens.",
+    "disclaimer": "Aviso: As respostas são geradas por IA e podem não ser 100% precisas. Sempre consulte um veterinário para aconselhamento profissional."
+  },
+  "petType": {
+    "label": "Selecionar Tipo de Animal:",
+    "dog": "Cães",
+    "cat": "Gatos"
+  },
+  "breed": {
+    "label": "Selecionar Raça:",
+    "placeholder": "Escolha uma raça...",
+    "other": "Digite o nome da raça personalizada",
+    "customPlaceholder": "Digite o nome da raça...",
+    "helperText": "Selecione uma raça da lista ou digite uma personalizada"
+  },
+  "question": {
+    "label": "Selecionar Pergunta:",
+    "placeholder": "Escolha uma pergunta...",
+    "custom": "Fazer pergunta personalizada",
+    "customPlaceholder": "Digite sua pergunta...",
+    "helperText": "Selecione uma pergunta predefinida ou faça a sua"
+  },
+  "suggestions": {
+    "title": "Você quis dizer",
+    "useThis": "Usar Esta"
+  },
+  "actions": {
+    "ask": "Perguntar",
+    "asking": "Perguntando..."
+  },
+  "answer": {
+    "title": "Resposta",
+    "breedInfo": "Informações da Raça",
+    "provider": "Fornecedor",
+    "responseTime": "Tempo de Resposta"
+  },
+  "errors": {
+    "selectBreed": "Por favor, selecione ou digite uma raça.",
+    "selectQuestion": "Por favor, selecione ou digite uma pergunta.",
+    "fetchFailed": "Falha ao buscar resposta. Por favor, tente novamente.",
+    "noAnswer": "Nenhuma resposta recebida. Por favor, tente novamente."
+  },
+  "questions": {
+    "temperament": "Qual é o temperamento típico desta raça?",
+    "care": "Quais são os requisitos de cuidados para esta raça?",
+    "health": "Quais são os problemas de saúde comuns para esta raça?",
+    "exercise": "Quanto exercício esta raça precisa?",
+    "training": "Esta raça é fácil de treinar?",
+    "family": "Esta raça é boa com crianças e famílias?",
+    "size": "Qual é o tamanho e peso típicos desta raça?",
+    "lifespan": "Qual é a expectativa de vida média desta raça?",
+    "grooming": "Quais são as necessidades de higiene para esta raça?",
+    "living": "Quais condições de vida são melhores para esta raça?"
+  },
+  "breeds": {
+    "beagle": "Beagle",
+    "bernese": "Boiadeiro de Berna",
+    "bordercollie": "Border Collie",
+    "boxer": "Boxer",
+    "bulldog": "Buldogue Inglês",
+    "cavalier": "Cavalier King Charles Spaniel",
+    "chihuahua": "Chihuahua",
+    "corgi": "Corgi Galês de Pembroke",
+    "dachshund": "Dachshund",
+    "doberman": "Doberman Pinscher",
+    "frenchbulldog": "Buldogue Francês",
+    "germanshepherd": "Pastor Alemão",
+    "goldenretriever": "Golden Retriever",
+    "greatdane": "Dogue Alemão",
+    "husky": "Husky Siberiano",
+    "jackrussell": "Jack Russell Terrier",
+    "labrador": "Labrador Retriever",
+    "maltese": "Maltês",
+    "miniaturepoodle": "Poodle Miniatura",
+    "papillon": "Papillon",
+    "pomeranian": "Spitz Alemão Anão",
+    "pug": "Pug",
+    "rottweiler": "Rottweiler",
+    "samoyed": "Samoieda",
+    "schipperke": "Schipperke",
+    "shibainu": "Shiba Inu",
+    "shihTzu": "Shih Tzu",
+    "schnauzer": "Schnauzer Miniatura",
+    "staffordshire": "Staffordshire Bull Terrier",
+    "vizsla": "Vizsla",
+    "whippet": "Whippet",
+    "abyssinian": "Abissínio",
+    "americanbobtail": "Bobtail Americano",
+    "americanshorthair": "Pelo Curto Americano",
+    "balinese": "Balinês",
+    "bengal": "Bengal",
+    "birman": "Sagrado da Birmânia",
+    "britishshorthair": "British Shorthair",
+    "burmese": "Birmanês",
+    "chartreux": "Chartreux",
+    "cornishrex": "Cornish Rex",
+    "devonrex": "Devon Rex",
+    "egyptianmau": "Mau Egípcio",
+    "exoticshorthair": "Exotic Shorthair",
+    "himalayan": "Himalaio",
+    "mainecoon": "Maine Coon",
+    "manx": "Manx",
+    "norwegianforest": "Gato da Floresta Norueguesa",
+    "ocicat": "Ocicat",
+    "oriental": "Oriental",
+    "persian": "Persa",
+    "ragdoll": "Ragdoll",
+    "russianblue": "Azul Russo",
+    "savannah": "Savannah",
+    "scottishfold": "Scottish Fold",
+    "siamese": "Siamês",
+    "siberian": "Siberiano",
+    "singapura": "Singapura",
+    "somali": "Somali",
+    "sphynx": "Sphynx",
+    "tonkinese": "Tonquinês"
+  }
+}

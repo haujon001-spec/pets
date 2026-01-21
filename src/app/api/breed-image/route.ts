@@ -373,12 +373,16 @@ export async function GET(req: NextRequest) {
   const breed = searchParams.get('breedId') || searchParams.get('breed');
   const type = searchParams.get('petType') || searchParams.get('type');
   const breedName = searchParams.get('breedName') || breed || '';
+  
   if (!breed || !type) {
     return NextResponse.json({ error: 'Missing breed or type' }, { status: 400 });
   }
-  const localPath = path.join(breedsDir, `${breed}.jpg`);
-  const publicPath = `/breeds/${breed}.jpg`;
-  const filename = `${breed}.jpg`;
+  
+  // Include pet type in filename for custom breeds to prevent cat/dog mixup
+  const filenameBase = breed === 'custom' ? `custom-${type}` : breed;
+  const localPath = path.join(breedsDir, `${filenameBase}.jpg`);
+  const publicPath = `/breeds/${filenameBase}.jpg`;
+  const filename = `${filenameBase}.jpg`;
   
   // Check if file exists locally and is not expired
   if (fs.existsSync(localPath)) {

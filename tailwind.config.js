@@ -4,6 +4,14 @@ module.exports = {
     "./src/**/*.{js,ts,jsx,tsx}",
   ],
   theme: {
+    screens: {
+      'xs': '375px',   // Small phones (iPhone SE)
+      'sm': '640px',   // Large phones
+      'md': '768px',   // Tablets
+      'lg': '1024px',  // Small laptops
+      'xl': '1280px',  // Desktops
+      '2xl': '1536px', // Large screens
+    },
     extend: {
       colors: {
         primary: {
@@ -26,6 +34,18 @@ module.exports = {
       },
       borderRadius: {
         xl: '1.25rem',
+      },
+      spacing: {
+        'safe-top': 'env(safe-area-inset-top)',
+        'safe-bottom': 'env(safe-area-inset-bottom)',
+        'safe-left': 'env(safe-area-inset-left)',
+        'safe-right': 'env(safe-area-inset-right)',
+      },
+      minHeight: {
+        'touch': '44px', // Minimum touch target size
+      },
+      minWidth: {
+        'touch': '44px', // Minimum touch target size
       },
     },
   },

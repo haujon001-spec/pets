@@ -1,0 +1,122 @@
+{
+  "app": {
+    "title": "AI Breeds",
+    "subtitle": "ペット品種情報ポータル",
+    "description": "さまざまなペットの品種について質問し、AIによる回答と画像を取得します。",
+    "disclaimer": "免責事項：回答はAIによって生成されており、100％正確ではない可能性があります。専門的なアドバイスについては、常に獣医師に相談してください。"
+  },
+  "petType": {
+    "label": "ペットの種類を選択:",
+    "dog": "犬",
+    "cat": "猫"
+  },
+  "breed": {
+    "label": "品種を選択:",
+    "placeholder": "品種を選んでください...",
+    "other": "カスタム品種名を入力",
+    "customPlaceholder": "品種名を入力してください...",
+    "helperText": "リストから品種を選択するか、カスタム品種を入力してください"
+  },
+  "question": {
+    "label": "質問を選択:",
+    "placeholder": "質問を選んでください...",
+    "custom": "カスタム質問をする",
+    "customPlaceholder": "質問を入力してください...",
+    "helperText": "事前定義された質問を選択するか、独自の質問を入力してください"
+  },
+  "suggestions": {
+    "title": "もしかして",
+    "useThis": "これを使用"
+  },
+  "actions": {
+    "ask": "質問する",
+    "asking": "質問中..."
+  },
+  "answer": {
+    "title": "回答",
+    "breedInfo": "品種情報",
+    "provider": "プロバイダー",
+    "responseTime": "応答時間"
+  },
+  "errors": {
+    "selectBreed": "品種を選択または入力してください。",
+    "selectQuestion": "質問を選択または入力してください。",
+    "fetchFailed": "回答の取得に失敗しました。もう一度お試しください。",
+    "noAnswer": "回答を受信できませんでした。もう一度お試しください。"
+  },
+  "questions": {
+    "temperament": "この品種の典型的な気質は何ですか？",
+    "care": "この品種のケア要件は何ですか？",
+    "health": "この品種の一般的な健康問題は何ですか？",
+    "exercise": "この品種にはどのくらいの運動が必要ですか？",
+    "training": "この品種は訓練しやすいですか？",
+    "family": "この品種は子供や家族に適していますか？",
+    "size": "この品種の典型的なサイズと体重は？",
+    "lifespan": "この品種の平均寿命は？",
+    "grooming": "この品種のグルーミング要件は何ですか？",
+    "living": "この品種に最適な生活条件は何ですか？"
+  },
+  "breeds": {
+    "beagle": "ビーグル",
+    "bernese": "バーニーズマウンテンドッグ",
+    "bordercollie": "ボーダーコリー",
+    "boxer": "ボクサー",
+    "bulldog": "イングリッシュブルドッグ",
+    "cavalier": "キャバリア・キング・チャールズ・スパニエル",
+    "chihuahua": "チワワ",
+    "corgi": "ウェルシュコーギーペンブローク",
+    "dachshund": "ダックスフンド",
+    "doberman": "ドーベルマンピンシャー",
+    "frenchbulldog": "フレンチブルドッグ",
+    "germanshepherd": "ジャーマンシェパード",
+    "goldenretriever": "ゴールデンレトリバー",
+    "greatdane": "グレートデーン",
+    "husky": "シベリアンハスキー",
+    "jackrussell": "ジャックラッセルテリア",
+    "labrador": "ラブラドールレトリバー",
+    "maltese": "マルチーズ",
+    "miniaturepoodle": "ミニチュアプードル",
+    "papillon": "パピヨン",
+    "pomeranian": "ポメラニアン",
+    "pug": "パグ",
+    "rottweiler": "ロットワイラー",
+    "samoyed": "サモエド",
+    "schipperke": "スキッパーキ",
+    "shibainu": "柴犬",
+    "shihTzu": "シーズー",
+    "schnauzer": "ミニチュアシュナウザー",
+    "staffordshire": "スタッフォードシャーブルテリア",
+    "vizsla": "ビズラ",
+    "whippet": "ウィペット",
+    "abyssinian": "アビシニアン",
+    "americanbobtail": "アメリカンボブテイル",
+    "americanshorthair": "アメリカンショートヘア",
+    "balinese": "バリニーズ",
+    "bengal": "ベンガル",
+    "birman": "バーマン",
+    "britishshorthair": "ブリティッシュショートヘア",
+    "burmese": "バーミーズ",
+    "chartreux": "シャルトリュー",
+    "cornishrex": "コーニッシュレックス",
+    "devonrex": "デボンレックス",
+    "egyptianmau": "エジプシャンマウ",
+    "exoticshorthair": "エキゾチックショートヘア",
+    "himalayan": "ヒマラヤン",
+    "mainecoon": "メインクーン",
+    "manx": "マンクス",
+    "norwegianforest": "ノルウェージャンフォレストキャット",
+    "ocicat": "オシキャット",
+    "oriental": "オリエンタル",
+    "persian": "ペルシャ",
+    "ragdoll": "ラグドール",
+    "russianblue": "ロシアンブルー",
+    "savannah": "サバンナ",
+    "scottishfold": "スコティッシュフォールド",
+    "siamese": "シャム",
+    "siberian": "サイベリアン",
+    "singapura": "シンガプーラ",
+    "somali": "ソマリ",
+    "sphynx": "スフィンクス",
+    "tonkinese": "トンキニーズ"
+  }
+}

@@ -23,5 +23,100 @@
     "fetchedAt": "2026-01-20T12:25:32.879Z",
     "sourceUrl": "https://images.dog.ceo/breeds/doberman/n02107142_30.jpg",
     "expiresAt": "2026-01-27T12:25:32.879Z"
+  },
+  "bernese.jpg": {
+    "fetchedAt": "2026-01-20T14:37:54.917Z",
+    "sourceUrl": "https://images.dog.ceo/breeds/mountain-swiss/n02107574_2377.jpg",
+    "expiresAt": "2026-01-27T14:37:54.917Z"
+  },
+  "bordercollie.jpg": {
+    "fetchedAt": "2026-01-20T14:40:11.762Z",
+    "sourceUrl": "https://images.dog.ceo/breeds/collie-border/n02106166_1460.jpg",
+    "expiresAt": "2026-01-27T14:40:11.762Z"
+  },
+  "dachshund.jpg": {
+    "fetchedAt": "2026-01-20T14:40:25.997Z",
+    "sourceUrl": "https://images.dog.ceo/breeds/dachshund/daschund-luna.jpg",
+    "expiresAt": "2026-01-27T14:40:25.997Z"
+  },
+  "devonrex.jpg": {
+    "fetchedAt": "2026-01-20T14:40:50.330Z",
+    "sourceUrl": "https://cdn2.thecatapi.com/images/uUGt0UBzF.jpg",
+    "expiresAt": "2026-01-27T14:40:50.330Z"
+  },
+  "persian.jpg": {
+    "fetchedAt": "2026-01-20T14:41:07.092Z",
+    "sourceUrl": "https://cdn2.thecatapi.com/images/MjEa4UzfB.jpg",
+    "expiresAt": "2026-01-27T14:41:07.092Z"
+  },
+  "custom.jpg": {
+    "fetchedAt": "2026-01-20T14:41:07.151Z",
+    "sourceUrl": "https://cdn2.thecatapi.com/images/MjEa4UzfB.jpg",
+    "expiresAt": "2026-01-27T14:41:07.151Z"
+  },
+  "pug.jpg": {
+    "fetchedAt": "2026-01-21T04:18:45.997Z",
+    "sourceUrl": "https://images.dog.ceo/breeds/puggle/IMG_074816.jpg",
+    "expiresAt": "2026-01-28T04:18:45.997Z"
+  },
+  "cavalier.jpg": {
+    "fetchedAt": "2026-01-21T04:21:05.925Z",
+    "sourceUrl": "https://images.dog.ceo/breeds/spaniel-irish/n02102973_2209.jpg",
+    "expiresAt": "2026-01-28T04:21:05.925Z"
+  },
+  "jackrussell.jpg": {
+    "fetchedAt": "2026-01-21T04:21:10.693Z",
+    "sourceUrl": "https://images.dog.ceo/breeds/terrier-fox/n02095314_261.jpg",
+    "expiresAt": "2026-01-28T04:21:10.693Z"
+  },
+  "chihuahua.jpg": {
+    "fetchedAt": "2026-01-21T04:27:55.923Z",
+    "sourceUrl": "https://images.dog.ceo/breeds/chihuahua/n02085620_4951.jpg",
+    "expiresAt": "2026-01-28T04:27:55.923Z"
+  },
+  "schnauzer.jpg": {
+    "fetchedAt": "2026-01-21T04:37:13.257Z",
+    "sourceUrl": "https://images.dog.ceo/breeds/schnauzer-giant/n02097130_982.jpg",
+    "expiresAt": "2026-01-28T04:37:13.257Z"
+  },
+  "custom-dog.jpg": {
+    "fetchedAt": "2026-01-21T04:53:29.478Z",
+    "sourceUrl": "https://images.dog.ceo/breeds/cattledog-australian/IMG_1042.jpg",
+    "expiresAt": "2026-01-28T04:53:29.478Z"
+  },
+  "custom-cat.jpg": {
+    "fetchedAt": "2026-01-21T04:54:01.378Z",
+    "sourceUrl": "https://cdn2.thecatapi.com/images/_6x-3TiCA.jpg",
+    "expiresAt": "2026-01-28T04:54:01.378Z"
+  },
+  "abyssinian.jpg": {
+    "fetchedAt": "2026-01-21T04:54:13.715Z",
+    "sourceUrl": "https://cdn2.thecatapi.com/images/0XYvRd7oD.jpg",
+    "expiresAt": "2026-01-28T04:54:13.715Z"
+  },
+  "egyptianmau.jpg": {
+    "fetchedAt": "2026-01-21T04:54:14.342Z",
+    "sourceUrl": "https://cdn2.thecatapi.com/images/oxuem0v7U.jpg",
+    "expiresAt": "2026-01-28T04:54:14.342Z"
+  },
+  "ragdoll.jpg": {
+    "fetchedAt": "2026-01-21T04:54:29.426Z",
+    "sourceUrl": "https://cdn2.thecatapi.com/images/UYLI_E-SZ.jpg",
+    "expiresAt": "2026-01-28T04:54:29.426Z"
+  },
+  "papillon.jpg": {
+    "fetchedAt": "2026-01-21T05:36:57.034Z",
+    "sourceUrl": "https://images.dog.ceo/breeds/papillon/n02086910_334.jpg",
+    "expiresAt": "2026-01-28T05:36:57.034Z"
+  },
+  "greatdane.jpg": {
+    "fetchedAt": "2026-01-21T05:37:06.735Z",
+    "sourceUrl": "https://images.dog.ceo/breeds/dane-great/dane-5.jpg",
+    "expiresAt": "2026-01-28T05:37:06.735Z"
+  },
+  "americanbobtail.jpg": {
+    "fetchedAt": "2026-01-21T05:45:36.614Z",
+    "sourceUrl": "https://cdn2.thecatapi.com/images/vH0bd0YDH.jpg",
+    "expiresAt": "2026-01-28T05:45:36.614Z"
   }
 }

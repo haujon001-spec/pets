@@ -4,6 +4,8 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
+    "dev:health": "pwsh -File scripts/dev.ps1",
+    "health:check": "pwsh -File scripts/health-check-analyze.ps1",
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
@@ -19,6 +21,7 @@
   "dependencies": {
     "fuse.js": "^7.1.0",
     "next": "16.1.3",
+    "next-intl": "^4.7.0",
     "node-fetch": "^3.3.2",
     "react": "19.2.3",
     "react-dom": "19.2.3",

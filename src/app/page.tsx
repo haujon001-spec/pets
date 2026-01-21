@@ -3,6 +3,8 @@
 import { useState, useEffect } from "react";
 import Fuse from "fuse.js";
 import Image from "next/image";
+import { useTranslations } from 'next-intl';
+import LanguageSwitcher from '@/components/LanguageSwitcher';
 
 type PetType = "dog" | "cat";
 interface BreedInfo {
@@ -19,8 +21,8 @@ interface BreedInfo {
 }
 
 export default function Home() {
+  const t = useTranslations();
   const [breeds, setBreeds] = useState<BreedInfo[]>([]);
-  const [breedFAQs, setBreedFAQs] = useState<string[]>([]);
   const [selectedBreed, setSelectedBreed] = useState<string>("");
   const [typedBreed, setTypedBreed] = useState<string>("");
   const [petType, setPetType] = useState<PetType>("dog");
@@ -33,12 +35,25 @@ export default function Home() {
   const [suggestedBreed, setSuggestedBreed] = useState<string>("");
   const [breedImage, setBreedImage] = useState<string>("");
 
+  // Translated questions from i18n - recreated on every render to update with language changes
+  const breedFAQs = [
+    t('questions.temperament'),
+    t('questions.care'),
+    t('questions.health'),
+    t('questions.exercise'),
+    t('questions.training'),
+    t('questions.family'),
+    t('questions.size'),
+    t('questions.lifespan'),
+    t('questions.grooming'),
+    t('questions.living'),
+  ];
+
   useEffect(() => {
     fetch("/api/chatbot")
       .then((res) => res.json())
       .then((data) => {
         setBreeds(data.breeds || []);
-        setBreedFAQs(data.breedFAQs || []);
       });
   }, []);
 
@@ -47,7 +62,6 @@ export default function Home() {
     async function fetchBreedImage() {
       let breed: BreedInfo | undefined = undefined;
       let customBreedName: string | undefined = undefined;
-      let currentPetType: 'dog' | 'cat' = petType;
       
       // First, try to find breed in database
       if (selectedBreed && selectedBreed !== 'other') {
@@ -55,7 +69,7 @@ export default function Home() {
       } else if (typedBreed && suggestedBreed) {
         breed = breeds.find(b => b.name === suggestedBreed);
       } else if (selectedBreed === 'other' && typedBreed) {
-        // User typed a custom breed name - use it directly
+        // User typed a custom breed name - use it directly with current petType
         customBreedName = typedBreed;
       }
       
@@ -69,7 +83,7 @@ export default function Home() {
       try {
         const params = new URLSearchParams({
           breedId: breed?.id || 'custom',
-          petType: breed?.petType || currentPetType,
+          petType: breed?.petType || petType,
           breedName: breed?.name || customBreedName || '',
         });
         const res = await fetch(`/api/breed-image?${params.toString()}`);
@@ -77,12 +91,10 @@ export default function Home() {
         if (data && data.imageUrl) {
           setBreedImage(data.imageUrl);
         } else {
-          const fallbackPetType = breed?.petType || currentPetType;
-          setBreedImage(fallbackPetType === "dog" ? "/breeds/placeholder_dog.jpg" : "/breeds/placeholder_cat.jpg");
+          setBreedImage(petType === "dog" ? "/breeds/placeholder_dog.jpg" : "/breeds/placeholder_cat.jpg");
         }
       } catch {
-        const fallbackPetType = breed?.petType || currentPetType;
-        setBreedImage(fallbackPetType === "dog" ? "/breeds/placeholder_dog.jpg" : "/breeds/placeholder_cat.jpg");
+        setBreedImage(petType === "dog" ? "/breeds/placeholder_dog.jpg" : "/breeds/placeholder_cat.jpg");
       }
     }
     fetchBreedImage();
@@ -131,32 +143,36 @@ export default function Home() {
       <Image src="/breeds/siamese.jpg" alt="Siamese" width={100} height={100} className="absolute right-10 bottom-0 opacity-10 rounded-full blur-lg z-0" />
 
       <div className="relative z-10 w-full max-w-6xl px-4">
-        <h1 className="text-5xl font-extrabold mb-4 text-center text-orange-700 drop-shadow-lg" style={{ fontFamily: 'var(--font-display)' }}>
-          🐾 Pet Breed Info Portal
+        <div className="flex justify-end mb-4">
+          <LanguageSwitcher />
+        </div>
+        <h1 className="text-3xl sm:text-4xl md:text-5xl font-extrabold mb-4 text-center text-orange-700 drop-shadow-lg" style={{ fontFamily: 'var(--font-display)' }}>
+          🐾 {t('app.title')}
         </h1>
-        <p className="text-lg text-orange-900 mb-6 text-center">Discover, ask, and learn about the world's most popular dog and cat breeds!</p>
+        <p className="text-base sm:text-lg text-orange-900 mb-6 text-center">{t('app.description')}</p>
         <div className="mb-6 flex gap-4 justify-center">
           <button
-            className={`px-6 py-2 rounded-full shadow transition-all duration-200 text-lg font-semibold ${petType === "dog" ? "bg-orange-400 text-white scale-105" : "bg-orange-100 text-orange-700"}`}
+            className={`min-h-touch min-w-touch px-6 py-2 rounded-full shadow transition-all duration-200 text-base sm:text-lg font-semibold ${petType === "dog" ? "bg-orange-400 text-white" : "bg-orange-100 text-orange-700 hover:bg-orange-200"}`}
             onClick={() => setPetType("dog")}
           >
-            <span role="img" aria-label="dog">🐶</span> Dogs
+            {t('petType.dog')}
           </button>
           <button
-            className={`px-6 py-2 rounded-full shadow transition-all duration-200 text-lg font-semibold ${petType === "cat" ? "bg-pink-400 text-white scale-105" : "bg-pink-100 text-pink-700"}`}
+            className={`min-h-touch min-w-touch px-6 py-2 rounded-full shadow transition-all duration-200 text-base sm:text-lg font-semibold ${petType === "cat" ? "bg-pink-400 text-white" : "bg-pink-100 text-pink-700 hover:bg-pink-200"}`}
             onClick={() => setPetType("cat")}
           >
-            <span role="img" aria-label="cat">🐱</span> Cats
+            {t('petType.cat')}
           </button>
         </div>
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6 mb-4 sm:mb-6">
         <div className="card">
-          <label className="block mb-2 text-lg font-semibold" style={{ color: 'var(--primary)' }}>
-            Select or Type Breed:
-            <span className="text-sm font-normal text-gray-600 ml-2">(or choose "Type custom breed" to enter your own)</span>
+          <label className="block mb-3 sm:mb-2 text-base sm:text-lg font-semibold" style={{ color: 'var(--primary)' }}>
+            {t('breed.label')}:
+            <span className="block sm:inline text-xs sm:text-sm font-normal text-gray-600 sm:ml-2 mt-1 sm:mt-0">{t('breed.helperText')}</span>
           </label>
           <select
-            className="w-full p-3 rounded-xl border border-primary text-lg mb-2"
+            className="w-full min-h-touch p-3 sm:p-3 rounded-xl border border-primary text-base sm:text-lg mb-2"
+            style={{ maxHeight: '300px' }}
             value={selectedBreed}
             onChange={e => {
               setSelectedBreed(e.target.value);
@@ -167,37 +183,37 @@ export default function Home() {
               }
             }}
           >
-            <option value="">-- Choose a breed --</option>
+            <option value="">{t('breed.placeholder')}</option>
             {breeds.filter(b => b.petType === petType).sort((a, b) => a.name.localeCompare(b.name)).map(breed => (
-              <option key={breed.id} value={breed.id}>{breed.name}</option>
+              <option key={breed.id} value={breed.id}>{t(`breeds.${breed.id}`)}</option>
             ))}
-            <option value="other">✏️ Type custom breed name</option>
+            <option value="other">✏️ {t('breed.other')}</option>
           </select>
           {selectedBreed === "other" && (
             <>
               <input
-                className="w-full p-3 rounded-xl border border-primary mb-1 text-lg focus:ring-2 focus:ring-orange-400"
+                className="w-full min-h-touch p-3 sm:p-3 rounded-xl border border-primary mb-1 text-base sm:text-lg focus:ring-2 focus:ring-orange-400"
                 type="text"
                 value={typedBreed}
                 onChange={e => setTypedBreed(e.target.value)}
-                placeholder={`Type any ${petType} breed name (e.g., ${petType === 'dog' ? 'Australian Shepherd, Pitbull' : 'Ragdoll, Persian'})`}
+                placeholder={t('breed.customPlaceholder')}
                 autoComplete="off"
                 autoFocus
               />
               {typedBreed && suggestedBreed && suggestedBreed.toLowerCase() !== typedBreed.toLowerCase() && (
-                <div className="text-sm text-orange-700 mt-2 p-2 bg-orange-50 rounded-lg flex items-center gap-2">
-                  💡 Did you mean: <span className="font-semibold">{suggestedBreed}</span>?
+                <div className="text-xs sm:text-sm text-orange-700 mt-2 p-3 sm:p-2 bg-orange-50 rounded-lg flex flex-col sm:flex-row items-start sm:items-center gap-2">
+                  <div>💡 {t('suggestions.title')} <span className="font-semibold">{suggestedBreed}</span>?</div>
                   <button
                     type="button"
-                    className="ml-auto px-3 py-1 rounded-lg bg-orange-400 hover:bg-orange-500 text-white text-xs font-semibold transition-colors"
+                    className="min-h-touch min-w-touch w-full sm:w-auto sm:ml-auto px-3 py-2 rounded-lg bg-orange-400 hover:bg-orange-500 active:bg-orange-600 text-white text-sm font-semibold transition-colors"
                     onClick={() => setTypedBreed(suggestedBreed)}
                   >
-                    Use this
+                    {t('suggestions.useThis')}
                   </button>
                 </div>
               )}
               {typedBreed && !suggestedBreed && (
-                <div className="text-sm text-gray-600 mt-2 p-2 bg-gray-50 rounded-lg">
+                <div className="text-xs sm:text-sm text-gray-600 mt-2 p-3 sm:p-2 bg-gray-50 rounded-lg">
                   ℹ️ No exact match found. The AI will do its best to answer about "{typedBreed}".
                 </div>
               )}
@@ -205,33 +221,34 @@ export default function Home() {
           )}
         </div>
         <div className="card">
-          <label className="block mb-2 text-lg font-semibold" style={{ color: 'var(--primary)' }}>
-            Ask a question about this breed:
-            <span className="text-sm font-normal text-gray-600 ml-2">(or write your own custom question)</span>
+          <label className="block mb-3 sm:mb-2 text-base sm:text-lg font-semibold" style={{ color: 'var(--primary)' }}>
+            {t('question.label')}:
+            <span className="block sm:inline text-xs sm:text-sm font-normal text-gray-600 sm:ml-2 mt-1 sm:mt-0">{t('question.helperText')}</span>
           </label>
           <select
-            className="w-full p-3 rounded-xl border border-primary mb-2 text-lg"
+            className="w-full min-h-touch p-3 sm:p-3 rounded-xl border border-primary mb-2 text-base sm:text-lg"
+            style={{ maxHeight: '300px' }}
             value={question}
             onChange={e => setQuestion(e.target.value)}
           >
-            <option value="">-- Select a question --</option>
+            <option value="">{t('question.placeholder')}</option>
             {breedFAQs.map((faq, idx) => (
               <option key={idx} value={faq}>{faq}</option>
             ))}
-            <option value="other">✏️ Ask custom question</option>
+            <option value="other">✏️ {t('question.custom')}</option>
           </select>
           {question === "other" && (
             <input
-              className="w-full p-3 rounded-xl border border-primary mb-2 text-lg focus:ring-2 focus:ring-orange-400"
+              className="w-full min-h-touch p-3 sm:p-3 rounded-xl border border-primary mb-2 text-base sm:text-lg focus:ring-2 focus:ring-orange-400"
               type="text"
               value={customQuestion || ""}
               onChange={e => setCustomQuestion(e.target.value)}
-              placeholder="Ask anything! (e.g., Are they good with kids? Training difficulty? Exercise needs?)"
+              placeholder={t('question.customPlaceholder')}
               autoFocus
             />
           )}
           <button
-            className="px-6 py-2 rounded-xl font-semibold shadow transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
+            className="w-full sm:w-auto min-h-touch px-6 py-3 sm:py-2 rounded-xl text-base sm:text-lg font-semibold shadow transition-all duration-200 active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed disabled:active:scale-100"
             style={{ background: 'var(--primary)', color: '#fff' }}
             onClick={handleAsk}
             disabled={
@@ -242,21 +259,21 @@ export default function Home() {
               (selectedBreed === "other" && !typedBreed?.trim())
             }
           >
-            {loading ? "🤔 Asking..." : "Ask"}
+            {loading ? t('actions.asking') : t('actions.ask')}
           </button>
-          <div className="text-xs mt-2 flex items-center gap-2">
-            <span className="inline-block w-2 h-2 rounded-full bg-green-500"></span>
-            <span className="text-gray-600">
-              Answers provided by AI using multi-provider LLM system (Together AI or OpenRouter). For informational purposes only.
+          <div className="text-xs mt-3 sm:mt-2 flex items-start sm:items-center gap-2">
+            <span className="inline-block w-2 h-2 rounded-full bg-green-500 mt-1 sm:mt-0 flex-shrink-0"></span>
+            <span className="text-gray-600 leading-relaxed">
+              {t('app.disclaimer')}
             </span>
           </div>
         </div>
         </div>
         {answer && (
           <div className="card" style={{ background: 'var(--accent)', color: 'var(--text)' }}>
-            <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+            <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 sm:gap-6">
               <div className="lg:col-span-2">
-                <div className="mb-3 flex items-center gap-2 text-sm">
+                <div className="mb-3 flex flex-wrap items-center gap-2 text-xs sm:text-sm">
                   <span className="inline-block px-2 py-1 rounded bg-green-100 text-green-700 font-semibold">
                     ✓ {llmProvider}
                   </span>
@@ -266,8 +283,8 @@ export default function Home() {
                     </span>
                   )}
                 </div>
-                <div className="mb-4">
-                  <strong>Answer:</strong> {answer}
+                <div className="mb-4 text-sm sm:text-base leading-relaxed">
+                  <strong>{t('answer.title')}:</strong> {answer}
                 </div>
                 {/* Show breed info for the selected breed only */}
                 {(() => {
@@ -280,12 +297,12 @@ export default function Home() {
                   if (breed) {
                     return (
                       <div>
-                        <h3 className="text-2xl font-bold mb-2" style={{ color: 'var(--primary)' }}>{breed.name}</h3>
-                        <p className="mb-1"><strong>Temperament:</strong> {breed.temperament}</p>
-                        <p className="mb-1"><strong>Lifespan:</strong> {breed.lifespan}</p>
-                        <p className="mb-1"><strong>Description:</strong> {breed.description}</p>
-                        {breed.origin && <p className="mb-1"><strong>Origin:</strong> {breed.origin}</p>}
-                        {breed.traits && <p className="mb-1"><strong>Traits:</strong> {breed.traits.join(", ")}</p>}
+                        <h3 className="text-xl sm:text-2xl font-bold mb-2" style={{ color: 'var(--primary)' }}>{breed.name}</h3>
+                        <p className="mb-2 text-sm sm:text-base"><strong>Temperament:</strong> {breed.temperament}</p>
+                        <p className="mb-2 text-sm sm:text-base"><strong>Lifespan:</strong> {breed.lifespan}</p>
+                        <p className="mb-2 text-sm sm:text-base"><strong>Description:</strong> {breed.description}</p>
+                        {breed.origin && <p className="mb-2 text-sm sm:text-base"><strong>Origin:</strong> {breed.origin}</p>}
+                        {breed.traits && <p className="mb-2 text-sm sm:text-base"><strong>Traits:</strong> {breed.traits.join(", ")}</p>}
                       </div>
                     );
                   }
@@ -294,7 +311,7 @@ export default function Home() {
               </div>
               <div className="flex items-start justify-center lg:justify-end">
                 {breedImage && (
-                  <div className="w-full max-w-sm lg:max-w-none bg-gray-100 rounded-2xl shadow-lg overflow-hidden" style={{ maxHeight: '400px', minHeight: '300px' }}>
+                  <div className="w-full max-w-sm lg:max-w-none bg-gray-100 rounded-xl sm:rounded-2xl shadow-lg overflow-hidden" style={{ maxHeight: '400px', minHeight: '250px' }}>
                     <img 
                       src={breedImage} 
                       alt="Breed" 
