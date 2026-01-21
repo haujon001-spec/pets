@@ -60,14 +60,20 @@
     "expiresAt": "2026-01-28T04:18:45.997Z"
   },
   "cavalier.jpg": {
-    "fetchedAt": "2026-01-21T04:21:05.925Z",
-    "sourceUrl": "https://images.dog.ceo/breeds/spaniel-irish/n02102973_2209.jpg",
-    "expiresAt": "2026-01-28T04:21:05.925Z"
+    "fetchedAt": "2026-01-21T12:25:41.844Z",
+    "sourceUrl": "https://images.dog.ceo/breeds/spaniel-irish/n02102973_3623.jpg",
+    "expiresAt": "2026-01-28T12:25:41.844Z",
+    "verified": true,
+    "verifiedAt": "2026-01-21T12:25:41.844Z",
+    "verificationScore": 95
   },
   "jackrussell.jpg": {
-    "fetchedAt": "2026-01-21T04:21:10.693Z",
-    "sourceUrl": "https://images.dog.ceo/breeds/terrier-fox/n02095314_261.jpg",
-    "expiresAt": "2026-01-28T04:21:10.693Z"
+    "fetchedAt": "2026-01-21T12:15:14.029Z",
+    "sourceUrl": "https://images.dog.ceo/breeds/terrier-fox/n02095314_1969.jpg",
+    "expiresAt": "2026-01-28T12:15:14.029Z",
+    "verified": true,
+    "verifiedAt": "2026-01-21T12:15:14.029Z",
+    "verificationScore": 95
   },
   "chihuahua.jpg": {
     "fetchedAt": "2026-01-21T04:27:55.923Z",
@@ -118,5 +124,89 @@
     "fetchedAt": "2026-01-21T05:45:36.614Z",
     "sourceUrl": "https://cdn2.thecatapi.com/images/vH0bd0YDH.jpg",
     "expiresAt": "2026-01-28T05:45:36.614Z"
+  },
+  "goldenretriever.jpg": {
+    "fetchedAt": "2026-01-21T11:56:24.593Z",
+    "sourceUrl": "https://images.dog.ceo/breeds/retriever-golden/n02099601_3360.jpg",
+    "expiresAt": "2026-01-28T11:56:24.593Z",
+    "verified": true,
+    "verifiedAt": "2026-01-21T11:56:24.593Z",
+    "verificationScore": 95
+  },
+  "balinese.jpg": {
+    "fetchedAt": "2026-01-21T11:17:55.038Z",
+    "sourceUrl": "https://cdn2.thecatapi.com/images/aU69p2mTT.jpg",
+    "expiresAt": "2026-01-28T11:17:55.038Z"
+  },
+  "cornishrex.jpg": {
+    "fetchedAt": "2026-01-21T11:18:07.603Z",
+    "sourceUrl": "https://cdn2.thecatapi.com/images/DmP9GCClC.jpg",
+    "expiresAt": "2026-01-28T11:18:07.603Z"
+  },
+  "bulldog.jpg": {
+    "fetchedAt": "2026-01-21T11:31:35.081Z",
+    "sourceUrl": "https://images.dog.ceo/breeds/bulldog-boston/n02096585_11614.jpg",
+    "expiresAt": "2026-01-28T11:31:35.081Z"
+  },
+  "exoticshorthair.jpg": {
+    "fetchedAt": "2026-01-21T11:32:19.384Z",
+    "sourceUrl": "https://cdn2.thecatapi.com/images/Jxl7eRfCW.jpg",
+    "expiresAt": "2026-01-28T11:32:19.384Z"
+  },
+  "germanshepherd.jpg": {
+    "fetchedAt": "2026-01-21T12:39:57.744Z",
+    "sourceUrl": "https://images.dog.ceo/breeds/german-shepherd/n02106662_18405.jpg",
+    "expiresAt": "2026-01-28T12:39:57.744Z",
+    "verified": true,
+    "verifiedAt": "2026-01-21T12:39:57.744Z",
+    "verificationScore": 95
+  },
+  "bengal.jpg": {
+    "fetchedAt": "2026-01-21T11:56:49.840Z",
+    "sourceUrl": "https://cdn2.thecatapi.com/images/byQhFO7iV.jpg",
+    "expiresAt": "2026-01-28T11:56:49.840Z",
+    "verified": false,
+    "verifiedAt": "2026-01-21T11:56:49.840Z",
+    "verificationScore": 60
+  },
+  "boxer.jpg": {
+    "fetchedAt": "2026-01-21T11:57:43.901Z",
+    "sourceUrl": "https://images.dog.ceo/breeds/boxer/n02108089_12739.jpg",
+    "expiresAt": "2026-01-28T11:57:43.901Z",
+    "verified": true,
+    "verifiedAt": "2026-01-21T11:57:43.901Z",
+    "verificationScore": 95
+  },
+  "britishshorthair.jpg": {
+    "fetchedAt": "2026-01-21T11:59:25.606Z",
+    "sourceUrl": "https://cdn2.thecatapi.com/images/4QlywK9_Y.jpg",
+    "expiresAt": "2026-01-28T11:59:25.606Z",
+    "verified": false,
+    "verifiedAt": "2026-01-21T11:59:25.606Z",
+    "verificationScore": 60
+  },
+  "beagle.jpg": {
+    "fetchedAt": "2026-01-21T12:38:28.019Z",
+    "sourceUrl": "https://images.dog.ceo/breeds/beagle/n02088364_13028.jpg",
+    "expiresAt": "2026-01-28T12:38:28.019Z",
+    "verified": true,
+    "verifiedAt": "2026-01-21T12:38:28.019Z",
+    "verificationScore": 95
+  },
+  "maltese.jpg": {
+    "fetchedAt": "2026-01-21T12:38:30.121Z",
+    "sourceUrl": "https://images.dog.ceo/breeds/maltese/n02085936_10610.jpg",
+    "expiresAt": "2026-01-28T12:38:30.121Z",
+    "verified": true,
+    "verifiedAt": "2026-01-21T12:38:30.121Z",
+    "verificationScore": 95
+  },
+  "miniaturepoodle.jpg": {
+    "fetchedAt": "2026-01-21T12:38:32.533Z",
+    "sourceUrl": "https://images.dog.ceo/breeds/poodle-miniature/n02113712_3315.jpg",
+    "expiresAt": "2026-01-28T12:38:32.533Z",
+    "verified": true,
+    "verifiedAt": "2026-01-21T12:38:32.533Z",
+    "verificationScore": 95
   }
 }

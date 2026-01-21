@@ -38,6 +38,13 @@
     "provider": "AI Provider",
     "responseTime": "Response Time"
   },
+  "breedInfo": {
+    "temperament": "Temperament",
+    "lifespan": "Lifespan",
+    "description": "Description",
+    "origin": "Origin",
+    "traits": "Traits"
+  },
   "errors": {
     "selectPetType": "Please select a pet type",
     "selectBreed": "Please select or type a breed name",
@@ -116,5 +123,8 @@
     "singapura": "Singapura",
     "somali": "Somali",
     "sphynx": "Sphynx",
-    "tonkinese": "Tonkinese"  }
+    "tonkinese": "Tonkinese"  },
+  "breedDetails": {
+    "years": "years"
+  }
 }

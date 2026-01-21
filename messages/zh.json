@@ -38,6 +38,13 @@
     "provider": "AI提供商",
     "responseTime": "响应时间"
   },
+  "breedInfo": {
+    "temperament": "性格",
+    "lifespan": "寿命",
+    "description": "描述",
+    "origin": "起源",
+    "traits": "特征"
+  },
   "errors": {
     "selectPetType": "请选择宠物类型",
     "selectBreed": "请选择或输入品种名称",
@@ -116,5 +123,128 @@
     "singapura": "新加坡猫",
     "somali": "索马里猫",
     "sphynx": "斯芬克斯猫",
-    "tonkinese": "东奇尼猫"  }
+    "tonkinese": "东奇尼猫"  },
+  "breedDetails": {
+    "jackrussell": {
+      "temperament": "机警、好奇、活泼",
+      "description": "杰克罗素梗机警、好奇且活泼。",
+      "origin": "英国",
+      "traits": "机警, 好奇, 活泼"
+    },
+    "labrador": {
+      "temperament": "温和、聪明、外向",
+      "description": "拉布拉多是友好、外向且精力充沛的伴侣犬。",
+      "origin": "加拿大",
+      "traits": "适合家庭, 活跃, 易训练"
+    },
+    "goldenretriever": {
+      "temperament": "聪明、友好、忠诚",
+      "description": "金毛寻回犬是友好、聪明且忠诚的家庭犬。",
+      "origin": "苏格兰",
+      "traits": "友好, 聪明, 忠诚"
+    },
+    "germanshepherd": {
+      "temperament": "自信、勇敢、聪明",
+      "description": "德国牧羊犬忠诚、勇敢且高度聪明。",
+      "origin": "德国",
+      "traits": "保护性强, 忠诚, 聪明"
+    },
+    "frenchbulldog": {
+      "temperament": "适应力强、爱玩、聪明",
+      "description": "法国斗牛犬适应力强、爱玩且聪明。",
+      "origin": "法国",
+      "traits": "适应力强, 爱玩, 聪明"
+    },
+    "bulldog": {
+      "temperament": "温顺、任性、友好",
+      "description": "斗牛犬温和、深情且可靠。",
+      "origin": "英国",
+      "traits": "温和, 深情, 可靠"
+    },
+    "pug": {
+      "temperament": "迷人、顽皮、loving",
+      "description": "巴哥犬迷人、顽皮且充满爱心。",
+      "origin": "中国",
+      "traits": "迷人, 顽皮, 充满爱心"
+    },
+    "chihuahua": {
+      "temperament": "迷人、优雅、活泼",
+      "description": "吉娃娃小巧、活泼且忠诚。",
+      "origin": "墨西哥",
+      "traits": "小巧, 活泼, 忠诚"
+    },
+    "beagle": {
+      "temperament": "好奇、快乐、友好",
+      "description": "比格犬可爱、快乐且易相处。",
+      "origin": "英国",
+      "traits": "友好, 好奇, 快乐"
+    },
+    "husky": {
+      "temperament": "外向、友好、机警",
+      "description": "哈士奇外向、友好且机警。",
+      "origin": "俄罗斯",
+      "traits": "外向, 友好, 机警"
+    },
+    "corgi": {
+      "temperament": "深情、聪明、机警",
+      "description": "柯基犬深情、聪明且机警。",
+      "origin": "威尔士",
+      "traits": "深情, 聪明, 机警"
+    },
+    "dachshund": {
+      "temperament": "聪明、活泼、勇敢",
+      "description": "腊肠犬聪明、活泼且勇敢。",
+      "origin": "德国",
+      "traits": "聪明, 活泼, 勇敢"
+    },
+    "shibainu": {
+      "temperament": "机警、活跃、专注",
+      "description": "柴犬机警、活跃且专注。",
+      "origin": "日本",
+      "traits": "机警, 活跃, 专注"
+    },
+    "shihTzu": {
+      "temperament": "外向、深情、爱玩",
+      "description": "西施犬外向、深情且爱玩。",
+      "origin": "中国",
+      "traits": "外向, 深情, 爱玩"
+    },
+    "pomeranian": {
+      "temperament": "好奇、大胆、活泼",
+      "description": "博美犬好奇、大胆且活泼。",
+      "origin": "德国/波兰",
+      "traits": "好奇, 大胆, 活泼"
+    },
+    "persian": {
+      "temperament": "温和、安静、甜美",
+      "description": "波斯猫温和、安静且甜美。",
+      "origin": "伊朗",
+      "traits": "温和, 安静, 甜美"
+    },
+    "siamese": {
+      "temperament": "社交、聪明、爱说话",
+      "description": "暹罗猫社交、聪明且爱说话。",
+      "origin": "泰国",
+      "traits": "社交, 聪明, 爱说话"
+    },
+    "mainecoon": {
+      "temperament": "友好、聪明、爱玩",
+      "description": "缅因猫友好、聪明且爱玩。",
+      "origin": "美国",
+      "traits": "友好, 聪明, 爱玩"
+    },
+    "ragdoll": {
+      "temperament": "温柔、平静、深情",
+      "description": "布偶猫温柔、平静且深情。",
+      "origin": "美国",
+      "traits": "温柔, 平静, 深情"
+    },
+    "britishshorthair": {
+      "temperament": "随和、忠诚、平静",
+      "description": "英国短毛猫随和、忠诚且平静。",
+      "origin": "英国",
+      "traits": "随和, 忠诚, 平静"
+    },
+    "years": "年"
+  }
 }

@@ -37,8 +37,13 @@
     "breedInfo": "Informações da Raça",
     "provider": "Fornecedor",
     "responseTime": "Tempo de Resposta"
-  },
-  "errors": {
+  },  "breedInfo": {
+    "temperament": "Temperamento",
+    "lifespan": "Expectativa de Vida",
+    "description": "Descrição",
+    "origin": "Origem",
+    "traits": "Características"
+  },  "errors": {
     "selectBreed": "Por favor, selecione ou digite uma raça.",
     "selectQuestion": "Por favor, selecione ou digite uma pergunta.",
     "fetchFailed": "Falha ao buscar resposta. Por favor, tente novamente.",
@@ -118,5 +123,8 @@
     "somali": "Somali",
     "sphynx": "Sphynx",
     "tonkinese": "Tonquinês"
+  },
+  "breedDetails": {
+    "years": "anos"
   }
 }

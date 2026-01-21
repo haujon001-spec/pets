@@ -38,6 +38,13 @@
     "provider": "المزود",
     "responseTime": "وقت الاستجابة"
   },
+  "breedInfo": {
+    "temperament": "المزاج",
+    "lifespan": "العمر المتوقع",
+    "description": "الوصف",
+    "origin": "الأصل",
+    "traits": "الصفات"
+  },
   "errors": {
     "selectBreed": "الرجاء اختيار أو كتابة سلالة.",
     "selectQuestion": "الرجاء اختيار أو كتابة سؤال.",
@@ -118,5 +125,8 @@
     "somali": "صومالي",
     "sphynx": "سفينكس",
     "tonkinese": "تونكينيز"
+  },
+  "breedDetails": {
+    "years": "سنوات"
   }
 }

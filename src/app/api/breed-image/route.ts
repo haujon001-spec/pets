@@ -19,6 +19,9 @@ interface CacheMetadata {
     fetchedAt: string;
     sourceUrl: string;
     expiresAt: string;
+    verified?: boolean;
+    verifiedAt?: string;
+    verificationScore?: number;
   };
 }
 
@@ -64,7 +67,7 @@ function isCacheExpired(filename: string): boolean {
 /**
  * Update cache metadata for a file
  */
-function updateCacheMetadata(filename: string, sourceUrl: string): void {
+function updateCacheMetadata(filename: string, sourceUrl: string, verified?: boolean, verificationScore?: number): void {
   const metadata = loadCacheMetadata();
   const now = new Date();
   const expiresAt = new Date(now.getTime() + CACHE_TTL_DAYS * 24 * 60 * 60 * 1000);
@@ -73,9 +76,65 @@ function updateCacheMetadata(filename: string, sourceUrl: string): void {
     fetchedAt: now.toISOString(),
     sourceUrl,
     expiresAt: expiresAt.toISOString(),
+    ...(verified !== undefined && { verified, verifiedAt: now.toISOString(), verificationScore }),
   };
   
   saveCacheMetadata(metadata);
+}
+
+/**
+ * Verify if an image matches the breed using LLM vision
+ */
+async function verifyImageWithVision(imageUrl: string, breedName: string, petType: string): Promise<{ isCorrect: boolean; confidence: number; reasoning: string }> {
+  try {
+    console.log(`[breed-image] 🔍 Verifying image for ${breedName} (${petType})...`);
+    
+    const prompt = `You are an expert pet breed identifier. Analyze this image and determine if it shows a ${breedName} ${petType}.
+
+Respond with ONLY a JSON object in this exact format:
+{
+  "isCorrect": true or false,
+  "confidence": 0-100,
+  "reasoning": "brief explanation"
+}
+
+Be strict - only return true if you're confident this is actually a ${breedName}.`;
+
+    const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000'}/api/chatbot`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        question: prompt,
+        imageUrl: imageUrl,
+        useVision: true,
+      }),
+      signal: AbortSignal.timeout(15000),
+    });
+
+    if (!response.ok) {
+      throw new Error(`Vision API failed: ${response.status}`);
+    }
+
+    const data = await response.json();
+    const answer = data.answer;
+    
+    // Parse JSON from response
+    const jsonMatch = answer.match(/\{[^}]+\}/);
+    if (!jsonMatch) {
+      console.warn('[breed-image] ⚠️ Vision response not in expected format');
+      return { isCorrect: true, confidence: 50, reasoning: 'Could not parse verification response' };
+    }
+
+    const result = JSON.parse(jsonMatch[0]);
+    console.log(`[breed-image] ✅ Vision verification: ${result.isCorrect ? '✓ CORRECT' : '✗ INCORRECT'} (${result.confidence}% confidence)`);
+    console.log(`[breed-image] 💭 Reasoning: ${result.reasoning}`);
+    
+    return result;
+  } catch (err) {
+    console.error('[breed-image] ❌ Vision verification failed:', err);
+    // On error, assume image is correct (don't break functionality)
+    return { isCorrect: true, confidence: 50, reasoning: 'Verification failed' };
+  }
 }
 
 /**
@@ -182,6 +241,45 @@ async function getDogCeoKey(breedName: string): Promise<string | null> {
   const availableBreeds = await fetchDogCeoBreeds();
   if (availableBreeds.length === 0) return null;
   
+  const breedLower = breedName.toLowerCase();
+  
+  // First, try exact match with common formats
+  const directFormats = [
+    breedLower.replace(/\s+/g, ''),
+    breedLower.replace(/\s+/g, '/'),
+    breedLower.replace(/\s+/g, '-'),
+  ];
+  
+  // Check for exact key matches or sub-breed matches
+  for (const format of directFormats) {
+    for (const key of availableBreeds) {
+      // Check if the format matches the key exactly
+      if (key === format || key.replace(/\//g, '') === format) {
+        console.log(`[breed-image] Exact match "${breedName}" to "${key}"`);
+        return key;
+      }
+      
+      // For compound breeds like "Golden Retriever", check if sub-breed matches
+      const parts = key.split('/');
+      if (parts.length === 2) {
+        const [mainBreed, subBreed] = parts;
+        const readableName = `${subBreed} ${mainBreed}`.toLowerCase();
+        const words = breedLower.split(/\s+/);
+        
+        // If breed name contains the sub-breed word, prioritize it
+        if (words.includes(subBreed.toLowerCase())) {
+          const allWordsMatch = words.every(word => 
+            readableName.includes(word) || key.includes(word)
+          );
+          if (allWordsMatch) {
+            console.log(`[breed-image] Sub-breed word match "${breedName}" to "${key}"`);
+            return key;
+          }
+        }
+      }
+    }
+  }
+  
   // Create searchable list with both the key and readable name
   const searchableBreeds = availableBreeds.map(key => {
     // Convert 'retriever/golden' to 'golden retriever'
@@ -218,7 +316,7 @@ async function getDogCeoKey(breedName: string): Promise<string | null> {
   }
   
   if (bestMatch) {
-    console.log(`[breed-image] Matched "${breedName}" to Dog CEO key: "${bestMatch.key}" (confidence: ${(1 - bestScore) * 100}%)`);
+    console.log(`[breed-image] Fuzzy match "${breedName}" to Dog CEO key: "${bestMatch.key}" (confidence: ${(1 - bestScore) * 100}%)`);
     return bestMatch.key;
   }
   
@@ -414,8 +512,20 @@ export async function GET(req: NextRequest) {
         .jpeg({ quality: 85 }) // Convert to JPEG with 85% quality
         .toFile(localPath);
       
-      // Update cache metadata
-      updateCacheMetadata(filename, imageUrl);
+      // Verify image with vision AI
+      const verification = await verifyImageWithVision(imageUrl, breedName, type);
+      
+      // If image is incorrect with high confidence, delete it and use placeholder
+      if (!verification.isCorrect && verification.confidence > 70) {
+        console.warn(`[breed-image] ⚠️ Image verification failed for ${breedName}: ${verification.reasoning}`);
+        console.warn(`[breed-image] 🗑️ Deleting incorrect image and using placeholder`);
+        fs.unlinkSync(localPath);
+        const placeholder = type === 'dog' ? '/breeds/placeholder_dog.jpg' : '/breeds/placeholder_cat.jpg';
+        return NextResponse.json({ imageUrl: placeholder });
+      }
+      
+      // Update cache metadata with verification
+      updateCacheMetadata(filename, imageUrl, verification.isCorrect, verification.confidence);
       
       console.log(`[breed-image] Successfully fetched and cached image for ${breedName} (${type}): ${imageUrl}`);
       return NextResponse.json({ imageUrl: publicPath });

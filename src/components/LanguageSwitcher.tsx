@@ -14,12 +14,14 @@ const LANGUAGES: Language[] = [
   { code: 'es', name: 'Spanish', nativeName: 'Español', flag: '🇪🇸' },
   { code: 'fr', name: 'French', nativeName: 'Français', flag: '🇫🇷' },
   { code: 'de', name: 'German', nativeName: 'Deutsch', flag: '🇩🇪' },
-  { code: 'zh', name: 'Chinese', nativeName: '中文', flag: '🇨🇳' },
+  { code: 'zh', name: 'Chinese (Simplified)', nativeName: '简体中文', flag: '🇨🇳' },
+  { code: 'zh-tw', name: 'Chinese (Traditional)', nativeName: '繁體中文', flag: '🇹🇼' },
   { code: 'pt', name: 'Portuguese', nativeName: 'Português', flag: '🇵🇹' },
   { code: 'ar', name: 'Arabic', nativeName: 'العربية', flag: '🇸🇦' },
   { code: 'ja', name: 'Japanese', nativeName: '日本語', flag: '🇯🇵' },
   { code: 'ru', name: 'Russian', nativeName: 'Русский', flag: '🇷🇺' },
   { code: 'it', name: 'Italian', nativeName: 'Italiano', flag: '🇮🇹' },
+  { code: 'vi', name: 'Vietnamese', nativeName: 'Tiếng Việt', flag: '🇻🇳' },
 ];
 
 export default function LanguageSwitcher() {
@@ -51,11 +53,11 @@ export default function LanguageSwitcher() {
       {/* Globe Icon Button */}
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="flex items-center gap-2 px-3 py-2 rounded-lg bg-white border-2 border-orange-300 hover:border-orange-500 hover:bg-orange-50 transition-all duration-200 min-h-touch min-w-touch active:scale-95"
+        className="flex items-center gap-2 px-3 py-2 rounded-lg bg-white border-2 border-blue-200 hover:border-blue-500 hover:bg-blue-50 transition-all duration-200 min-h-touch min-w-touch active:scale-95 shadow-sm hover:shadow-md"
         aria-label="Change language"
       >
         <svg
-          className="w-5 h-5 text-orange-600"
+          className="w-5 h-5 text-blue-600"
           fill="none"
           stroke="currentColor"
           viewBox="0 0 24 24"
@@ -91,13 +93,13 @@ export default function LanguageSwitcher() {
           />
           
           {/* Menu */}
-          <div className="absolute right-0 mt-2 w-56 bg-white rounded-lg shadow-xl border-2 border-orange-200 z-20 max-h-80 overflow-y-auto">
+          <div className="absolute right-0 mt-2 w-56 bg-white rounded-lg shadow-xl border-2 border-blue-200 z-20 max-h-80 overflow-y-auto">
             {LANGUAGES.map((language) => (
               <button
                 key={language.code}
                 onClick={() => changeLanguage(language.code)}
-                className={`w-full text-left px-4 py-3 hover:bg-orange-50 transition-colors flex items-center gap-3 ${
-                  currentLocale === language.code ? 'bg-orange-100' : ''
+                className={`w-full text-left px-4 py-3 hover:bg-blue-50 transition-colors flex items-center gap-3 ${
+                  currentLocale === language.code ? 'bg-blue-100' : ''
                 }`}
               >
                 <span className="text-2xl">{language.flag}</span>
@@ -107,7 +109,7 @@ export default function LanguageSwitcher() {
                 </div>
                 {currentLocale === language.code && (
                   <svg
-                    className="w-5 h-5 text-orange-600"
+                    className="w-5 h-5 text-blue-600"
                     fill="currentColor"
                     viewBox="0 0 20 20"
                   >

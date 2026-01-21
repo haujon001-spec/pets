@@ -37,8 +37,13 @@
     "breedInfo": "Información de Raza",
     "provider": "Proveedor de IA",
     "responseTime": "Tiempo de Respuesta"
-  },
-  "errors": {
+  },  "breedInfo": {
+    "temperament": "Temperamento",
+    "lifespan": "Esperanza de Vida",
+    "description": "Descripción",
+    "origin": "Origen",
+    "traits": "Características"
+  },  "errors": {
     "selectPetType": "Por favor seleccione un tipo de mascota",
     "selectBreed": "Por favor seleccione o escriba un nombre de raza",
     "enterQuestion": "Por favor ingrese una pregunta",
@@ -116,5 +121,8 @@
     "singapura": "Singapura",
     "somali": "Somalí",
     "sphynx": "Sphynx",
-    "tonkinese": "Tonkinés"  }
+    "tonkinese": "Tonkinés"  },
+  "breedDetails": {
+    "years": "años"
+  }
 }

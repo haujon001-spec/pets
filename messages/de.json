@@ -38,6 +38,13 @@
     "provider": "KI-Anbieter",
     "responseTime": "Antwortzeit"
   },
+  "breedInfo": {
+    "temperament": "Temperament",
+    "lifespan": "Lebenserwartung",
+    "description": "Beschreibung",
+    "origin": "Herkunft",
+    "traits": "Eigenschaften"
+  },
   "errors": {
     "selectPetType": "Bitte wählen Sie eine Haustierart",
     "selectBreed": "Bitte wählen Sie eine Rasse oder geben Sie einen Rassennamen ein",
@@ -116,5 +123,8 @@
     "singapura": "Singapura",
     "somali": "Somali",
     "sphynx": "Sphynx",
-    "tonkinese": "Tonkanese"  }
+    "tonkinese": "Tonkanese"  },
+  "breedDetails": {
+    "years": "Jahre"
+  }
 }

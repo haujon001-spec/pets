@@ -13,7 +13,9 @@ async function getAIAnswer(
   question: string, 
   breedId?: string, 
   petType?: 'dog' | 'cat',
-  customBreedName?: string
+  customBreedName?: string,
+  imageUrl?: string,
+  useVision?: boolean
 ): Promise<{ answer: string; provider: string; latencyMs: number }> {
   // Find breed context if provided
   let breedName: string | undefined;
@@ -31,12 +33,16 @@ async function getAIAnswer(
   try {
     const response = await llmRouter.route({
       prompt: question,
-      systemPrompt: 'You are a helpful assistant for pet breed information. Answer concisely and accurately.',
-      maxTokens: 256,
-      temperature: 0.7,
+      systemPrompt: useVision 
+        ? 'You are an expert pet breed identifier. Analyze images carefully and provide accurate assessments.'
+        : 'You are a helpful assistant for pet breed information. Answer concisely and accurately.',
+      maxTokens: useVision ? 512 : 256,
+      temperature: useVision ? 0.3 : 0.7,
       context: {
         breedName,
         petType,
+        imageUrl,
+        useVision,
       },
     });
 
@@ -66,7 +72,7 @@ const breeds: BreedInfo[] = [...dogBreeds, ...catBreeds];
 const fuse = new Fuse(breeds, { keys: ['name'], threshold: 0.3 });
 
 export async function POST(request: NextRequest) {
-  const { question, breedId, petType, breedName } = await request.json();
+  const { question, breedId, petType, breedName, imageUrl, useVision } = await request.json();
   let resolvedBreedId = breedId;
   
   // If breedId is not provided but breedName is, try to correct it with fuzzy search
@@ -78,7 +84,14 @@ export async function POST(request: NextRequest) {
   }
   
   // Get AI answer using multi-provider router
-  const { answer, provider, latencyMs } = await getAIAnswer(question, resolvedBreedId, petType, breedName);
+  const { answer, provider, latencyMs } = await getAIAnswer(
+    question, 
+    resolvedBreedId, 
+    petType, 
+    breedName,
+    imageUrl,
+    useVision
+  );
   
   const userQuestion: UserQuestion = {
     id: Date.now().toString(),

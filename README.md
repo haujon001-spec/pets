@@ -1,27 +1,32 @@
 # AI Pet Breeds Portal 🐕🐈
 
-A modern, production-ready Next.js web portal for dog and cat breeds with **AI-powered chatbot**, **10-language support**, and **mobile-first design**.
+A modern, production-ready Next.js web portal for dog and cat breeds with **AI-powered chatbot**, **12-language support**, **LLM-powered translation**, and **mobile-first design**.
 
 **Live Site**: https://aibreeds-demo.com  
 **Last Updated**: January 21, 2026  
-**Status**: ✅ Phase 4 Complete | 🔄 Phase 5 In Planning
+**Status**: ✅ Phase 6 Complete | 🎉 LLM Translation & Vision Verification
 
 ## ✨ Features
 
 ### Core Features
-- **🤖 AI Chatbot**: Multi-provider LLM system with intelligent fallback (Groq, Together AI, OpenRouter)
-- **🌍 10 Languages**: Full internationalization - English, Spanish, French, German, Chinese, Portuguese, Arabic, Japanese, Russian, Italian
+- **🤖 AI Chatbot**: Multi-provider LLM system with intelligent fallback (Together AI, OpenRouter)
+- **🌍 12 Languages**: Full internationalization - English, Spanish, French, German, Chinese (Simplified & Traditional), Vietnamese, Portuguese, Arabic, Japanese, Russian, Italian
+- **🔤 LLM-Powered Translation**: Dynamic breed info translation using AI with client-side caching
+- **👁️ Vision Verification**: LLM vision models validate breed images for accuracy
 - **📱 Mobile-First**: Responsive design with touch-optimized UI (min 44px tap targets)
 - **🗂️ 61 Breeds**: Comprehensive profiles for 31 dog + 30 cat breeds
 - **🖼️ Smart Images**: Automatic breed image fetching with caching and compression
 - **⚡ Production-Ready**: Docker deployment with health checks, rollback, and monitoring
 
 ### Technical Features
-- **Multi-Provider LLM**: Automatic fallback across 5 LLM providers
+- **Multi-Provider LLM**: Automatic fallback across LLM providers (Together AI → OpenRouter)
+- **Vision AI**: Image verification using Llama-3.2-11B-Vision-Instruct-Turbo
+- **Dynamic Translation**: Real-time breed content translation with caching
 - **RTL Support**: Right-to-left layout for Arabic
 - **Cookie Persistence**: Language preference saved across sessions
-- **Health Monitoring**: `/api/health` endpoint with status tracking
-- **Zero-Downtime Deployment**: Blue-green deployment strategy
+- **Comprehensive Health Checks**: 10-category validation system (66 automated checks)
+- **Image Verification System**: Automated breed image validation
+- **Zero-Downtime Deployment**: Blue-green deployment strategy with health validation
 - **Environment Segregation**: Separate dev, staging, production configs
 
 ## 🏗️ Project Structure
@@ -31,26 +36,30 @@ vscode_2/
 ├── src/
 │   ├── app/
 │   │   ├── api/
-│   │   │   ├── chatbot/route.ts      # LLM router with multi-provider fallback
-│   │   │   ├── breed-image/route.ts  # Image fetching with caching
+│   │   │   ├── chatbot/route.ts      # LLM router with vision support
+│   │   │   ├── breed-image/route.ts  # Image fetching with vision verification
+│   │   │   ├── verify-cache/route.ts # Batch image verification endpoint
 │   │   │   └── health/route.ts       # Health check endpoint
 │   │   ├── layout.tsx                # Root layout with i18n provider
-│   │   └── page.tsx                  # Main UI (mobile-first responsive)
+│   │   └── page.tsx                  # Main UI with translation system
 │   ├── components/
-│   │   └── LanguageSwitcher.tsx     # Globe icon language selector (10 languages)
+│   │   └── LanguageSwitcher.tsx     # Globe icon language selector (12 languages)
 │   ├── models/
 │   │   ├── breed.ts                  # TypeScript interfaces
 │   │   └── breedData.ts             # 61 breed definitions
 │   ├── lib/
-│   │   ├── llm-providers.ts         # 5 LLM provider implementations
+│   │   ├── llm-providers.ts         # LLM providers with vision support
 │   │   └── llm-router.ts            # Intelligent routing & fallback
 │   └── i18n/
 │       └── request.ts                # Server-side locale detection
-├── messages/                         # Translation files (10 languages)
-│   ├── en.json, es.json, fr.json, de.json, zh.json
-│   ├── pt.json, ar.json, ja.json, ru.json, it.json
-├── scripts/                          # Deployment automation
-│   ├── deploy-vps.sh                # VPS deployment with health checks
+├── messages/                         # Translation files (12 languages)
+│   ├── en.json, es.json, fr.json, de.json, zh.json, zh-tw.json
+│   ├── pt.json, ar.json, ja.json, ru.json, it.json, vi.json
+├── scripts/                          # Automation & validation
+│   ├── deploy-production.sh         # Production deployment with health checks
+│   ├── phase6-comprehensive-health-check.js  # 10-category validation (66 checks)
+│   ├── verify-breed-images.js       # Image verification test suite
+│   ├── health-check-languages.js    # Language configuration validation
 │   ├── rollback-vps.sh              # One-command rollback
 │   ├── backup.sh, restore.sh        # Backup automation
 │   └── setup-production-env.sh      # Environment setup
@@ -59,6 +68,8 @@ vscode_2/
 │   ├── phase2-implementation-complete.md
 │   ├── phase3-implementation.md
 │   ├── phase4-implementation.md
+│   ├── phase6-implementation.md     # Translation & verification system
+│   ├── IMAGE-VERIFICATION.md        # LLM vision documentation
 │   └── DEPLOYMENT.md
 ├── docker-compose.yml               # Production orchestration
 ├── docker-compose.staging.yml       # Staging configuration
@@ -69,10 +80,12 @@ vscode_2/
 **Key Technologies**:
 - **Framework**: Next.js 16.1.3, React 19, TypeScript
 - **Styling**: Tailwind CSS with mobile breakpoints
-- **i18n**: next-intl v3.x with cookie persistence
-- **LLM**: Multi-provider system (Groq, Together AI, OpenRouter, etc.)
+- **i18n**: next-intl v4.7 with cookie persistence + LLM translation
+- **LLM**: Together AI, OpenRouter with vision model support
+- **Vision AI**: Llama-3.2-11B-Vision-Instruct-Turbo for image verification
 - **Deployment**: Docker, Caddy, Let's Encrypt SSL
-- **Monitoring**: Health checks, automated rollback
+- **Validation**: Comprehensive health checks (66 automated tests)
+- **Monitoring**: Health checks, automated rollback, image verification
 
 ## 🚀 Quick Start
 

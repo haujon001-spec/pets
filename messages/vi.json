@@ -1,0 +1,132 @@
+{
+  "app": {
+    "title": "AI Breeds",
+    "subtitle": "Cổng Thông Tin Giống Thú Cưng",
+    "description": "Hỏi các câu hỏi về các giống thú cưng khác nhau và nhận câu trả lời từ AI kèm hình ảnh.",
+    "disclaimer": "Câu trả lời do AI tạo ra có thể không luôn chính xác. Vui lòng xác minh với các nguồn chuyên nghiệp."
+  },
+  "petType": {
+    "label": "Chọn Loại Thú Cưng",
+    "dog": "Chó 🐕",
+    "cat": "Mèo 🐱"
+  },
+  "breed": {
+    "label": "Chọn Giống",
+    "placeholder": "Chọn một giống...",
+    "other": "Nhập tên giống tùy chỉnh",
+    "customPlaceholder": "Nhập tên giống...",
+    "helperText": "hoặc nhập tên tùy chỉnh"
+  },
+  "question": {
+    "label": "Chọn Câu Hỏi",
+    "placeholder": "Chọn một câu hỏi...",
+    "custom": "Đặt câu hỏi tùy chỉnh",
+    "customPlaceholder": "Nhập câu hỏi của bạn tại đây...",
+    "helperText": "hoặc đặt câu hỏi tùy chỉnh"
+  },
+  "suggestions": {
+    "title": "Ý bạn là:",
+    "useThis": "Sử dụng cái này"
+  },
+  "actions": {
+    "ask": "Đặt Câu Hỏi",
+    "asking": "Đang hỏi..."
+  },
+  "answer": {
+    "title": "Câu Trả Lời",
+    "breedInfo": "Thông Tin Giống",
+    "provider": "Nhà Cung Cấp AI",
+    "responseTime": "Thời Gian Phản Hồi"
+  },
+  "breedInfo": {
+    "temperament": "Tính Cách",
+    "lifespan": "Tuổi Thọ",
+    "description": "Mô Tả",
+    "origin": "Nguồn Gốc",
+    "traits": "Đặc Điểm"
+  },
+  "errors": {
+    "selectPetType": "Vui lòng chọn loại thú cưng",
+    "selectBreed": "Vui lòng chọn hoặc nhập tên giống",
+    "enterQuestion": "Vui lòng nhập câu hỏi",
+    "fetchFailed": "Không thể lấy câu trả lời. Vui lòng thử lại."
+  },
+  "questions": {
+    "temperament": "Tính cách điển hình của giống này là gì?",
+    "care": "Yêu cầu chăm sóc cho giống này là gì?",
+    "health": "Các vấn đề sức khỏe phổ biến của giống này là gì?",
+    "exercise": "Giống này cần bao nhiêu vận động?",
+    "training": "Giống này có dễ huấn luyện không?",
+    "family": "Giống này có thân thiện với trẻ em và gia đình không?",
+    "size": "Kích thước và cân nặng điển hình của giống này là bao nhiêu?",
+    "lifespan": "Tuổi thọ trung bình của giống này là bao nhiêu?",
+    "grooming": "Nhu cầu chải chuốt cho giống này là gì?",
+    "living": "Điều kiện sống tốt nhất cho giống này là gì?"
+  },
+  "breeds": {
+    "beagle": "Beagle",
+    "bernese": "Chó Núi Bernese",
+    "bordercollie": "Border Collie",
+    "boxer": "Boxer",
+    "bulldog": "Bulldog",
+    "cavalier": "Cavalier King Charles Spaniel",
+    "chihuahua": "Chihuahua",
+    "corgi": "Pembroke Welsh Corgi",
+    "dachshund": "Dachshund",
+    "doberman": "Doberman Pinscher",
+    "frenchbulldog": "Chó Bulldog Pháp",
+    "germanshepherd": "Chó Chăn Cừu Đức",
+    "goldenretriever": "Golden Retriever",
+    "greatdane": "Chó Great Dane",
+    "husky": "Chó Husky Siberia",
+    "jackrussell": "Jack Russell Terrier",
+    "labrador": "Labrador Retriever",
+    "maltese": "Maltese",
+    "miniaturepoodle": "Poodle Miniature",
+    "papillon": "Papillon",
+    "pomeranian": "Pomeranian",
+    "pug": "Pug",
+    "rottweiler": "Rottweiler",
+    "samoyed": "Samoyed",
+    "schipperke": "Schipperke",
+    "shibainu": "Shiba Inu",
+    "shihTzu": "Shih Tzu",
+    "schnauzer": "Schnauzer Miniature",
+    "staffordshire": "Staffordshire Bull Terrier",
+    "vizsla": "Vizsla",
+    "whippet": "Whippet",
+    "abyssinian": "Mèo Abyssinian",
+    "americanbobtail": "Mèo American Bobtail",
+    "americanshorthair": "Mèo Lông Ngắn Mỹ",
+    "balinese": "Mèo Balinese",
+    "bengal": "Mèo Bengal",
+    "birman": "Mèo Birman",
+    "britishshorthair": "Mèo Lông Ngắn Anh",
+    "burmese": "Mèo Burmese",
+    "chartreux": "Mèo Chartreux",
+    "cornishrex": "Mèo Cornish Rex",
+    "devonrex": "Mèo Devon Rex",
+    "egyptianmau": "Mèo Ai Cập",
+    "exoticshorthair": "Mèo Lông Ngắn Exotic",
+    "himalayan": "Mèo Himalayan",
+    "mainecoon": "Mèo Maine Coon",
+    "manx": "Mèo Manx",
+    "norwegianforest": "Mèo Rừng Na Uy",
+    "ocicat": "Mèo Ocicat",
+    "oriental": "Mèo Oriental",
+    "persian": "Mèo Ba Tư",
+    "ragdoll": "Mèo Ragdoll",
+    "russianblue": "Mèo Xanh Nga",
+    "savannah": "Mèo Savannah",
+    "scottishfold": "Mèo Scottish Fold",
+    "siamese": "Mèo Xiêm",
+    "siberian": "Mèo Siberia",
+    "singapura": "Mèo Singapura",
+    "somali": "Mèo Somali",
+    "sphynx": "Mèo Sphynx",
+    "tonkinese": "Mèo Tonkinese"
+  },
+  "breedDetails": {
+    "years": "năm"
+  }
+}

@@ -37,8 +37,13 @@
     "breedInfo": "品種情報",
     "provider": "プロバイダー",
     "responseTime": "応答時間"
-  },
-  "errors": {
+  },  "breedInfo": {
+    "temperament": "気質",
+    "lifespan": "寿命",
+    "description": "説明",
+    "origin": "起源",
+    "traits": "特徴"
+  },  "errors": {
     "selectBreed": "品種を選択または入力してください。",
     "selectQuestion": "質問を選択または入力してください。",
     "fetchFailed": "回答の取得に失敗しました。もう一度お試しください。",
@@ -118,5 +123,8 @@
     "somali": "ソマリ",
     "sphynx": "スフィンクス",
     "tonkinese": "トンキニーズ"
+  },
+  "breedDetails": {
+    "years": "年"
   }
 }

@@ -2,36 +2,46 @@
 @import "tailwindcss";
 
 :root {
-  --background: #FFF8F1;
-  --foreground: #7C4700;
-  --card: #FFE4C7;
-  --primary: #F59E42;
-  --accent: #FBBF24;
+  --background: #F0F4F8;
+  --foreground: #1E293B;
+  --card: #FFFFFF;
+  --primary: #0078D4;
+  --accent: #1E90FF;
+  --border: #E2E8F0;
   --font-display: 'Poppins', ui-sans-serif, system-ui;
   --font-body: 'Inter', ui-sans-serif, system-ui;
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --background: #1a1208;
-    --foreground: #FFD6A0;
-    --card: #3B2F1C;
-    --primary: #B45309;
-    --accent: #FBBF24;
+    --background: #0F172A;
+    --foreground: #E2E8F0;
+    --card: #1E293B;
+    --primary: #3B82F6;
+    --accent: #60A5FA;
+    --border: #334155;
   }
 }
 
 body {
-  background: var(--background);
+  background: linear-gradient(135deg, #F0F4F8 0%, #E0E7FF 100%);
   color: var(--foreground);
   font-family: var(--font-body);
   transition: background 0.3s, color 0.3s;
+  min-height: 100vh;
 }
 
 .card {
   background: var(--card);
-  border-radius: 1.25rem;
-  box-shadow: 0 4px 24px 0 rgba(245, 158, 66, 0.12);
+  border-radius: 1.5rem;
+  box-shadow: 0 10px 40px 0 rgba(0, 120, 212, 0.08), 0 2px 8px 0 rgba(0, 0, 0, 0.04);
   padding: 2rem;
   margin-bottom: 2rem;
+  border: 1px solid var(--border);
+  transition: all 0.3s ease;
+}
+
+.card:hover {
+  box-shadow: 0 20px 60px 0 rgba(0, 120, 212, 0.12), 0 4px 12px 0 rgba(0, 0, 0, 0.06);
+  transform: translateY(-2px);
 }

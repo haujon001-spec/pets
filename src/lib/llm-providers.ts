@@ -20,6 +20,8 @@ export interface LLMRequest {
   context?: {
     breedName?: string;
     petType?: 'dog' | 'cat';
+    imageUrl?: string;
+    useVision?: boolean;
   };
 }
 
@@ -109,7 +111,8 @@ export class GroqProvider implements LLMProvider {
 export class TogetherProvider implements LLMProvider {
   name = 'Together AI';
   private apiKey: string;
-  private model = 'meta-llama/Meta-Llama-3.1-8B-Instruct-Turbo';
+  private textModel = 'meta-llama/Meta-Llama-3.1-8B-Instruct-Turbo';
+  private visionModel = 'meta-llama/Llama-3.2-11B-Vision-Instruct-Turbo';
   private baseUrl = 'https://api.together.xyz/v1/chat/completions';
 
   constructor(apiKey?: string) {
@@ -122,6 +125,8 @@ export class TogetherProvider implements LLMProvider {
 
   async callAPI(request: LLMRequest): Promise<LLMResponse> {
     const startTime = Date.now();
+    const useVision = request.context?.useVision && request.context?.imageUrl;
+    const model = useVision ? this.visionModel : this.textModel;
 
     const systemPrompt = request.systemPrompt || 
       'You are a helpful assistant for pet breed information. Answer concisely and accurately.';
@@ -130,26 +135,42 @@ export class TogetherProvider implements LLMProvider {
       ? `Question about ${request.context.breedName} (${request.context.petType}): ${request.prompt}`
       : request.prompt;
 
+    // Build messages with vision support
+    const messages: any[] = [
+      { role: 'system', content: systemPrompt },
+    ];
+
+    if (useVision && request.context?.imageUrl) {
+      // For vision models, include image in user message
+      messages.push({
+        role: 'user',
+        content: [
+          { type: 'text', text: userPrompt },
+          { type: 'image_url', image_url: { url: request.context.imageUrl } }
+        ]
+      });
+    } else {
+      messages.push({ role: 'user', content: userPrompt });
+    }
+
     const response = await fetch(this.baseUrl, {
       method: 'POST',
       headers: {
         'Authorization': `Bearer ${this.apiKey}`,
         'Content-Type': 'application/json',
       },
-      signal: AbortSignal.timeout(10000),
+      signal: AbortSignal.timeout(20000), // Vision models may need more time
       body: JSON.stringify({
-        model: this.model,
-        messages: [
-          { role: 'system', content: systemPrompt },
-          { role: 'user', content: userPrompt }
-        ],
+        model,
+        messages,
         max_tokens: request.maxTokens || 256,
         temperature: request.temperature || 0.7,
       }),
     });
 
     if (!response.ok) {
-      throw new Error(`Together AI error: ${response.status} ${response.statusText}`);
+      const errorText = await response.text();
+      throw new Error(`Together AI error: ${response.status} ${response.statusText} - ${errorText}`);
     }
 
     const data = await response.json();
@@ -158,7 +179,7 @@ export class TogetherProvider implements LLMProvider {
     return {
       content: data.choices[0].message.content,
       provider: this.name,
-      model: this.model,
+      model,
       tokensUsed: data.usage?.total_tokens,
       latencyMs,
     };

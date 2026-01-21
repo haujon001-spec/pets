@@ -37,8 +37,13 @@
     "breedInfo": "Informations sur la Race",
     "provider": "Fournisseur d'IA",
     "responseTime": "Temps de Réponse"
-  },
-  "errors": {
+  },  "breedInfo": {
+    "temperament": "Tempérament",
+    "lifespan": "Espérance de Vie",
+    "description": "Description",
+    "origin": "Origine",
+    "traits": "Caractéristiques"
+  },  "errors": {
     "selectPetType": "Veuillez sélectionner un type d'animal",
     "selectBreed": "Veuillez sélectionner ou saisir un nom de race",
     "enterQuestion": "Veuillez entrer une question",
@@ -118,5 +123,8 @@
     "somali": "Somali",
     "sphynx": "Sphynx",
     "tonkinese": "Tonkinois"
+  },
+  "breedDetails": {
+    "years": "ans"
   }
 }

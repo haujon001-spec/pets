@@ -38,6 +38,13 @@
     "provider": "Fornitore",
     "responseTime": "Tempo di Risposta"
   },
+  "breedInfo": {
+    "temperament": "Temperamento",
+    "lifespan": "Aspettativa di Vita",
+    "description": "Descrizione",
+    "origin": "Origine",
+    "traits": "Caratteristiche"
+  },
   "errors": {
     "selectBreed": "Seleziona o digita una razza.",
     "selectQuestion": "Seleziona o digita una domanda.",
@@ -118,5 +125,8 @@
     "somali": "Somalo",
     "sphynx": "Sphynx",
     "tonkinese": "Tonkinese"
+  },
+  "breedDetails": {
+    "years": "anni"
   }
 }
