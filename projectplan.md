@@ -189,7 +189,112 @@ This document outlines the complete modernization plan for the AI Pet Breeds por
 
 ---
 
-## Phase 5: GitHub Issue Workflow & Monitoring 📊
+## Phase 5: Automated Deployment & Health Checks 🔧
+**Goal**: Seamless VPS deployment with automated testing, health checks, and instant rollback  
+**Status**: 🔄 **IN PLANNING** (Priority: HIGH)
+
+**Why This Matters**:
+- Manual deployment to VPS requires too many steps and troubleshooting
+- No automated verification that deployment succeeded
+- Docker build failures waste time without early detection
+- Environment configuration issues (like missing .env) discovered too late
+- Need quick rollback mechanism when deployments fail
+
+**Tasks**:
+
+### Pre-Deployment Validation
+- [ ] Create pre-deployment checklist script (`scripts/pre-deploy-check.sh`):
+  - [ ] Verify .env.production.template exists and has all required keys
+  - [ ] Validate docker-compose.yml syntax
+  - [ ] Check Dockerfile builds locally
+  - [ ] Run `npm run build` to catch Next.js build errors
+  - [ ] Validate Caddyfile syntax
+  - [ ] Check all required files present (package.json, tsconfig.json, etc.)
+- [ ] Add automated tests before deployment:
+  - [ ] Unit tests for LLM router
+  - [ ] API endpoint tests
+  - [ ] Environment variable validation tests
+- [ ] Create deployment simulation script (test Docker build locally)
+
+### VPS Deployment Automation
+- [ ] Create one-command deployment script (`scripts/deploy-vps.sh`):
+  - [ ] SSH to VPS automatically
+  - [ ] Pull latest code from GitHub
+  - [ ] Backup current .env file (preserve API keys)
+  - [ ] Run Docker build with progress tracking
+  - [ ] Tag new image with version (semantic versioning)
+  - [ ] Start new containers with health checks
+  - [ ] Wait for health check confirmation
+  - [ ] Run smoke tests (curl /api/health, test LLM endpoint)
+  - [ ] If any step fails: auto-rollback to previous version
+- [ ] Implement health check endpoints:
+  - [ ] `/api/health` - Overall system health
+  - [ ] `/api/health/llm` - LLM providers status
+  - [ ] `/api/health/docker` - Container status
+- [ ] Add deployment logging and notifications
+- [ ] Create deployment status dashboard (simple HTML page)
+
+### Rollback & Recovery
+- [ ] Implement automatic rollback on failure:
+  - [ ] Keep last 3 working Docker images tagged
+  - [ ] Auto-revert to previous image if health checks fail
+  - [ ] Preserve .env file during rollback
+- [ ] Create manual rollback script (`scripts/rollback.sh`):
+  - [ ] List available versions to rollback to
+  - [ ] One-command rollback to specific version
+  - [ ] Verify rollback succeeded with health checks
+- [ ] Add deployment history log (`/root/pets/deployment-history.log`)
+- [ ] Create emergency recovery guide
+
+### Docker & Packaging Improvements
+- [ ] Optimize Dockerfile for faster builds:
+  - [ ] Better layer caching
+  - [ ] Parallel dependency installation
+  - [ ] Multi-stage build optimization
+- [ ] Add Docker build validation:
+  - [ ] Catch build errors early
+  - [ ] Validate environment variables are loaded
+  - [ ] Check all required files copied
+- [ ] Implement build-time checks:
+  - [ ] Next.js build succeeds
+  - [ ] TypeScript compilation succeeds
+  - [ ] All dependencies installed
+- [ ] Add Docker health checks (HEALTHCHECK directive)
+
+### Environment Configuration Safety
+- [ ] Implement .env validation:
+  - [ ] Check required API keys present
+  - [ ] Validate API key format
+  - [ ] Warn about placeholder values
+- [ ] Create .env backup and restore:
+  - [ ] Auto-backup before each deployment
+  - [ ] Keep last 5 .env backups
+  - [ ] Quick restore command
+- [ ] Add environment diff tool (compare local vs VPS .env)
+
+### Continuous Integration (Basic)
+- [ ] Create GitHub Actions workflow (`.github/workflows/deploy.yml`):
+  - [ ] Trigger on push to main branch
+  - [ ] Run tests automatically
+  - [ ] Build Docker image
+  - [ ] Deploy to VPS if tests pass
+  - [ ] Rollback if deployment fails
+- [ ] Add PR validation workflow:
+  - [ ] Run tests on pull requests
+  - [ ] Check Docker build succeeds
+  - [ ] Prevent merge if tests fail
+
+**Success Metrics**:
+- ✅ Deployment from laptop to VPS in < 5 minutes
+- ✅ Automated health checks catch failures within 30 seconds
+- ✅ Auto-rollback succeeds in < 2 minutes
+- ✅ 90% reduction in manual troubleshooting time
+- ✅ Zero downtime deployments
+- ✅ Clear deployment status visibility
+
+---
+
+## Phase 6: GitHub Issue Workflow & Monitoring 📊
 **Goal**: Streamlined issue tracking with automated workflows
 
 **Why This Matters**:
@@ -309,20 +414,34 @@ This document outlines the complete modernization plan for the AI Pet Breeds por
 | Phase 2: Image Search & Cache | 2-3 days | **HIGH** | None |
 | Phase 3: Deployment & Rollback | 3-4 days | **CRITICAL** | None |
 | Phase 4: i18n & Mobile | 4-5 days | **MEDIUM** | Phase 3 |
-| Phase 5: GitHub Workflow | 2-3 days | **MEDIUM** | None |
+| Phase 5: Automated Deployment | 3-4 days | **HIGH** | Phase 3 |
+| Phase 6: GitHub Workflow | 2-3 days | **MEDIUM** | None |
 
-**Total Estimated Time**: 13-18 days
+**Total Estimated Time**: 16-22 days
 
 ---
 
 ## Current Status
 
-**Active Phase**: VPS Deployment & Testing  
+**Active Phase**: Phase 5 - Automated Deployment & Health Checks  
 **Start Date**: January 20, 2026  
 **Last Updated**: January 21, 2026  
-**Overall Progress**: 3/5 Phases Complete (60%)
+**Overall Progress**: 4/6 Phases Complete (67%)
 
 ### Recent Updates
+- ✅ **HTTPS ENABLED** (January 21, 2026)
+  - Let's Encrypt SSL certificate obtained
+  - Site accessible at https://aibreeds-demo.com
+  - Certificate valid until April 21, 2026
+  - Removed www subdomain (DNS not configured)
+  
+- ✅ **DEPLOYMENT WORKFLOW FIXED** (January 21, 2026)
+  - Created .env.production.template for safe Git commits
+  - Created setup-production-env.sh for one-time VPS setup
+  - Documented proper DEV → GitHub → Production workflow
+  - Updated docker-compose.yml to load env_file: .env
+  - Fixed environment variable synchronization issue
+
 - ✅ **Phase 4 COMPLETED** (January 21, 2026) - Internationalization & Mobile Optimization
   - 10 languages implemented (EN, ES, FR, DE, ZH, PT, AR, JA, RU, IT)
   - Globe icon language switcher with cookie persistence
@@ -376,10 +495,13 @@ This document outlines the complete modernization plan for the AI Pet Breeds por
 
 The project is considered successful when:
 1. ✅ Website accessible from Hong Kong with functional LLM
-2. ✅ Zero deployment rollbacks needed due to clear testing
-3. ✅ Mobile users have smooth experience (Lighthouse > 90)
-4. ✅ At least 2 languages supported beyond English
-5. ✅ All issues tracked and resolved systematically via GitHub
+2. ✅ HTTPS enabled with valid SSL certificate
+3. ✅ Consistent DEV → GitHub → Production deployment workflow
+4. ⏳ Automated deployment with health checks and rollback (Phase 5)
+5. ✅ Mobile users have smooth experience (mobile-first design complete)
+6. ✅ 10 languages supported (exceeded 2+ requirement)
+7. ⏳ All issues tracked and resolved systematically via GitHub (Phase 6)
+8. ⏳ Zero downtime deployments achieved (Phase 5)
 
 ---
 
