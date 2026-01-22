@@ -208,5 +208,45 @@
     "verified": true,
     "verifiedAt": "2026-01-21T12:38:32.533Z",
     "verificationScore": 95
+  },
+  "himalayan.jpg": {
+    "fetchedAt": "2026-01-22T16:39:11.549Z",
+    "sourceUrl": "https://cdn2.thecatapi.com/images/ajWdNxBwN.jpg",
+    "expiresAt": "2026-01-29T16:39:11.549Z",
+    "verified": false,
+    "verifiedAt": "2026-01-22T16:39:11.549Z",
+    "verificationScore": 60
+  },
+  "mainecoon.jpg": {
+    "fetchedAt": "2026-01-22T16:39:15.342Z",
+    "sourceUrl": "https://cdn2.thecatapi.com/images/HD4lZB6BI.jpg",
+    "expiresAt": "2026-01-29T16:39:15.342Z",
+    "verified": false,
+    "verifiedAt": "2026-01-22T16:39:15.342Z",
+    "verificationScore": 70
+  },
+  "burmese.jpg": {
+    "fetchedAt": "2026-01-22T16:42:12.626Z",
+    "sourceUrl": "https://cdn2.thecatapi.com/images/4lXnnfxac.jpg",
+    "expiresAt": "2026-01-29T16:42:12.626Z",
+    "verified": false,
+    "verifiedAt": "2026-01-22T16:42:12.626Z",
+    "verificationScore": 60
+  },
+  "manx.jpg": {
+    "fetchedAt": "2026-01-22T16:42:45.500Z",
+    "sourceUrl": "https://cdn2.thecatapi.com/images/gU5wUcOuo.jpg",
+    "expiresAt": "2026-01-29T16:42:45.500Z",
+    "verified": false,
+    "verifiedAt": "2026-01-22T16:42:45.500Z",
+    "verificationScore": 70
+  },
+  "norwegianforest.jpg": {
+    "fetchedAt": "2026-01-22T16:43:03.006Z",
+    "sourceUrl": "https://cdn2.thecatapi.com/images/qQNpoUTW1.jpg",
+    "expiresAt": "2026-01-29T16:43:03.006Z",
+    "verified": false,
+    "verifiedAt": "2026-01-22T16:43:03.006Z",
+    "verificationScore": 60
   }
 }

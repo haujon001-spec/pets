@@ -41,23 +41,21 @@ async function main() {
     process.exit(1);
   }
   
-  // Load breed data to map IDs to names
+  // Load breed data to map IDs to names and pet types
   const breedDataPath = path.join(process.cwd(), 'src', 'models', 'breedData.ts');
   let breedMap = {};
   
   if (fs.existsSync(breedDataPath)) {
     const content = fs.readFileSync(breedDataPath, 'utf8');
     
-    // Parse breed IDs and names (simple regex extraction)
-    const idMatches = content.matchAll(/id:\s*["']([^"']+)["']/g);
-    const nameMatches = content.matchAll(/name:\s*["']([^"']+)["']/g);
+    // Parse breed objects more carefully to get id, name, and petType
+    const breedObjectRegex = /\{\s*id:\s*["']([^"']+)["'][^}]*name:\s*["']([^"']+)["'][^}]*petType:\s*["']([^"']+)["'][^}]*\}/g;
+    let match;
     
-    const ids = Array.from(idMatches).map(m => m[1]);
-    const names = Array.from(nameMatches).map(m => m[1]);
-    
-    ids.forEach((id, i) => {
-      breedMap[id] = names[i] || id;
-    });
+    while ((match = breedObjectRegex.exec(content)) !== null) {
+      const [, id, name, petType] = match;
+      breedMap[id] = { name, petType };
+    }
     
     log(`✅ Loaded ${Object.keys(breedMap).length} breeds from breedData.ts`, 'green');
   } else {
@@ -84,13 +82,15 @@ async function main() {
   for (let i = 0; i < imageFiles.length; i++) {
     const filename = imageFiles[i];
     const breedId = filename.replace(/\.(jpg|jpeg|png|webp)$/i, '');
-    const breedName = breedMap[breedId] || breedId;
+    const breedData = breedMap[breedId];
+    const breedName = breedData?.name || breedId;
+    const petType = breedData?.petType || 'dog'; // Default to dog if not found
     
-    log(`[${i + 1}/${imageFiles.length}] Verifying: ${breedName} (${filename})`, 'blue');
+    log(`[${i + 1}/${imageFiles.length}] Verifying: ${breedName} (${petType}) - ${filename}`, 'blue');
     
     // Check if server is running
     try {
-      const response = await fetch(`http://localhost:3000/api/breed-image?breedId=${breedId}&petType=dog&breedName=${encodeURIComponent(breedName)}`);
+      const response = await fetch(`http://localhost:3000/api/breed-image?breedId=${breedId}&petType=${petType}&breedName=${encodeURIComponent(breedName)}`);
       
       if (!response.ok) {
         log(`   ⚠️  API error: ${response.status}`, 'yellow');
@@ -104,20 +104,20 @@ async function main() {
         if (data.verified === true) {
           const score = data.verificationScore || 'N/A';
           log(`   ✅ VERIFIED (${score}% confidence)`, 'green');
-          results.verified.push({ breed: breedName, score });
+          results.verified.push({ breed: breedName, petType, score });
         } else if (data.verified === false) {
           const score = data.verificationScore || 'N/A';
           const reasoning = data.verificationReasoning || 'No reason provided';
           log(`   ❌ INCORRECT (${score}% confidence)`, 'red');
           log(`   💭 Reason: ${reasoning}`, 'yellow');
-          results.incorrect.push({ breed: breedName, score, reasoning });
+          results.incorrect.push({ breed: breedName, petType, score, reasoning });
         } else {
           log(`   ⏭️  Not verified (may be newly cached)`, 'cyan');
-          results.skipped.push({ breed: breedName, reason: 'Not verified yet' });
+          results.skipped.push({ breed: breedName, petType, reason: 'Not verified yet' });
         }
       } else {
         log(`   ⏭️  No verification data`, 'cyan');
-        results.skipped.push({ breed: breedName, reason: 'No verification data' });
+        results.skipped.push({ breed: breedName, petType, reason: 'No verification data' });
       }
       
     } catch (error) {
@@ -127,7 +127,7 @@ async function main() {
         process.exit(1);
       } else {
         log(`   ❌ Error: ${error.message}`, 'red');
-        results.errors.push({ breed: breedName, error: error.message });
+        results.errors.push({ breed: breedName, petType, error: error.message });
       }
     }
     
@@ -148,7 +148,7 @@ async function main() {
     log('\n❌ INCORRECT IMAGES FOUND:\n', 'red');
     
     results.incorrect.forEach(item => {
-      log(`   • ${item.breed}`, 'red');
+      log(`   • ${item.breed} (${item.petType})`, 'red');
       log(`     Confidence: ${item.score}%`, 'yellow');
       log(`     Reason: ${item.reasoning}`, 'yellow');
       console.log();
@@ -165,7 +165,7 @@ async function main() {
     log('\n🔴 ERRORS ENCOUNTERED:\n', 'red');
     
     results.errors.forEach(item => {
-      log(`   • ${item.breed}: ${item.error}`, 'red');
+      log(`   • ${item.breed} (${item.petType}): ${item.error}`, 'red');
     });
   }
   

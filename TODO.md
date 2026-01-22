@@ -93,19 +93,27 @@
 
 ## Known Issues - To Be Addressed Later
 
+### Missing Cat Breed Images (Being Fixed)
+- **Status**: In Progress - Images will be fetched on next access
+- **Issue**: Some cat breed images not yet cached locally
+  - `/breeds/himalayan.jpg` - Will be fetched from TheCatAPI
+  - `/breeds/mainecoon.jpg` - Will be fetched from TheCatAPI
+- **Impact**: 404 errors in browser console until images are fetched
+- **Root Cause**: Cat breed images not pre-cached during initial development
+- **Action Taken**:
+  1. ✅ Fixed health check script to test BOTH dog and cat breeds
+  2. ✅ Enhanced breed verification to properly detect cat vs dog breeds
+  3. 🔄 Images will be automatically fetched and verified on next access
+- **Priority**: Medium (affects user experience for these specific breeds)
+- **Detected**: January 23, 2026 - Production testing
+
 ### Missing Placeholder Images (404 Errors)
 - **Status**: Non-critical - UI cosmetic issue
-- **Issue**: Decorative background images referenced in page.tsx don't exist
-  - `/breeds/labrador.jpg` - 404 error (referenced in background)
-  - `/breeds/mainecoon.jpg` - 404 error (referenced in background)
-  - `/breeds/siamese.jpg` - 404 error (referenced in background)
-- **Impact**: Console shows 404 errors and "not a valid image" warnings, but app functions normally
-- **Root Cause**: Background decoration images in `page.tsx` reference local files that were never created
-- **Action Needed**:
-  1. Either remove the decorative Image components from page.tsx
-  2. Or create/download placeholder images for these breeds
-  3. Or fetch them dynamically using the breed-image API on initial load
-- **Priority**: Low (doesn't affect functionality, only creates console noise)
+- **Issue**: Decorative background images referenced in older documentation don't exist
+  - `/breeds/labrador.jpg` - ✅ EXISTS (cached)
+  - Note: These were listed in older docs but are not actually causing issues
+- **Impact**: No current impact - previously referenced decorative images removed
+- **Priority**: Low (resolved, no action needed)
 - **Detected**: January 21, 2026 - Phase 4 Mobile Optimization testing
 
 ### Hugging Face LLM Provider Not Working

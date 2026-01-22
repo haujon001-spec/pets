@@ -9,6 +9,7 @@
     "health:languages": "node scripts/health-check-languages.js",
     "health:phase6": "node scripts/phase6-comprehensive-health-check.js",
     "test:images": "node scripts/verify-breed-images.js",
+    "fetch:cat-images": "node scripts/fetch-missing-cat-images.js",
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
