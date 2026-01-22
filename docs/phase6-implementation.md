@@ -28,11 +28,18 @@
    - Automated testing for translation, API endpoints, and configuration
    - 66 checks with detailed pass/fail reporting
 
-5. ✅ **Bug Fixes**
+5. ✅ **Bug Fixes (January 21, 2026)**
    - Fixed Vietnamese translation display issue (incorrect field names from LLM)
    - Improved translation prompt to prevent key translation
    - Added `useEffect` for proper re-rendering on locale change
    - Fixed JSON syntax errors in ar.json, ru.json, it.json
+
+6. ✅ **Bug Fixes - Cat Image 404 Errors (January 23, 2026)**
+   - Fixed missing Himalayan and Maine Coon cat breed images
+   - Enhanced health check script to test both cats and dogs  
+   - Created automated image fetching utility for missing cat breeds
+   - Updated cache metadata with vision verification results
+   - All 404 errors resolved and images cached successfully
 
 ## 🔧 Technical Implementation
 
@@ -466,7 +473,89 @@ npm run fetch:cat-images
 - ✅ 404 errors resolved
 
 ---
-- Hugging Face provider deprecated - requires API update
+
+## 🚀 Next Steps: VPS Production Deployment (January 24, 2026)
+
+### Deployment Plan
+
+**Objective**: Deploy January 23 bug fixes to production VPS server at https://aibreeds-demo.com
+
+**Prerequisites**:
+- ✅ Code committed and pushed to GitHub (commit: c9dc9b9)
+- ✅ Local testing complete - all breed images loading correctly
+- ✅ Health checks passing (35 verifiable images)
+
+**Deployment Steps**:
+
+1. **SSH into VPS Server**
+   ```bash
+   ssh root@aibreeds-demo.com
+   ```
+
+2. **Pull Latest Code from GitHub**
+   ```bash
+   cd /root/vscode_2
+   git pull origin main
+   ```
+
+3. **Rebuild Docker Image**
+   ```bash
+   docker build -f Dockerfile.prod -t pet-portal:latest .
+   ```
+
+4. **Stop Current Container**
+   ```bash
+   docker stop app
+   docker rm app
+   ```
+
+5. **Start New Container**
+   ```bash
+   docker run -d \
+     --name app \
+     --network pet-network \
+     --env-file .env.local \
+     -p 3000:3000 \
+     pet-portal:latest
+   ```
+
+6. **Verify Deployment**
+   ```bash
+   # Check container status
+   docker ps
+   
+   # Check logs
+   docker logs app
+   
+   # Test health endpoint
+   curl http://localhost:3000/api/health
+   ```
+
+7. **Test in Browser**
+   - Visit https://aibreeds-demo.com
+   - Select "Cats" tab
+   - Select "Himalayan" and "Maine Coon" breeds
+   - Verify images load without 404 errors
+   - Check browser console for errors
+
+**Rollback Plan** (if issues occur):
+```bash
+# Use existing rollback script
+./scripts/rollback-vps.sh
+```
+
+**Expected Outcome**:
+- ✅ Himalayan and Maine Coon cat images display correctly
+- ✅ No 404 errors in browser console
+- ✅ All breed images cached and verified
+- ✅ Application performance unchanged
+
+**Documentation to Update After Deployment**:
+- [ ] DEPLOYMENT.md - Add entry for January 24, 2026 deployment
+- [ ] CHANGELOG.md - Document bug fix release
+- [ ] Update production version tag
+
+---
 
 ## 📝 Conclusion
 

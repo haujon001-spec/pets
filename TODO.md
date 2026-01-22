@@ -41,9 +41,40 @@
 - ✅ **Regex JSON Parsing**: Updated regex to handle nested JSON objects properly
 - ✅ **Package Lock Sync**: Fixed package-lock.json out-of-sync issues
 
+## ✅ Recently Completed (January 23, 2026) - Cat Image Bug Fixes
+
+### Missing Cat Breed Images
+- ✅ **Himalayan Image 404 Fixed**: Fetched from TheCatAPI and cached successfully
+- ✅ **Maine Coon Image 404 Fixed**: Fetched from TheCatAPI and cached successfully  
+- ✅ **Health Check Enhanced**: verify-breed-images.js now tests both cats and dogs
+- ✅ **Pet Type Detection**: Added regex parsing to extract petType from breedData.ts
+- ✅ **Image Fetch Script**: Created fetch-missing-cat-images.js for automated fetching
+- ✅ **NPM Script Added**: `npm run fetch:cat-images` command
+- ✅ **Vision Verification**: Images validated with Llama-3.2-11B-Vision-Instruct-Turbo
+- ✅ **Cache Updated**: .cache-metadata.json updated with verification results
+- ✅ **Code Pushed to GitHub**: Commit c9dc9b9 - ready for production deployment
+
 ---
 
-## 📋 Phase 7 - Deployment & Testing Improvements (Planned)
+## 📋 Phase 7 - VPS Production Deployment (January 24, 2026)
+
+### Next Steps - Deploy Bug Fixes to Production
+- 🔜 **SSH into VPS**: Connect to production server at aibreeds-demo.com
+- 🔜 **Pull Latest Code**: `git pull origin main` to get January 23 fixes
+- 🔜 **Rebuild Docker Image**: `docker build -f Dockerfile.prod -t pet-portal:latest .`
+- 🔜 **Stop Old Container**: `docker stop app && docker rm app`
+- 🔜 **Start New Container**: Deploy with updated images and bug fixes
+- 🔜 **Verify Deployment**: Test Himalayan and Maine Coon images load correctly
+- 🔜 **Update Documentation**: Add deployment entry to DEPLOYMENT.md
+
+### Priority: High
+**Target Date**: January 24, 2026  
+**Estimated Time**: 15-20 minutes  
+**Risk Level**: Low (bug fixes only, no breaking changes)
+
+---
+
+## 📋 Phase 8 - Future Enhancements (Planned)
 
 ### Local Docker Testing
 - 🔄 **Pre-Production Docker Validation**: Test Dockerfile.prod on local laptop before VPS deployment
