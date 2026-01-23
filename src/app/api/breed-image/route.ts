@@ -361,12 +361,14 @@ async function getCatApiId(breedName: string): Promise<string | null> {
 }
 
 async function fetchImageUrl(breed: string, type: string, breedName: string): Promise<string | null> {
-  console.log(`[breed-image] Fetching image for: ${breedName} (${type}), breed ID: ${breed}`);
+  // Use breedName for searching, it's more reliable than breedId for custom breeds
+  const searchName = breedName || breed;
+  console.log(`[breed-image] Fetching image for: ${searchName} (${type}), breed ID: ${breed}`);
   
   // Try Dog CEO for dogs with dynamic matching
   if (type === 'dog') {
     try {
-      const dogCeoKey = await getDogCeoKey(breedName);
+      const dogCeoKey = await getDogCeoKey(searchName);
       if (dogCeoKey) {
         console.log(`[breed-image] Trying Dog CEO with key: ${dogCeoKey}`);
         const res = await fetch(`https://dog.ceo/api/breed/${dogCeoKey}/images/random`, {
@@ -379,7 +381,7 @@ async function fetchImageUrl(breed: string, type: string, breedName: string): Pr
           return data.message;
         }
       } else {
-        console.log(`[breed-image] No Dog CEO mapping found for ${breedName}`);
+        console.log(`[breed-image] No Dog CEO mapping found for ${searchName}`);
       }
     } catch (err) {
       console.error(`[breed-image] Dog CEO failed:`, err);
@@ -387,8 +389,8 @@ async function fetchImageUrl(breed: string, type: string, breedName: string): Pr
     
     // Secondary source: Pexels (via direct image URL)
     try {
-      console.log(`[breed-image] Trying Pexels for ${breedName}`);
-      const query = encodeURIComponent(`${breedName} dog portrait`);
+      console.log(`[breed-image] Trying Pexels for ${searchName}`);
+      const query = encodeURIComponent(`${searchName} dog portrait`);
       const pexelsRes = await fetch(`https://api.pexels.com/v1/search?query=${query}&per_page=1`, {
         headers: {
           'Authorization': process.env.PEXELS_API_KEY || '',
@@ -411,7 +413,7 @@ async function fetchImageUrl(breed: string, type: string, breedName: string): Pr
   // Try TheCatAPI for cats with dynamic matching
   if (type === 'cat') {
     try {
-      const catApiId = await getCatApiId(breedName);
+      const catApiId = await getCatApiId(searchName);
       if (catApiId) {
         console.log(`[breed-image] Trying TheCatAPI with ID: ${catApiId}`);
         const res = await fetch(`https://api.thecatapi.com/v1/images/search?breed_ids=${catApiId}`, {
@@ -429,8 +431,8 @@ async function fetchImageUrl(breed: string, type: string, breedName: string): Pr
     
     // Secondary source for cats: Unsplash
     try {
-      console.log(`[breed-image] Trying Unsplash for ${breedName} cat`);
-      const query = encodeURIComponent(`${breedName} cat`);
+      console.log(`[breed-image] Trying Unsplash for ${searchName} cat`);
+      const query = encodeURIComponent(`${searchName} cat`);
       const res = await fetch(`https://source.unsplash.com/400x400/?${query}`, {
         redirect: 'follow',
         signal: AbortSignal.timeout(5000),
@@ -447,8 +449,8 @@ async function fetchImageUrl(breed: string, type: string, breedName: string): Pr
   // Final fallback: Generic Unsplash for dogs
   if (type === 'dog') {
     try {
-      console.log(`[breed-image] Final fallback: Unsplash for ${breedName}`);
-      const query = encodeURIComponent(`${breedName} dog`);
+      console.log(`[breed-image] Final fallback: Unsplash for ${searchName}`);
+      const query = encodeURIComponent(`${searchName} dog`);
       const res = await fetch(`https://source.unsplash.com/400x400/?${query}`, {
         redirect: 'follow',
         signal: AbortSignal.timeout(5000),
@@ -476,8 +478,11 @@ export async function GET(req: NextRequest) {
     return NextResponse.json({ error: 'Missing breed or type' }, { status: 400 });
   }
   
-  // Include pet type in filename for custom breeds to prevent cat/dog mixup
-  const filenameBase = breed === 'custom' ? `custom-${type}` : breed;
+  // For custom breeds, use the breedName for the filename to make it unique
+  // This prevents conflicts between different custom cat/dog breeds
+  const filenameBase = breed === 'custom' 
+    ? `custom-${type}-${breedName.toLowerCase().replace(/[^a-z0-9]/g, '')}` 
+    : breed;
   const localPath = path.join(breedsDir, `${filenameBase}.jpg`);
   const publicPath = `/breeds/${filenameBase}.jpg`;
   const filename = `${filenameBase}.jpg`;
@@ -485,10 +490,10 @@ export async function GET(req: NextRequest) {
   // Check if file exists locally and is not expired
   if (fs.existsSync(localPath)) {
     if (!isCacheExpired(filename)) {
-      console.log(`[breed-image] Found local image for ${breed}: ${publicPath}`);
+      console.log(`[breed-image] Found local image for ${breedName}: ${publicPath}`);
       return NextResponse.json({ imageUrl: publicPath });
     } else {
-      console.log(`[breed-image] Cache expired for ${breed}, refetching...`);
+      console.log(`[breed-image] Cache expired for ${breedName}, refetching...`);
       // Remove expired file
       fs.unlinkSync(localPath);
     }
