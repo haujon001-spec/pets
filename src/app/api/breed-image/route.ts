@@ -65,9 +65,26 @@ function isCacheExpired(filename: string): boolean {
 }
 
 /**
+ * Get AI metadata from cache
+ */
+function getAiMetadataFromCache(filename: string): { provider: string; generationTime: number } | null {
+  const metadata = loadCacheMetadata();
+  const entry = metadata[filename];
+  
+  if (entry && entry.aiGenerated && entry.aiProvider) {
+    return {
+      provider: entry.aiProvider,
+      generationTime: entry.generationTime || 0
+    };
+  }
+  
+  return null;
+}
+
+/**
  * Update cache metadata for a file
  */
-function updateCacheMetadata(filename: string, sourceUrl: string, verified?: boolean, verificationScore?: number): void {
+function updateCacheMetadata(filename: string, sourceUrl: string, verified?: boolean, verificationScore?: number, aiProvider?: string, generationTime?: number): void {
   const metadata = loadCacheMetadata();
   const now = new Date();
   const expiresAt = new Date(now.getTime() + CACHE_TTL_DAYS * 24 * 60 * 60 * 1000);
@@ -77,6 +94,7 @@ function updateCacheMetadata(filename: string, sourceUrl: string, verified?: boo
     sourceUrl,
     expiresAt: expiresAt.toISOString(),
     ...(verified !== undefined && { verified, verifiedAt: now.toISOString(), verificationScore }),
+    ...(aiProvider && { aiGenerated: true, aiProvider, generationTime }),
   };
   
   saveCacheMetadata(metadata);
@@ -631,7 +649,16 @@ export async function GET(req: NextRequest) {
   if (fs.existsSync(localPath)) {
     if (!isCacheExpired(filename)) {
       console.log(`[breed-image] Found local image for ${breedName}: ${publicPath}`);
-      return NextResponse.json({ imageUrl: publicPath });
+      
+      // Check if this was AI-generated (from cache metadata)
+      const cachedAiMetadata = getAiMetadataFromCache(filename);
+      const response: any = { imageUrl: publicPath };
+      if (cachedAiMetadata) {
+        response.aiGenerated = true;
+        response.aiProvider = cachedAiMetadata.provider;
+        response.generationTime = cachedAiMetadata.generationTime;
+      }
+      return NextResponse.json(response);
     } else {
       console.log(`[breed-image] Cache expired for ${breedName}, refetching...`);
       // Remove expired file
@@ -683,8 +710,15 @@ export async function GET(req: NextRequest) {
         return NextResponse.json({ imageUrl: placeholder });
       }
       
-      // Update cache metadata with verification
-      updateCacheMetadata(filename, imageUrl, verification.isCorrect, verification.confidence);
+      // Update cache metadata with verification and AI info
+      updateCacheMetadata(
+        filename, 
+        imageUrl, 
+        verification.isCorrect, 
+        verification.confidence,
+        aiMetadata?.provider,
+        aiMetadata?.generationTime
+      );
       
       console.log(`[breed-image] Successfully fetched and cached image for ${breedName} (${type}): ${imageUrl}`);
       
