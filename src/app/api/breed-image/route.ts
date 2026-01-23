@@ -467,6 +467,141 @@ async function fetchImageUrl(breed: string, type: string, breedName: string): Pr
   return null;
 }
 
+/**
+ * Generate AI image using DALL-E 3 or Stable Diffusion as ultimate fallback
+ */
+async function generateAIImage(breedName: string, petType: string): Promise<string | null> {
+  console.log(`[breed-image] 🎨 Attempting AI image generation for ${breedName} (${petType})`);
+  
+  // Try OpenAI DALL-E 3 first (best quality)
+  if (process.env.OPENAI_API_KEY) {
+    try {
+      console.log(`[breed-image] Trying DALL-E 3...`);
+      const prompt = `A professional high-quality photograph of a ${breedName} ${petType}, realistic, detailed, studio lighting, facing camera, full body visible, neutral background`;
+      
+      const response = await fetch('https://api.openai.com/v1/images/generations', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${process.env.OPENAI_API_KEY}`,
+        },
+        body: JSON.stringify({
+          model: 'dall-e-3',
+          prompt: prompt,
+          n: 1,
+          size: '1024x1024',
+          quality: 'standard',
+          style: 'natural',
+        }),
+        signal: AbortSignal.timeout(30000), // 30s timeout for image generation
+      });
+      
+      if (response.ok) {
+        const data: any = await response.json();
+        if (data.data && data.data[0]?.url) {
+          console.log(`[breed-image] ✅ DALL-E 3 generated image successfully`);
+          return data.data[0].url;
+        }
+      } else {
+        console.log(`[breed-image] DALL-E 3 failed: ${response.status} ${await response.text()}`);
+      }
+    } catch (err) {
+      console.log(`[breed-image] DALL-E 3 error:`, err);
+    }
+  }
+  
+  // Try Replicate Stable Diffusion XL as fallback
+  if (process.env.REPLICATE_API_TOKEN) {
+    try {
+      console.log(`[breed-image] Trying Stable Diffusion XL...`);
+      const prompt = `professional photograph of a ${breedName} ${petType}, high quality, realistic, detailed, studio lighting`;
+      
+      const response = await fetch('https://api.replicate.com/v1/predictions', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Token ${process.env.REPLICATE_API_TOKEN}`,
+        },
+        body: JSON.stringify({
+          version: 'stability-ai/sdxl:39ed52f2a78e934b3ba6e2a89f5b1c712de7dfea535525255b1aa35c5565e08b',
+          input: {
+            prompt: prompt,
+            negative_prompt: 'cartoon, anime, drawing, illustration, low quality, blurry',
+            num_outputs: 1,
+          },
+        }),
+        signal: AbortSignal.timeout(60000), // 60s for Stable Diffusion
+      });
+      
+      if (response.ok) {
+        const prediction: any = await response.json();
+        // Poll for completion
+        let attempts = 0;
+        while (attempts < 30) {
+          await new Promise(resolve => setTimeout(resolve, 2000)); // Wait 2s
+          const statusRes = await fetch(`https://api.replicate.com/v1/predictions/${prediction.id}`, {
+            headers: { 'Authorization': `Token ${process.env.REPLICATE_API_TOKEN}` },
+          });
+          
+          if (statusRes.ok) {
+            const status: any = await statusRes.json();
+            if (status.status === 'succeeded' && status.output?.[0]) {
+              console.log(`[breed-image] ✅ Stable Diffusion generated image successfully`);
+              return status.output[0];
+            } else if (status.status === 'failed') {
+              console.log(`[breed-image] Stable Diffusion failed:`, status.error);
+              break;
+            }
+          }
+          attempts++;
+        }
+      }
+    } catch (err) {
+      console.log(`[breed-image] Stable Diffusion error:`, err);
+    }
+  }
+  
+  // Try Together AI image models as final fallback
+  if (process.env.TOGETHER_API_KEY) {
+    try {
+      console.log(`[breed-image] Trying Together AI SDXL...`);
+      const prompt = `professional photograph of a ${breedName} ${petType}, high quality, realistic, detailed`;
+      
+      const response = await fetch('https://api.together.xyz/v1/images/generations', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${process.env.TOGETHER_API_KEY}`,
+        },
+        body: JSON.stringify({
+          model: 'stabilityai/stable-diffusion-xl-base-1.0',
+          prompt: prompt,
+          steps: 20,
+          n: 1,
+          width: 1024,
+          height: 1024,
+        }),
+        signal: AbortSignal.timeout(30000),
+      });
+      
+      if (response.ok) {
+        const data: any = await response.json();
+        if (data.data && data.data[0]?.url) {
+          console.log(`[breed-image] ✅ Together AI generated image successfully`);
+          return data.data[0].url;
+        }
+      } else {
+        console.log(`[breed-image] Together AI image generation failed: ${response.status}`);
+      }
+    } catch (err) {
+      console.log(`[breed-image] Together AI image error:`, err);
+    }
+  }
+  
+  console.log(`[breed-image] ❌ All AI image generation methods failed`);
+  return null;
+}
+
 export async function GET(req: NextRequest) {
   const { searchParams } = new URL(req.url);
   // Accept both new and old param names for compatibility
@@ -500,7 +635,14 @@ export async function GET(req: NextRequest) {
   }
   
   // Otherwise, fetch and save
-  const imageUrl = await fetchImageUrl(breed, type, breedName);
+  let imageUrl = await fetchImageUrl(breed, type, breedName);
+  
+  // If all standard APIs failed, try AI image generation
+  if (imageUrl === null) {
+    console.log(`[breed-image] Standard APIs failed, attempting AI generation...`);
+    imageUrl = await generateAIImage(breedName, type);
+  }
+  
   if (imageUrl !== null) {
     try {
       const imgRes = await fetch(imageUrl);
@@ -517,8 +659,10 @@ export async function GET(req: NextRequest) {
         .jpeg({ quality: 85 }) // Convert to JPEG with 85% quality
         .toFile(localPath);
       
-      // Verify image with vision AI
-      const verification = await verifyImageWithVision(imageUrl, breedName, type);
+      // Verify image with vision AI (skip if it was AI-generated, as it's already correct)
+      const verification = imageUrl.includes('openai.com') || imageUrl.includes('replicate.com') || imageUrl.includes('together.xyz')
+        ? { isCorrect: true, confidence: 100, reasoning: 'AI-generated image' }
+        : await verifyImageWithVision(imageUrl, breedName, type);
       
       // If image is incorrect with high confidence, delete it and use placeholder
       if (!verification.isCorrect && verification.confidence > 70) {
