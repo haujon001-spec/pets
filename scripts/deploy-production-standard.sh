@@ -138,6 +138,7 @@ ssh ${VPS_USER}@${VPS_HOST} "cd ${VPS_PROJECT_DIR} && docker run -d \
   --network ${NETWORK_NAME} \
   --env-file ${ENV_FILE} \
   -p 3000:3000 \
+  -v ${VPS_PROJECT_DIR}/public/breeds:/app/public/breeds \
   --restart unless-stopped \
   ${DOCKER_IMAGE}" || {
     log_error "Failed to start container!"
@@ -148,6 +149,7 @@ ssh ${VPS_USER}@${VPS_HOST} "cd ${VPS_PROJECT_DIR} && docker run -d \
       --network ${NETWORK_NAME} \
       --env-file ${ENV_FILE} \
       -p 3000:3000 \
+      -v ${VPS_PROJECT_DIR}/public/breeds:/app/public/breeds \
       --restart unless-stopped \
       pet-portal:${BACKUP_TAG}"
     exit 1

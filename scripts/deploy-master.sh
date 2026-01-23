@@ -241,6 +241,12 @@ log_success "Environment backed up"
 
 log_section "PHASE 6: DEPLOY NEW CONTAINER"
 
+log_step "Ensuring breeds folder has correct permissions..."
+ssh ${VPS_USER}@${VPS_HOST} "mkdir -p ${VPS_PROJECT_DIR}/public/breeds"
+ssh ${VPS_USER}@${VPS_HOST} "chown -R 1001:1001 ${VPS_PROJECT_DIR}/public/breeds"
+ssh ${VPS_USER}@${VPS_HOST} "chmod 755 ${VPS_PROJECT_DIR}/public/breeds"
+log_success "Breeds folder permissions set (UID 1001 for nextjs user)"
+
 log_step "Stopping old container..."
 ssh ${VPS_USER}@${VPS_HOST} "docker stop ${CONTAINER_NAME} 2>/dev/null || true"
 ssh ${VPS_USER}@${VPS_HOST} "docker rm ${CONTAINER_NAME} 2>/dev/null || true"
@@ -252,6 +258,7 @@ ssh ${VPS_USER}@${VPS_HOST} "cd ${VPS_PROJECT_DIR} && docker run -d \
   --network ${NETWORK_NAME} \
   --env-file ${ENV_FILE} \
   -p 3000:3000 \
+  -v ${VPS_PROJECT_DIR}/public/breeds:/app/public/breeds \
   --restart unless-stopped \
   ${DOCKER_IMAGE}:${DOCKER_TAG}" || {
     log_error "Failed to start new container - rolling back..."
@@ -260,6 +267,7 @@ ssh ${VPS_USER}@${VPS_HOST} "cd ${VPS_PROJECT_DIR} && docker run -d \
       --network ${NETWORK_NAME} \
       --env-file ${ENV_FILE} \
       -p 3000:3000 \
+      -v ${VPS_PROJECT_DIR}/public/breeds:/app/public/breeds \
       --restart unless-stopped \
       ${DOCKER_IMAGE}:${BACKUP_TAG}"
     exit 1
@@ -349,6 +357,6 @@ echo "Rollback (if needed):"
 echo "  ssh ${VPS_USER}@${VPS_HOST}"
 echo "  cd ${VPS_PROJECT_DIR}"
 echo "  docker stop app && docker rm app"
-echo "  docker run -d --name app --network pet-network --env-file .env -p 3000:3000 ${DOCKER_IMAGE}:${BACKUP_TAG}"
+echo "  docker run -d --name app --network pet-network --env-file .env -p 3000:3000 -v ${VPS_PROJECT_DIR}/public/breeds:/app/public/breeds --restart unless-stopped ${DOCKER_IMAGE}:${BACKUP_TAG}"
 echo ""
 log_success "Deployment completed successfully!"
