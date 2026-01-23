@@ -65,26 +65,9 @@ function isCacheExpired(filename: string): boolean {
 }
 
 /**
- * Get AI metadata from cache
- */
-function getAiMetadataFromCache(filename: string): { provider: string; generationTime: number } | null {
-  const metadata = loadCacheMetadata();
-  const entry = metadata[filename];
-  
-  if (entry && entry.aiGenerated && entry.aiProvider) {
-    return {
-      provider: entry.aiProvider,
-      generationTime: entry.generationTime || 0
-    };
-  }
-  
-  return null;
-}
-
-/**
  * Update cache metadata for a file
  */
-function updateCacheMetadata(filename: string, sourceUrl: string, verified?: boolean, verificationScore?: number, aiProvider?: string, generationTime?: number): void {
+function updateCacheMetadata(filename: string, sourceUrl: string, verified?: boolean, verificationScore?: number): void {
   const metadata = loadCacheMetadata();
   const now = new Date();
   const expiresAt = new Date(now.getTime() + CACHE_TTL_DAYS * 24 * 60 * 60 * 1000);
@@ -94,7 +77,6 @@ function updateCacheMetadata(filename: string, sourceUrl: string, verified?: boo
     sourceUrl,
     expiresAt: expiresAt.toISOString(),
     ...(verified !== undefined && { verified, verifiedAt: now.toISOString(), verificationScore }),
-    ...(aiProvider && { aiGenerated: true, aiProvider, generationTime }),
   };
   
   saveCacheMetadata(metadata);
@@ -487,11 +469,9 @@ async function fetchImageUrl(breed: string, type: string, breedName: string): Pr
 
 /**
  * Generate AI image using DALL-E 3 or Stable Diffusion as ultimate fallback
- * Returns object with imageUrl, provider, and generation time
  */
-async function generateAIImage(breedName: string, petType: string): Promise<{ imageUrl: string; provider: string; generationTime: number } | null> {
+async function generateAIImage(breedName: string, petType: string): Promise<string | null> {
   console.log(`[breed-image] 🎨 Attempting AI image generation for ${breedName} (${petType})`);
-  const startTime = Date.now();
   
   // Try OpenAI DALL-E 3 first (best quality)
   if (process.env.OPENAI_API_KEY) {
@@ -519,9 +499,8 @@ async function generateAIImage(breedName: string, petType: string): Promise<{ im
       if (response.ok) {
         const data: any = await response.json();
         if (data.data && data.data[0]?.url) {
-          const generationTime = Date.now() - startTime;
-          console.log(`[breed-image] ✅ DALL-E 3 generated image successfully in ${generationTime}ms`);
-          return { imageUrl: data.data[0].url, provider: 'DALL-E 3 (OpenAI)', generationTime };
+          console.log(`[breed-image] ✅ DALL-E 3 generated image successfully`);
+          return data.data[0].url;
         }
       } else {
         console.log(`[breed-image] DALL-E 3 failed: ${response.status} ${await response.text()}`);
@@ -567,9 +546,8 @@ async function generateAIImage(breedName: string, petType: string): Promise<{ im
           if (statusRes.ok) {
             const status: any = await statusRes.json();
             if (status.status === 'succeeded' && status.output?.[0]) {
-              const generationTime = Date.now() - startTime;
-              console.log(`[breed-image] ✅ Stable Diffusion generated image successfully in ${generationTime}ms`);
-              return { imageUrl: status.output[0], provider: 'Stable Diffusion XL (Replicate)', generationTime };
+              console.log(`[breed-image] ✅ Stable Diffusion generated image successfully`);
+              return status.output[0];
             } else if (status.status === 'failed') {
               console.log(`[breed-image] Stable Diffusion failed:`, status.error);
               break;
@@ -609,9 +587,8 @@ async function generateAIImage(breedName: string, petType: string): Promise<{ im
       if (response.ok) {
         const data: any = await response.json();
         if (data.data && data.data[0]?.url) {
-          const generationTime = Date.now() - startTime;
-          console.log(`[breed-image] ✅ Together AI generated image successfully in ${generationTime}ms`);
-          return { imageUrl: data.data[0].url, provider: 'Stable Diffusion XL (Together AI)', generationTime };
+          console.log(`[breed-image] ✅ Together AI generated image successfully`);
+          return data.data[0].url;
         }
       } else {
         console.log(`[breed-image] Together AI image generation failed: ${response.status}`);
@@ -649,16 +626,7 @@ export async function GET(req: NextRequest) {
   if (fs.existsSync(localPath)) {
     if (!isCacheExpired(filename)) {
       console.log(`[breed-image] Found local image for ${breedName}: ${publicPath}`);
-      
-      // Check if this was AI-generated (from cache metadata)
-      const cachedAiMetadata = getAiMetadataFromCache(filename);
-      const response: any = { imageUrl: publicPath };
-      if (cachedAiMetadata) {
-        response.aiGenerated = true;
-        response.aiProvider = cachedAiMetadata.provider;
-        response.generationTime = cachedAiMetadata.generationTime;
-      }
-      return NextResponse.json(response);
+      return NextResponse.json({ imageUrl: publicPath });
     } else {
       console.log(`[breed-image] Cache expired for ${breedName}, refetching...`);
       // Remove expired file
@@ -668,16 +636,11 @@ export async function GET(req: NextRequest) {
   
   // Otherwise, fetch and save
   let imageUrl = await fetchImageUrl(breed, type, breedName);
-  let aiMetadata: { provider: string; generationTime: number } | null = null;
   
   // If all standard APIs failed, try AI image generation
   if (imageUrl === null) {
     console.log(`[breed-image] Standard APIs failed, attempting AI generation...`);
-    const aiResult = await generateAIImage(breedName, type);
-    if (aiResult) {
-      imageUrl = aiResult.imageUrl;
-      aiMetadata = { provider: aiResult.provider, generationTime: aiResult.generationTime };
-    }
+    imageUrl = await generateAIImage(breedName, type);
   }
   
   if (imageUrl !== null) {
@@ -710,26 +673,11 @@ export async function GET(req: NextRequest) {
         return NextResponse.json({ imageUrl: placeholder });
       }
       
-      // Update cache metadata with verification and AI info
-      updateCacheMetadata(
-        filename, 
-        imageUrl, 
-        verification.isCorrect, 
-        verification.confidence,
-        aiMetadata?.provider,
-        aiMetadata?.generationTime
-      );
+      // Update cache metadata with verification
+      updateCacheMetadata(filename, imageUrl, verification.isCorrect, verification.confidence);
       
       console.log(`[breed-image] Successfully fetched and cached image for ${breedName} (${type}): ${imageUrl}`);
-      
-      // Return image URL with AI metadata if available
-      const response: any = { imageUrl: publicPath };
-      if (aiMetadata) {
-        response.aiGenerated = true;
-        response.aiProvider = aiMetadata.provider;
-        response.generationTime = aiMetadata.generationTime;
-      }
-      return NextResponse.json(response);
+      return NextResponse.json({ imageUrl: publicPath });
     } catch (err) {
       console.error(`[breed-image] Error saving image for ${breedName} (${type}):`, err);
       const placeholder = type === 'dog' ? '/breeds/placeholder_dog.jpg' : '/breeds/placeholder_cat.jpg';

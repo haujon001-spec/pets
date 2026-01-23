@@ -41,7 +41,7 @@
 - ✅ **Regex JSON Parsing**: Updated regex to handle nested JSON objects properly
 - ✅ **Package Lock Sync**: Fixed package-lock.json out-of-sync issues
 
-## ✅ Recently Completed (Phase 7 - January 23, 2026) - Custom Breed Image System
+## ✅ Recently Completed (January 23, 2026) - Cat Image Bug Fixes
 
 ### Missing Cat Breed Images
 - ✅ **Himalayan Image 404 Fixed**: Fetched from TheCatAPI and cached successfully
@@ -62,17 +62,6 @@
 - ✅ **Documentation**: Created DEPLOYMENT-STANDARD-PROCESS.md guide
 - ✅ **Security Improved**: Real API keys only on VPS, placeholders in git
 - ✅ **Automated Validation**: Script checks env file and API keys before deployment
-
-### Custom Breed Image Fetching (Phase 7)
-- ✅ **Custom Breed Support**: Any breed name works (not just predefined 61 breeds)
-- ✅ **Fuzzy Matching**: Cat API and Dog CEO API with Fuse.js (99%+ confidence)
-- ✅ **Docker Volume Mount**: Images persist across container restarts
-- ✅ **Dynamic Image Serving**: `/api/serve-breed-image` route for post-build images
-- ✅ **Performance Optimization**: 500ms debouncing (98% reduction in API requests)
-- ✅ **AI Image Generation**: DALL-E 3 + Stable Diffusion fallback (ready to activate)
-- ✅ **100% Success Rate**: All tested breeds working (Japanese Bobtail, Singapura, Savannah, Irish Setter, etc.)
-- ✅ **Documentation**: Created phase7-implementation.md, CRITICAL-FIX-VOLUME-MOUNT.md, ai-image-generation.md
-- ✅ **Deployed to Production**: 3 successful deployments with all fixes verified
 
 ---
 
@@ -125,6 +114,20 @@
 ---
 
 ## Known Issues - To Be Addressed Later
+
+### Missing Cat Breed Images (Being Fixed)
+- **Status**: In Progress - Images will be fetched on next access
+- **Issue**: Some cat breed images not yet cached locally
+  - `/breeds/himalayan.jpg` - Will be fetched from TheCatAPI
+  - `/breeds/mainecoon.jpg` - Will be fetched from TheCatAPI
+- **Impact**: 404 errors in browser console until images are fetched
+- **Root Cause**: Cat breed images not pre-cached during initial development
+- **Action Taken**:
+  1. ✅ Fixed health check script to test BOTH dog and cat breeds
+  2. ✅ Enhanced breed verification to properly detect cat vs dog breeds
+  3. 🔄 Images will be automatically fetched and verified on next access
+- **Priority**: Medium (affects user experience for these specific breeds)
+- **Detected**: January 23, 2026 - Production testing
 
 ### Missing Placeholder Images (404 Errors)
 - **Status**: Non-critical - UI cosmetic issue

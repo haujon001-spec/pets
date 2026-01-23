@@ -743,11 +743,11 @@
     "verificationScore": 0
   },
   "custom-dog-rhodesianridgeback.jpg": {
-    "fetchedAt": "2026-01-23T04:18:40.027Z",
-    "sourceUrl": "https://images.dog.ceo/breeds/ridgeback-rhodesian/n02087394_9128.jpg",
-    "expiresAt": "2026-01-30T04:18:40.027Z",
+    "fetchedAt": "2026-01-23T03:35:42.893Z",
+    "sourceUrl": "https://images.dog.ceo/breeds/ridgeback-rhodesian/n02087394_1964.jpg",
+    "expiresAt": "2026-01-30T03:35:42.893Z",
     "verified": false,
-    "verifiedAt": "2026-01-23T04:18:40.027Z",
+    "verifiedAt": "2026-01-23T03:35:42.893Z",
     "verificationScore": 60
   },
   "staffordshire.jpg": {
@@ -893,29 +893,5 @@
     "verified": false,
     "verifiedAt": "2026-01-23T03:36:16.719Z",
     "verificationScore": 70
-  },
-  "custom-dog-havanese.jpg": {
-    "fetchedAt": "2026-01-23T04:17:59.632Z",
-    "sourceUrl": "https://images.dog.ceo/breeds/havanese/00100trPORTRAIT_00100_BURST20191112123933390_COVER.jpg",
-    "expiresAt": "2026-01-30T04:17:59.632Z",
-    "verified": false,
-    "verifiedAt": "2026-01-23T04:17:59.632Z",
-    "verificationScore": 60
-  },
-  "custom-dog-havanes.jpg": {
-    "fetchedAt": "2026-01-23T04:18:36.834Z",
-    "sourceUrl": "https://images.dog.ceo/breeds/havanese/00100trPORTRAIT_00100_BURST20191126134713895_COVER.jpg",
-    "expiresAt": "2026-01-30T04:18:36.834Z",
-    "verified": false,
-    "verifiedAt": "2026-01-23T04:18:36.834Z",
-    "verificationScore": 70
-  },
-  "custom-dog-australiancattledog.jpg": {
-    "fetchedAt": "2026-01-23T04:19:08.947Z",
-    "sourceUrl": "https://images.dog.ceo/breeds/cattledog-australian/IMG_1042.jpg",
-    "expiresAt": "2026-01-30T04:19:08.947Z",
-    "verified": false,
-    "verifiedAt": "2026-01-23T04:19:08.947Z",
-    "verificationScore": 60
   }
 }

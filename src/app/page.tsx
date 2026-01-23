@@ -39,7 +39,6 @@ export default function Home() {
   const [breedImage, setBreedImage] = useState<string>("");
   const [translatedBreedInfo, setTranslatedBreedInfo] = useState<{[key: string]: any}>({});
   const [lastFetchedBreed, setLastFetchedBreed] = useState<string>("");
-  const [aiMetadata, setAiMetadata] = useState<{provider: string; generationTime: number} | null>(null);
 
   // Translated questions from i18n - recreated on every render to update with language changes
   const breedFAQs = [
@@ -109,18 +108,8 @@ export default function Home() {
           const data = await res.json();
           if (data && data.imageUrl) {
             setBreedImage(data.imageUrl);
-            // Capture AI generation metadata if available
-            if (data.aiGenerated) {
-              setAiMetadata({
-                provider: data.aiProvider,
-                generationTime: data.generationTime
-              });
-            } else {
-              setAiMetadata(null);
-            }
           } else {
             setBreedImage(petType === "dog" ? "/breeds/placeholder_dog.jpg" : "/breeds/placeholder_cat.jpg");
-            setAiMetadata(null);
           }
         } catch {
           setBreedImage(petType === "dog" ? "/breeds/placeholder_dog.jpg" : "/breeds/placeholder_cat.jpg");
@@ -482,28 +471,12 @@ Return ONLY a valid JSON object with English keys and translated values:
               </div>
               <div className="flex items-start justify-center lg:justify-end">
                 {breedImage && (
-                  <div className="w-full max-w-sm lg:max-w-none">
-                    <div className="bg-gray-100 rounded-xl sm:rounded-2xl shadow-lg overflow-hidden" style={{ maxHeight: '400px', minHeight: '250px' }}>
-                      <img 
-                        src={breedImage} 
-                        alt="Breed" 
-                        className="w-full h-full object-contain" 
-                      />
-                    </div>
-                    {/* Display AI generation metadata */}
-                    {aiMetadata && (
-                      <div className="mt-2 px-3 py-2 bg-white/10 backdrop-blur-sm rounded-lg border border-white/20 text-xs sm:text-sm">
-                        <div className="flex items-center gap-2 text-white/90">
-                          <span className="text-base">🎨</span>
-                          <div>
-                            <div className="font-semibold text-white">AI Generated</div>
-                            <div className="text-white/80">{aiMetadata.provider}</div>
-                            <div className="text-white/70">{(aiMetadata.generationTime / 1000).toFixed(1)}s generation time</div>
-                          </div>
-                        </div>
-                      </div>
-                    )}
-                  </div>
+                  <div className="w-full max-w-sm lg:max-w-none bg-gray-100 rounded-xl sm:rounded-2xl shadow-lg overflow-hidden" style={{ maxHeight: '400px', minHeight: '250px' }}>
+                    <img 
+                      src={breedImage} 
+                      alt="Breed" 
+                      className="w-full h-full object-contain" 
+                    />
                   </div>
                 )}
               </div>
