@@ -3,19 +3,20 @@
 A modern, production-ready Next.js web portal for dog and cat breeds with **AI-powered chatbot**, **12-language support**, **LLM-powered translation**, and **mobile-first design**.
 
 **Live Site**: https://aibreeds-demo.com  
-**Last Updated**: January 21, 2026  
-**Status**: ✅ Phase 6 Complete & Deployed | 🎉 Production Live with LLM Translation & Vision AI
+**Last Updated**: January 23, 2026  
+**Status**: ✅ Phase 6 Complete & Deployed | 🎉 Production Live with LLM Translation, Vision AI & AI Image Generation
 
 ## ✨ Features
 
 ### Core Features
 - **🤖 AI Chatbot**: Multi-provider LLM system with intelligent fallback (Together AI, OpenRouter)
+- **� AI Image Generation**: Stable Diffusion XL via Replicate API for custom/rare breed images
 - **🌍 12 Languages**: Full internationalization - English, Spanish, French, German, Chinese (Simplified & Traditional), Vietnamese, Portuguese, Arabic, Japanese, Russian, Italian
 - **🔤 LLM-Powered Translation**: Dynamic breed info translation using AI with client-side caching
 - **👁️ Vision Verification**: LLM vision models validate breed images for accuracy
 - **📱 Mobile-First**: Responsive design with touch-optimized UI (min 44px tap targets)
 - **🗂️ 61 Breeds**: Comprehensive profiles for 31 dog + 30 cat breeds
-- **🖼️ Smart Images**: Automatic breed image fetching with caching and compression
+- **🖼️ Smart Images**: Automatic breed image fetching with AI generation fallback, caching and compression
 - **⚡ Production-Ready**: Docker deployment with health checks, rollback, and monitoring
 
 ### Technical Features

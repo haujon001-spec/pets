@@ -41,7 +41,28 @@
 - ✅ **Regex JSON Parsing**: Updated regex to handle nested JSON objects properly
 - ✅ **Package Lock Sync**: Fixed package-lock.json out-of-sync issues
 
-## ✅ Recently Completed (January 23, 2026) - Cat Image Bug Fixes
+## ✅ Recently Completed (January 23, 2026) - AI Image Generation & Deployment Fixes
+
+### AI Image Generation Integration
+- ✅ **Replicate API Setup**: Integrated Stable Diffusion XL for custom breed image generation
+- ✅ **API Token Configuration**: Added REPLICATE_API_TOKEN to both dev and production environments
+- ✅ **Priority Fallback System**: DALL-E 3 → Replicate SDXL → Together AI SDXL
+- ✅ **Cost-Effective Solution**: Replicate at $0.0025/image vs DALL-E 3 at $0.04/image
+- ✅ **Environment Sync**: Production .env and dev .env.local now have matching API keys
+
+### AI Metadata Badge (Reverted for Testing)
+- ⏸️ **Badge Feature Developed**: Shows AI provider and generation time below images
+- ⏸️ **Cache Metadata Enhanced**: Stores aiProvider and generationTime in cache
+- ⏸️ **Reverted for Dev Testing**: Will re-implement after testing in dev environment first
+- 📋 **Next Step**: Test AI metadata badge locally before production deployment
+
+### Production Deployment & Infrastructure Fixes
+- ✅ **Caddy Reverse Proxy Fixed**: Recreated Caddy container with proper port mappings (80, 443)
+- ✅ **Docker Network Setup**: Both app and Caddy on pet-network for communication
+- ✅ **SSL Certificate Renewal**: HTTPS working with auto-renewed Let's Encrypt certs
+- ✅ **Deployment Script Created**: /root/deploy.sh for streamlined VPS deployments
+- ✅ **Container Health Check**: Fixed permission errors on cache metadata file
+- ✅ **Auto-Restart Policy**: All containers have --restart unless-stopped
 
 ### Missing Cat Breed Images
 - ✅ **Himalayan Image 404 Fixed**: Fetched from TheCatAPI and cached successfully
