@@ -38,6 +38,7 @@ export default function Home() {
   const [suggestedBreed, setSuggestedBreed] = useState<string>("");
   const [breedImage, setBreedImage] = useState<string>("");
   const [translatedBreedInfo, setTranslatedBreedInfo] = useState<{[key: string]: any}>({});
+  const [lastFetchedBreed, setLastFetchedBreed] = useState<string>("");
 
   // Translated questions from i18n - recreated on every render to update with language changes
   const breedFAQs = [
@@ -63,46 +64,62 @@ export default function Home() {
 
   // Dynamic breed image fetch logic using new API route
   useEffect(() => {
-    async function fetchBreedImage() {
-      let breed: BreedInfo | undefined = undefined;
-      let customBreedName: string | undefined = undefined;
-      
-      // First, try to find breed in database
-      if (selectedBreed && selectedBreed !== 'other') {
-        breed = breeds.find(b => b.id === selectedBreed);
-      } else if (typedBreed && suggestedBreed) {
-        breed = breeds.find(b => b.name === suggestedBreed);
-      } else if (selectedBreed === 'other' && typedBreed) {
-        // User typed a custom breed name - use it directly with current petType
-        customBreedName = typedBreed;
-      }
-      
-      // Clear image if no breed specified
-      if (!breed && !customBreedName) {
-        setBreedImage("");
-        return;
-      }
-      
-      // Use new API route for breed image fetching and caching
-      try {
-        const params = new URLSearchParams({
-          breedId: breed?.id || 'custom',
-          petType: breed?.petType || petType,
-          breedName: breed?.name || customBreedName || '',
-        });
-        const res = await fetch(`/api/breed-image?${params.toString()}`);
-        const data = await res.json();
-        if (data && data.imageUrl) {
-          setBreedImage(data.imageUrl);
-        } else {
+    // Debounce: wait for user to stop typing before fetching
+    const timeoutId = setTimeout(() => {
+      async function fetchBreedImage() {
+        let breed: BreedInfo | undefined = undefined;
+        let customBreedName: string | undefined = undefined;
+        
+        // First, try to find breed in database
+        if (selectedBreed && selectedBreed !== 'other') {
+          breed = breeds.find(b => b.id === selectedBreed);
+        } else if (typedBreed && suggestedBreed) {
+          breed = breeds.find(b => b.name === suggestedBreed);
+        } else if (selectedBreed === 'other' && typedBreed) {
+          // User typed a custom breed name - use it directly with current petType
+          customBreedName = typedBreed;
+        }
+        
+        // Clear image if no breed specified
+        if (!breed && !customBreedName) {
+          setBreedImage("");
+          setLastFetchedBreed("");
+          return;
+        }
+        
+        // Create unique key for this breed request
+        const breedKey = `${breed?.id || 'custom'}-${breed?.name || customBreedName}-${breed?.petType || petType}`;
+        
+        // Prevent duplicate requests - only fetch if breed changed
+        if (breedKey === lastFetchedBreed) {
+          return;
+        }
+        
+        setLastFetchedBreed(breedKey);
+        
+        // Use new API route for breed image fetching and caching
+        try {
+          const params = new URLSearchParams({
+            breedId: breed?.id || 'custom',
+            petType: breed?.petType || petType,
+            breedName: breed?.name || customBreedName || '',
+          });
+          const res = await fetch(`/api/breed-image?${params.toString()}`);
+          const data = await res.json();
+          if (data && data.imageUrl) {
+            setBreedImage(data.imageUrl);
+          } else {
+            setBreedImage(petType === "dog" ? "/breeds/placeholder_dog.jpg" : "/breeds/placeholder_cat.jpg");
+          }
+        } catch {
           setBreedImage(petType === "dog" ? "/breeds/placeholder_dog.jpg" : "/breeds/placeholder_cat.jpg");
         }
-      } catch {
-        setBreedImage(petType === "dog" ? "/breeds/placeholder_dog.jpg" : "/breeds/placeholder_cat.jpg");
       }
-    }
-    fetchBreedImage();
-  }, [selectedBreed, typedBreed, suggestedBreed, breeds, petType]);
+      fetchBreedImage();
+    }, 500); // Wait 500ms after user stops typing
+    
+    return () => clearTimeout(timeoutId);
+  }, [selectedBreed, typedBreed, suggestedBreed, breeds, petType, lastFetchedBreed]);
 
   // Fuzzy search for breed name correction and prefill
   useEffect(() => {

@@ -253,5 +253,645 @@
     "fetchedAt": "2026-01-23T02:24:16.562Z",
     "sourceUrl": "https://images.dog.ceo/breeds/vizsla/n02100583_9884.jpg",
     "expiresAt": "2026-01-30T02:24:16.562Z"
+  },
+  "custom-cat-s.jpg": {
+    "fetchedAt": "2026-01-23T03:29:58.806Z",
+    "sourceUrl": "https://cdn2.thecatapi.com/images/a8nIYvs6S.jpg",
+    "expiresAt": "2026-01-30T03:29:58.806Z",
+    "verified": false,
+    "verifiedAt": "2026-01-23T03:29:58.806Z",
+    "verificationScore": 0
+  },
+  "singapura.jpg": {
+    "fetchedAt": "2026-01-23T03:29:59.774Z",
+    "sourceUrl": "https://cdn2.thecatapi.com/images/VGzO6r82_.jpg",
+    "expiresAt": "2026-01-30T03:29:59.774Z",
+    "verified": false,
+    "verifiedAt": "2026-01-23T03:29:59.774Z",
+    "verificationScore": 70
+  },
+  "siamese.jpg": {
+    "fetchedAt": "2026-01-23T03:29:59.925Z",
+    "sourceUrl": "https://cdn2.thecatapi.com/images/KCJeb66J2.jpg",
+    "expiresAt": "2026-01-30T03:29:59.925Z",
+    "verified": true,
+    "verifiedAt": "2026-01-23T03:29:59.925Z",
+    "verificationScore": 95
+  },
+  "custom-cat-sim.jpg": {
+    "fetchedAt": "2026-01-23T03:30:00.099Z",
+    "sourceUrl": "https://cdn2.thecatapi.com/images/nS12H9od0.jpg",
+    "expiresAt": "2026-01-30T03:30:00.099Z",
+    "verified": false,
+    "verifiedAt": "2026-01-23T03:30:00.099Z",
+    "verificationScore": 0
+  },
+  "savannah.jpg": {
+    "fetchedAt": "2026-01-23T03:30:00.105Z",
+    "sourceUrl": "https://cdn2.thecatapi.com/images/62Onx4gRb.jpg",
+    "expiresAt": "2026-01-30T03:30:00.105Z",
+    "verified": false,
+    "verifiedAt": "2026-01-23T03:30:00.105Z",
+    "verificationScore": 70
+  },
+  "custom-cat-si.jpg": {
+    "fetchedAt": "2026-01-23T03:30:11.003Z",
+    "sourceUrl": "https://cdn2.thecatapi.com/images/N0cPNDdpW.jpg",
+    "expiresAt": "2026-01-30T03:30:11.003Z",
+    "verified": false,
+    "verifiedAt": "2026-01-23T03:30:11.003Z",
+    "verificationScore": 60
+  },
+  "custom-cat-selkirkrex.jpg": {
+    "fetchedAt": "2026-01-23T03:32:02.543Z",
+    "sourceUrl": "https://cdn2.thecatapi.com/images/kcDyctLTZ.jpg",
+    "expiresAt": "2026-01-30T03:32:02.543Z",
+    "verified": false,
+    "verifiedAt": "2026-01-23T03:32:02.543Z",
+    "verificationScore": 50
+  },
+  "custom-cat-selkir.jpg": {
+    "fetchedAt": "2026-01-23T03:33:08.760Z",
+    "sourceUrl": "https://cdn2.thecatapi.com/images/0dR5LpzNO.jpg",
+    "expiresAt": "2026-01-30T03:33:08.760Z",
+    "verified": false,
+    "verifiedAt": "2026-01-23T03:33:08.760Z",
+    "verificationScore": 0
+  },
+  "custom-cat-selkirk.jpg": {
+    "fetchedAt": "2026-01-23T03:33:09.248Z",
+    "sourceUrl": "https://cdn2.thecatapi.com/images/kcDyctLTZ.jpg",
+    "expiresAt": "2026-01-30T03:33:09.248Z",
+    "verified": false,
+    "verifiedAt": "2026-01-23T03:33:09.248Z",
+    "verificationScore": 0
+  },
+  "custom-cat-selkirkre.jpg": {
+    "fetchedAt": "2026-01-23T03:33:09.043Z",
+    "sourceUrl": "https://cdn2.thecatapi.com/images/jnqO9lwG2.jpg",
+    "expiresAt": "2026-01-30T03:33:09.043Z",
+    "verified": false,
+    "verifiedAt": "2026-01-23T03:33:09.043Z",
+    "verificationScore": 0
+  },
+  "custom-cat-selkirkr.jpg": {
+    "fetchedAt": "2026-01-23T03:33:09.081Z",
+    "sourceUrl": "https://cdn2.thecatapi.com/images/wwFp9IiRd.jpg",
+    "expiresAt": "2026-01-30T03:33:09.081Z",
+    "verified": false,
+    "verifiedAt": "2026-01-23T03:33:09.081Z",
+    "verificationScore": 0
+  },
+  "custom-cat-selki.jpg": {
+    "fetchedAt": "2026-01-23T03:33:09.434Z",
+    "sourceUrl": "https://cdn2.thecatapi.com/images/II9dOZmrw.jpg",
+    "expiresAt": "2026-01-30T03:33:09.434Z",
+    "verified": false,
+    "verifiedAt": "2026-01-23T03:33:09.434Z",
+    "verificationScore": 0
+  },
+  "custom-cat-sel.jpg": {
+    "fetchedAt": "2026-01-23T03:33:10.404Z",
+    "sourceUrl": "https://cdn2.thecatapi.com/images/kcDyctLTZ.jpg",
+    "expiresAt": "2026-01-30T03:33:10.404Z",
+    "verified": false,
+    "verifiedAt": "2026-01-23T03:33:10.404Z",
+    "verificationScore": 0
+  },
+  "custom-cat-se.jpg": {
+    "fetchedAt": "2026-01-23T03:33:10.753Z",
+    "sourceUrl": "https://cdn2.thecatapi.com/images/zXYdWjjy4.jpg",
+    "expiresAt": "2026-01-30T03:33:10.753Z",
+    "verified": false,
+    "verifiedAt": "2026-01-23T03:33:10.753Z",
+    "verificationScore": 0
+  },
+  "custom-cat-turkishangora.jpg": {
+    "fetchedAt": "2026-01-23T03:33:10.788Z",
+    "sourceUrl": "https://cdn2.thecatapi.com/images/58mi0uCwO.jpg",
+    "expiresAt": "2026-01-30T03:33:10.788Z",
+    "verified": false,
+    "verifiedAt": "2026-01-23T03:33:10.788Z",
+    "verificationScore": 70
+  },
+  "custom-cat-selk.jpg": {
+    "fetchedAt": "2026-01-23T03:33:11.367Z",
+    "sourceUrl": "https://cdn2.thecatapi.com/images/0Vz3XgaPM.jpg",
+    "expiresAt": "2026-01-30T03:33:11.367Z",
+    "verified": false,
+    "verifiedAt": "2026-01-23T03:33:11.367Z",
+    "verificationScore": 0
+  },
+  "custom-dog-turkishangora.jpg": {
+    "fetchedAt": "2026-01-23T03:33:59.256Z",
+    "sourceUrl": "https://images.dog.ceo/breeds/rajapalayam-indian/Rajapalayam-dog.jpg",
+    "expiresAt": "2026-01-30T03:33:59.256Z",
+    "verified": false,
+    "verifiedAt": "2026-01-23T03:33:59.256Z",
+    "verificationScore": 0
+  },
+  "custom-dog-turkishangor.jpg": {
+    "fetchedAt": "2026-01-23T03:34:01.289Z",
+    "sourceUrl": "https://images.dog.ceo/breeds/buhund-norwegian/hakon1.jpg",
+    "expiresAt": "2026-01-30T03:34:01.289Z",
+    "verified": false,
+    "verifiedAt": "2026-01-23T03:34:01.289Z",
+    "verificationScore": 0
+  },
+  "custom-dog-turkishang.jpg": {
+    "fetchedAt": "2026-01-23T03:34:02.258Z",
+    "sourceUrl": "https://images.dog.ceo/breeds/springer-english/n02102040_7169.jpg",
+    "expiresAt": "2026-01-30T03:34:02.258Z",
+    "verified": false,
+    "verifiedAt": "2026-01-23T03:34:02.258Z",
+    "verificationScore": 0
+  },
+  "custom-dog-turkisha.jpg": {
+    "fetchedAt": "2026-01-23T03:34:02.551Z",
+    "sourceUrl": "https://images.dog.ceo/breeds/cattledog-australian/IMG_1688.jpg",
+    "expiresAt": "2026-01-30T03:34:02.551Z",
+    "verified": false,
+    "verifiedAt": "2026-01-23T03:34:02.551Z",
+    "verificationScore": 0
+  },
+  "custom-dog-turkish.jpg": {
+    "fetchedAt": "2026-01-23T03:34:17.315Z",
+    "sourceUrl": "https://api.together.ai/shrt/7K9H17awQ8Yu4On3",
+    "expiresAt": "2026-01-30T03:34:17.315Z",
+    "verified": false,
+    "verifiedAt": "2026-01-23T03:34:17.315Z",
+    "verificationScore": 0
+  },
+  "custom-dog-turkishango.jpg": {
+    "fetchedAt": "2026-01-23T03:34:02.903Z",
+    "sourceUrl": "https://images.dog.ceo/breeds/pointer-germanlonghair/hans3.jpg",
+    "expiresAt": "2026-01-30T03:34:02.903Z",
+    "verified": false,
+    "verifiedAt": "2026-01-23T03:34:02.903Z",
+    "verificationScore": 0
+  },
+  "custom-dog-turkis.jpg": {
+    "fetchedAt": "2026-01-23T03:34:03.867Z",
+    "sourceUrl": "https://images.dog.ceo/breeds/schnauzer-miniature/n02097047_6936.jpg",
+    "expiresAt": "2026-01-30T03:34:03.867Z",
+    "verified": false,
+    "verifiedAt": "2026-01-23T03:34:03.867Z",
+    "verificationScore": 0
+  },
+  "custom-dog-turkishan.jpg": {
+    "fetchedAt": "2026-01-23T03:34:04.090Z",
+    "sourceUrl": "https://images.dog.ceo/breeds/terrier-andalusian/ratoner-bodeguero-andaluz.jpg",
+    "expiresAt": "2026-01-30T03:34:04.090Z",
+    "verified": false,
+    "verifiedAt": "2026-01-23T03:34:04.090Z",
+    "verificationScore": 0
+  },
+  "custom-dog-turki.jpg": {
+    "fetchedAt": "2026-01-23T03:34:04.298Z",
+    "sourceUrl": "https://images.dog.ceo/breeds/terrier-american/n02093428_9346.jpg",
+    "expiresAt": "2026-01-30T03:34:04.298Z",
+    "verified": false,
+    "verifiedAt": "2026-01-23T03:34:04.298Z",
+    "verificationScore": 0
+  },
+  "rottweiler.jpg": {
+    "fetchedAt": "2026-01-23T03:34:04.608Z",
+    "sourceUrl": "https://images.dog.ceo/breeds/rottweiler/n02106550_9432.jpg",
+    "expiresAt": "2026-01-30T03:34:04.608Z",
+    "verified": true,
+    "verifiedAt": "2026-01-23T03:34:04.608Z",
+    "verificationScore": 95
+  },
+  "custom-dog-turk.jpg": {
+    "fetchedAt": "2026-01-23T03:34:05.078Z",
+    "sourceUrl": "https://images.dog.ceo/breeds/poodle-miniature/n02113712_1572.jpg",
+    "expiresAt": "2026-01-30T03:34:05.078Z",
+    "verified": false,
+    "verifiedAt": "2026-01-23T03:34:05.078Z",
+    "verificationScore": 0
+  },
+  "custom-dog-westhighlandwhiteterrier.jpg": {
+    "fetchedAt": "2026-01-23T03:34:05.656Z",
+    "sourceUrl": "https://images.dog.ceo/breeds/terrier-fox/n02095314_1772.jpg",
+    "expiresAt": "2026-01-30T03:34:05.656Z",
+    "verified": true,
+    "verifiedAt": "2026-01-23T03:34:05.656Z",
+    "verificationScore": 95
+  },
+  "custom-dog-westhighlandwhiteter.jpg": {
+    "fetchedAt": "2026-01-23T03:34:49.684Z",
+    "sourceUrl": "https://images.dog.ceo/breeds/terrier-patterdale/320px-05078045_Patterdale_Terrier.jpg",
+    "expiresAt": "2026-01-30T03:34:49.684Z",
+    "verified": false,
+    "verifiedAt": "2026-01-23T03:34:49.684Z",
+    "verificationScore": 70
+  },
+  "custom-dog-westhighlandwhiteterr.jpg": {
+    "fetchedAt": "2026-01-23T03:34:49.804Z",
+    "sourceUrl": "https://images.dog.ceo/breeds/terrier-fox/n02095314_3299.jpg",
+    "expiresAt": "2026-01-30T03:34:49.804Z",
+    "verified": false,
+    "verifiedAt": "2026-01-23T03:34:49.804Z",
+    "verificationScore": 70
+  },
+  "custom-dog-westhighlandwhitet.jpg": {
+    "fetchedAt": "2026-01-23T03:34:49.989Z",
+    "sourceUrl": "https://images.dog.ceo/breeds/terrier-tibetan/n02097474_4266.jpg",
+    "expiresAt": "2026-01-30T03:34:49.989Z",
+    "verified": false,
+    "verifiedAt": "2026-01-23T03:34:49.989Z",
+    "verificationScore": 70
+  },
+  "custom-dog-westhighlandwhiteterri.jpg": {
+    "fetchedAt": "2026-01-23T03:34:50.004Z",
+    "sourceUrl": "https://images.dog.ceo/breeds/terrier-fox/n02095314_740.jpg",
+    "expiresAt": "2026-01-30T03:34:50.004Z",
+    "verified": false,
+    "verifiedAt": "2026-01-23T03:34:50.004Z",
+    "verificationScore": 70
+  },
+  "custom-dog-westhighlandwhiteterrie.jpg": {
+    "fetchedAt": "2026-01-23T03:34:50.122Z",
+    "sourceUrl": "https://images.dog.ceo/breeds/terrier-fox/n02095314_1789.jpg",
+    "expiresAt": "2026-01-30T03:34:50.122Z",
+    "verified": false,
+    "verifiedAt": "2026-01-23T03:34:50.122Z",
+    "verificationScore": 0
+  },
+  "custom-dog-westhighlandwhitete.jpg": {
+    "fetchedAt": "2026-01-23T03:34:50.563Z",
+    "sourceUrl": "https://images.dog.ceo/breeds/terrier-patterdale/Patterdale.jpg",
+    "expiresAt": "2026-01-30T03:34:50.563Z",
+    "verified": false,
+    "verifiedAt": "2026-01-23T03:34:50.563Z",
+    "verificationScore": 60
+  },
+  "custom-dog-westhighlandwhite.jpg": {
+    "fetchedAt": "2026-01-23T03:34:51.501Z",
+    "sourceUrl": "https://images.dog.ceo/breeds/terrier-westhighland/n02098286_771.jpg",
+    "expiresAt": "2026-01-30T03:34:51.501Z",
+    "verified": false,
+    "verifiedAt": "2026-01-23T03:34:51.501Z",
+    "verificationScore": 60
+  },
+  "custom-dog-westhighlandwh.jpg": {
+    "fetchedAt": "2026-01-23T03:34:52.040Z",
+    "sourceUrl": "https://images.dog.ceo/breeds/terrier-westhighland/n02098286_5472.jpg",
+    "expiresAt": "2026-01-30T03:34:52.040Z",
+    "verified": false,
+    "verifiedAt": "2026-01-23T03:34:52.040Z",
+    "verificationScore": 70
+  },
+  "custom-dog-westhighlandw.jpg": {
+    "fetchedAt": "2026-01-23T03:34:52.182Z",
+    "sourceUrl": "https://images.dog.ceo/breeds/wolfhound-irish/n02090721_348.jpg",
+    "expiresAt": "2026-01-30T03:34:52.182Z",
+    "verified": false,
+    "verifiedAt": "2026-01-23T03:34:52.182Z",
+    "verificationScore": 0
+  },
+  "custom-dog-westhighlandwhit.jpg": {
+    "fetchedAt": "2026-01-23T03:34:52.188Z",
+    "sourceUrl": "https://images.dog.ceo/breeds/terrier-westhighland/n02098286_4734.jpg",
+    "expiresAt": "2026-01-30T03:34:52.188Z",
+    "verified": false,
+    "verifiedAt": "2026-01-23T03:34:52.188Z",
+    "verificationScore": 0
+  },
+  "custom-dog-westhighlandwhi.jpg": {
+    "fetchedAt": "2026-01-23T03:34:52.498Z",
+    "sourceUrl": "https://images.dog.ceo/breeds/terrier-westhighland/n02098286_5036.jpg",
+    "expiresAt": "2026-01-30T03:34:52.498Z",
+    "verified": false,
+    "verifiedAt": "2026-01-23T03:34:52.498Z",
+    "verificationScore": 70
+  },
+  "custom-dog-westhighland.jpg": {
+    "fetchedAt": "2026-01-23T03:34:54.230Z",
+    "sourceUrl": "https://images.dog.ceo/breeds/terrier-westhighland/n02098286_6158.jpg",
+    "expiresAt": "2026-01-30T03:34:54.230Z",
+    "verified": false,
+    "verifiedAt": "2026-01-23T03:34:54.230Z",
+    "verificationScore": 0
+  },
+  "custom-dog-westhighl.jpg": {
+    "fetchedAt": "2026-01-23T03:34:53.836Z",
+    "sourceUrl": "https://images.dog.ceo/breeds/terrier-westhighland/n02098286_1705.jpg",
+    "expiresAt": "2026-01-30T03:34:53.836Z",
+    "verified": false,
+    "verifiedAt": "2026-01-23T03:34:53.836Z",
+    "verificationScore": 0
+  },
+  "custom-dog-westhighlan.jpg": {
+    "fetchedAt": "2026-01-23T03:34:53.899Z",
+    "sourceUrl": "https://images.dog.ceo/breeds/terrier-westhighland/n02098286_4546.jpg",
+    "expiresAt": "2026-01-30T03:34:53.899Z",
+    "verified": false,
+    "verifiedAt": "2026-01-23T03:34:53.899Z",
+    "verificationScore": 0
+  },
+  "custom-dog-westhigh.jpg": {
+    "fetchedAt": "2026-01-23T03:34:54.368Z",
+    "sourceUrl": "https://images.dog.ceo/breeds/terrier-westhighland/n02098286_4158.jpg",
+    "expiresAt": "2026-01-30T03:34:54.368Z",
+    "verified": false,
+    "verifiedAt": "2026-01-23T03:34:54.368Z",
+    "verificationScore": 0
+  },
+  "custom-dog-westhighla.jpg": {
+    "fetchedAt": "2026-01-23T03:34:54.474Z",
+    "sourceUrl": "https://images.dog.ceo/breeds/terrier-westhighland/n02098286_1591.jpg",
+    "expiresAt": "2026-01-30T03:34:54.474Z",
+    "verified": false,
+    "verifiedAt": "2026-01-23T03:34:54.474Z",
+    "verificationScore": 0
+  },
+  "custom-dog-westhig.jpg": {
+    "fetchedAt": "2026-01-23T03:34:55.202Z",
+    "sourceUrl": "https://images.dog.ceo/breeds/terrier-westhighland/n02098286_5234.jpg",
+    "expiresAt": "2026-01-30T03:34:55.202Z",
+    "verified": false,
+    "verifiedAt": "2026-01-23T03:34:55.202Z",
+    "verificationScore": 0
+  },
+  "custom-dog-westhi.jpg": {
+    "fetchedAt": "2026-01-23T03:34:55.385Z",
+    "sourceUrl": "https://images.dog.ceo/breeds/terrier-westhighland/n02098286_1260.jpg",
+    "expiresAt": "2026-01-30T03:34:55.385Z",
+    "verified": false,
+    "verifiedAt": "2026-01-23T03:34:55.385Z",
+    "verificationScore": 0
+  },
+  "custom-dog-wes.jpg": {
+    "fetchedAt": "2026-01-23T03:34:56.264Z",
+    "sourceUrl": "https://images.dog.ceo/breeds/terrier-westhighland/n02098286_1490.jpg",
+    "expiresAt": "2026-01-30T03:34:56.264Z",
+    "verified": false,
+    "verifiedAt": "2026-01-23T03:34:56.264Z",
+    "verificationScore": 0
+  },
+  "custom-dog-westh.jpg": {
+    "fetchedAt": "2026-01-23T03:34:56.319Z",
+    "sourceUrl": "https://images.dog.ceo/breeds/hound-afghan/n02088094_12945.jpg",
+    "expiresAt": "2026-01-30T03:34:56.319Z",
+    "verified": false,
+    "verifiedAt": "2026-01-23T03:34:56.319Z",
+    "verificationScore": 0
+  },
+  "custom-dog-west.jpg": {
+    "fetchedAt": "2026-01-23T03:34:56.925Z",
+    "sourceUrl": "https://images.dog.ceo/breeds/terrier-westhighland/n02098286_3701.jpg",
+    "expiresAt": "2026-01-30T03:34:56.925Z",
+    "verified": false,
+    "verifiedAt": "2026-01-23T03:34:56.925Z",
+    "verificationScore": 0
+  },
+  "custom-dog-we.jpg": {
+    "fetchedAt": "2026-01-23T03:34:56.844Z",
+    "sourceUrl": "https://images.dog.ceo/breeds/spaniel-welsh/n02102177_1681.jpg",
+    "expiresAt": "2026-01-30T03:34:56.844Z",
+    "verified": false,
+    "verifiedAt": "2026-01-23T03:34:56.844Z",
+    "verificationScore": 0
+  },
+  "whippet.jpg": {
+    "fetchedAt": "2026-01-23T03:34:57.444Z",
+    "sourceUrl": "https://images.dog.ceo/breeds/whippet/n02091134_14465.jpg",
+    "expiresAt": "2026-01-30T03:34:57.444Z",
+    "verified": true,
+    "verifiedAt": "2026-01-23T03:34:57.444Z",
+    "verificationScore": 95
+  },
+  "custom-dog-irishsetter.jpg": {
+    "fetchedAt": "2026-01-23T03:34:58.194Z",
+    "sourceUrl": "https://images.dog.ceo/breeds/setter-irish/n02100877_4895.jpg",
+    "expiresAt": "2026-01-30T03:34:58.194Z",
+    "verified": false,
+    "verifiedAt": "2026-01-23T03:34:58.194Z",
+    "verificationScore": 60
+  },
+  "custom-dog-irishsett.jpg": {
+    "fetchedAt": "2026-01-23T03:35:40.102Z",
+    "sourceUrl": "https://images.dog.ceo/breeds/setter-irish/n02100877_6724.jpg",
+    "expiresAt": "2026-01-30T03:35:40.102Z",
+    "verified": false,
+    "verifiedAt": "2026-01-23T03:35:40.102Z",
+    "verificationScore": 0
+  },
+  "custom-dog-irish.jpg": {
+    "fetchedAt": "2026-01-23T03:35:41.966Z",
+    "sourceUrl": "https://images.dog.ceo/breeds/setter-irish/n02100877_6642.jpg",
+    "expiresAt": "2026-01-30T03:35:41.966Z",
+    "verified": false,
+    "verifiedAt": "2026-01-23T03:35:41.966Z",
+    "verificationScore": 0
+  },
+  "custom-dog-irishsette.jpg": {
+    "fetchedAt": "2026-01-23T03:35:40.404Z",
+    "sourceUrl": "https://images.dog.ceo/breeds/setter-irish/n02100877_239.jpg",
+    "expiresAt": "2026-01-30T03:35:40.404Z",
+    "verified": false,
+    "verifiedAt": "2026-01-23T03:35:40.404Z",
+    "verificationScore": 0
+  },
+  "custom-dog-irishset.jpg": {
+    "fetchedAt": "2026-01-23T03:35:40.640Z",
+    "sourceUrl": "https://images.dog.ceo/breeds/setter-irish/n02100877_4764.jpg",
+    "expiresAt": "2026-01-30T03:35:40.640Z",
+    "verified": false,
+    "verifiedAt": "2026-01-23T03:35:40.640Z",
+    "verificationScore": 0
+  },
+  "custom-dog-irishse.jpg": {
+    "fetchedAt": "2026-01-23T03:35:40.769Z",
+    "sourceUrl": "https://images.dog.ceo/breeds/setter-irish/n02100877_1669.jpg",
+    "expiresAt": "2026-01-30T03:35:40.769Z",
+    "verified": false,
+    "verifiedAt": "2026-01-23T03:35:40.769Z",
+    "verificationScore": 0
+  },
+  "custom-dog-irishs.jpg": {
+    "fetchedAt": "2026-01-23T03:35:41.083Z",
+    "sourceUrl": "https://images.dog.ceo/breeds/setter-irish/n02100877_131.jpg",
+    "expiresAt": "2026-01-30T03:35:41.083Z",
+    "verified": false,
+    "verifiedAt": "2026-01-23T03:35:41.083Z",
+    "verificationScore": 0
+  },
+  "custom-dog-iri.jpg": {
+    "fetchedAt": "2026-01-23T03:35:42.663Z",
+    "sourceUrl": "https://images.dog.ceo/breeds/terrier-irish/n02093991_281.jpg",
+    "expiresAt": "2026-01-30T03:35:42.663Z",
+    "verified": false,
+    "verifiedAt": "2026-01-23T03:35:42.663Z",
+    "verificationScore": 0
+  },
+  "custom-dog-iris.jpg": {
+    "fetchedAt": "2026-01-23T03:35:42.815Z",
+    "sourceUrl": "https://images.dog.ceo/breeds/setter-irish/n02100877_5799.jpg",
+    "expiresAt": "2026-01-30T03:35:42.815Z",
+    "verified": false,
+    "verifiedAt": "2026-01-23T03:35:42.815Z",
+    "verificationScore": 0
+  },
+  "custom-dog-ir.jpg": {
+    "fetchedAt": "2026-01-23T03:35:42.864Z",
+    "sourceUrl": "https://images.dog.ceo/breeds/setter-irish/n02100877_828.jpg",
+    "expiresAt": "2026-01-30T03:35:42.864Z",
+    "verified": false,
+    "verifiedAt": "2026-01-23T03:35:42.864Z",
+    "verificationScore": 0
+  },
+  "custom-dog-rhodesianridgeback.jpg": {
+    "fetchedAt": "2026-01-23T03:35:42.893Z",
+    "sourceUrl": "https://images.dog.ceo/breeds/ridgeback-rhodesian/n02087394_1964.jpg",
+    "expiresAt": "2026-01-30T03:35:42.893Z",
+    "verified": false,
+    "verifiedAt": "2026-01-23T03:35:42.893Z",
+    "verificationScore": 60
+  },
+  "staffordshire.jpg": {
+    "fetchedAt": "2026-01-23T03:35:43.060Z",
+    "sourceUrl": "https://images.dog.ceo/breeds/bullterrier-staffordshire/n02093256_7075.jpg",
+    "expiresAt": "2026-01-30T03:35:43.060Z",
+    "verified": false,
+    "verifiedAt": "2026-01-23T03:35:43.060Z",
+    "verificationScore": 60
+  },
+  "custom-dog-rhodesianridgebac.jpg": {
+    "fetchedAt": "2026-01-23T03:36:11.066Z",
+    "sourceUrl": "https://images.dog.ceo/breeds/ridgeback-rhodesian/n02087394_4681.jpg",
+    "expiresAt": "2026-01-30T03:36:11.066Z",
+    "verified": false,
+    "verifiedAt": "2026-01-23T03:36:11.066Z",
+    "verificationScore": 60
+  },
+  "custom-dog-rhodesianrid.jpg": {
+    "fetchedAt": "2026-01-23T03:36:11.091Z",
+    "sourceUrl": "https://images.dog.ceo/breeds/ridgeback-rhodesian/n02087394_8823.jpg",
+    "expiresAt": "2026-01-30T03:36:11.091Z",
+    "verified": false,
+    "verifiedAt": "2026-01-23T03:36:11.091Z",
+    "verificationScore": 60
+  },
+  "custom-dog-rhodesianridgeba.jpg": {
+    "fetchedAt": "2026-01-23T03:36:11.334Z",
+    "sourceUrl": "https://images.dog.ceo/breeds/ridgeback-rhodesian/n02087394_10683.jpg",
+    "expiresAt": "2026-01-30T03:36:11.334Z",
+    "verified": false,
+    "verifiedAt": "2026-01-23T03:36:11.334Z",
+    "verificationScore": 60
+  },
+  "custom-dog-rhodesianridgeb.jpg": {
+    "fetchedAt": "2026-01-23T03:36:11.502Z",
+    "sourceUrl": "https://images.dog.ceo/breeds/ridgeback-rhodesian/n02087394_7008.jpg",
+    "expiresAt": "2026-01-30T03:36:11.502Z",
+    "verified": false,
+    "verifiedAt": "2026-01-23T03:36:11.502Z",
+    "verificationScore": 70
+  },
+  "custom-dog-rhodesianridg.jpg": {
+    "fetchedAt": "2026-01-23T03:36:11.536Z",
+    "sourceUrl": "https://images.dog.ceo/breeds/ridgeback-rhodesian/n02087394_11541.jpg",
+    "expiresAt": "2026-01-30T03:36:11.536Z",
+    "verified": false,
+    "verifiedAt": "2026-01-23T03:36:11.536Z",
+    "verificationScore": 60
+  },
+  "custom-dog-rhodesianridge.jpg": {
+    "fetchedAt": "2026-01-23T03:36:11.969Z",
+    "sourceUrl": "https://images.dog.ceo/breeds/ridgeback-rhodesian/n02087394_9361.jpg",
+    "expiresAt": "2026-01-30T03:36:11.969Z",
+    "verified": false,
+    "verifiedAt": "2026-01-23T03:36:11.969Z",
+    "verificationScore": 60
+  },
+  "custom-dog-rhodesian.jpg": {
+    "fetchedAt": "2026-01-23T03:36:13.711Z",
+    "sourceUrl": "https://images.dog.ceo/breeds/ridgeback-rhodesian/n02087394_1137.jpg",
+    "expiresAt": "2026-01-30T03:36:13.711Z",
+    "verified": false,
+    "verifiedAt": "2026-01-23T03:36:13.711Z",
+    "verificationScore": 60
+  },
+  "custom-dog-rhodesia.jpg": {
+    "fetchedAt": "2026-01-23T03:36:13.293Z",
+    "sourceUrl": "https://images.dog.ceo/breeds/ridgeback-rhodesian/n02087394_9520.jpg",
+    "expiresAt": "2026-01-30T03:36:13.293Z",
+    "verified": false,
+    "verifiedAt": "2026-01-23T03:36:13.293Z",
+    "verificationScore": 70
+  },
+  "custom-dog-rhodesianr.jpg": {
+    "fetchedAt": "2026-01-23T03:36:14.172Z",
+    "sourceUrl": "https://images.dog.ceo/breeds/ridgeback-rhodesian/n02087394_10591.jpg",
+    "expiresAt": "2026-01-30T03:36:14.172Z",
+    "verified": false,
+    "verifiedAt": "2026-01-23T03:36:14.172Z",
+    "verificationScore": 70
+  },
+  "custom-dog-rhodesi.jpg": {
+    "fetchedAt": "2026-01-23T03:36:14.418Z",
+    "sourceUrl": "https://images.dog.ceo/breeds/ridgeback-rhodesian/n02087394_3015.jpg",
+    "expiresAt": "2026-01-30T03:36:14.418Z",
+    "verified": false,
+    "verifiedAt": "2026-01-23T03:36:14.418Z",
+    "verificationScore": 60
+  },
+  "custom-dog-rhodes.jpg": {
+    "fetchedAt": "2026-01-23T03:36:14.739Z",
+    "sourceUrl": "https://images.dog.ceo/breeds/ridgeback-rhodesian/n02087394_9369.jpg",
+    "expiresAt": "2026-01-30T03:36:14.739Z",
+    "verified": false,
+    "verifiedAt": "2026-01-23T03:36:14.739Z",
+    "verificationScore": 0
+  },
+  "custom-dog-rhode.jpg": {
+    "fetchedAt": "2026-01-23T03:36:15.212Z",
+    "sourceUrl": "https://images.dog.ceo/breeds/ridgeback-rhodesian/n02087394_1743.jpg",
+    "expiresAt": "2026-01-30T03:36:15.212Z",
+    "verified": false,
+    "verifiedAt": "2026-01-23T03:36:15.212Z",
+    "verificationScore": 0
+  },
+  "custom-dog-rhod.jpg": {
+    "fetchedAt": "2026-01-23T03:36:15.406Z",
+    "sourceUrl": "https://images.dog.ceo/breeds/ridgeback-rhodesian/n02087394_2319.jpg",
+    "expiresAt": "2026-01-30T03:36:15.406Z",
+    "verified": false,
+    "verifiedAt": "2026-01-23T03:36:15.406Z",
+    "verificationScore": 0
+  },
+  "custom-dog-rho.jpg": {
+    "fetchedAt": "2026-01-23T03:36:15.485Z",
+    "sourceUrl": "https://images.dog.ceo/breeds/ridgeback-rhodesian/n02087394_909.jpg",
+    "expiresAt": "2026-01-30T03:36:15.485Z",
+    "verified": false,
+    "verifiedAt": "2026-01-23T03:36:15.485Z",
+    "verificationScore": 0
+  },
+  "custom-dog-rh.jpg": {
+    "fetchedAt": "2026-01-23T03:36:15.872Z",
+    "sourceUrl": "https://images.dog.ceo/breeds/ridgeback-rhodesian/n02087394_681.jpg",
+    "expiresAt": "2026-01-30T03:36:15.872Z",
+    "verified": false,
+    "verifiedAt": "2026-01-23T03:36:15.872Z",
+    "verificationScore": 0
+  },
+  "custom-dog-r.jpg": {
+    "fetchedAt": "2026-01-23T03:36:15.987Z",
+    "sourceUrl": "https://images.dog.ceo/breeds/ridgeback-rhodesian/n02087394_9126.jpg",
+    "expiresAt": "2026-01-30T03:36:15.987Z",
+    "verified": false,
+    "verifiedAt": "2026-01-23T03:36:15.987Z",
+    "verificationScore": 0
+  },
+  "custom-dog-akita.jpg": {
+    "fetchedAt": "2026-01-23T03:36:16.719Z",
+    "sourceUrl": "https://images.dog.ceo/breeds/akita/512px-Ainu-Dog.jpg",
+    "expiresAt": "2026-01-30T03:36:16.719Z",
+    "verified": false,
+    "verifiedAt": "2026-01-23T03:36:16.719Z",
+    "verificationScore": 70
   }
 }
