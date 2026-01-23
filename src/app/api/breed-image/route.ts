@@ -619,7 +619,7 @@ export async function GET(req: NextRequest) {
     ? `custom-${type}-${breedName.toLowerCase().replace(/[^a-z0-9]/g, '')}` 
     : breed;
   const localPath = path.join(breedsDir, `${filenameBase}.jpg`);
-  const publicPath = `/breeds/${filenameBase}.jpg`;
+  const publicPath = `/api/serve-breed-image?filename=${filenameBase}.jpg`; // Use API route instead of static path
   const filename = `${filenameBase}.jpg`;
   
   // Check if file exists locally and is not expired
