@@ -248,5 +248,10 @@
     "verified": false,
     "verifiedAt": "2026-01-22T16:43:03.006Z",
     "verificationScore": 60
+  },
+  "vizsla.jpg": {
+    "fetchedAt": "2026-01-23T02:24:16.562Z",
+    "sourceUrl": "https://images.dog.ceo/breeds/vizsla/n02100583_9884.jpg",
+    "expiresAt": "2026-01-30T02:24:16.562Z"
   }
 }
