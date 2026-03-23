@@ -3,8 +3,8 @@
 A modern, production-ready Next.js web portal for dog and cat breeds with **AI-powered chatbot**, **12-language support**, **LLM-powered translation**, and **mobile-first design**.
 
 **Live Site**: https://aibreeds-demo.com  
-**Last Updated**: January 23, 2026  
-**Status**: ✅ Phase 6 Complete & Deployed | 🎉 Production Live with LLM Translation, Vision AI & AI Image Generation
+**Last Updated**: March 23, 2026  
+**Status**: ✅ Phase 6 Complete & Deployed | 🎉 Governance Finalized (soul.md) | 📦 VPS Infrastructure Established
 
 ## ✨ Features
 
@@ -29,6 +29,22 @@ A modern, production-ready Next.js web portal for dog and cat breeds with **AI-p
 - **Image Verification System**: Automated breed image validation
 - **Zero-Downtime Deployment**: Blue-green deployment strategy with health validation
 - **Environment Segregation**: Separate dev, staging, production configs
+
+## 📋 Project Governance (soul.md)
+
+This project follows a **Universal Project Constitution** (`[soul.md](soul.md)`) that establishes:
+
+- **Folder Structure**: Standardized organization for data, models, dashboards, QA, and documentation
+- **Naming Conventions**: Consistent snake_case for scripts, dated formats for files (e.g., `DDMMMYYYY`)
+- **QA Requirements**: Mandatory testing before merge (zero unhandled exceptions, AI behavior validation, state persistence)
+- **Security Policy**: All API keys stored in `/secrets/` (gitignored), never in tracked files
+- **Universal Principles**: 
+  - ✅ Reproducibility over convenience
+  - ✅ Structure over improvisation  
+  - ✅ QA over speed
+  - ✅ Security over shortcuts
+
+**Updated March 23, 2026**: Governance structure finalized with LLM diagnostic system, dashboard framework, data processing pipeline, and comprehensive VPS infrastructure.
 
 ## 🏗️ Project Structure
 
