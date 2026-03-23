@@ -9,19 +9,24 @@ A modern, production-ready Next.js web portal for dog and cat breeds with **AI-p
 ## ✨ Features
 
 ### Core Features
-- **🤖 AI Chatbot**: Multi-provider LLM system with intelligent fallback (Together AI, OpenRouter)
-- **� AI Image Generation**: Stable Diffusion XL via Replicate API for custom/rare breed images
+- **🤖 AI Chatbot**: Multi-provider LLM system with intelligent fallback (Groq → Together AI → Hugging Face → Cohere → OpenRouter)
+- **🖼️ AI Image Generation**: Stable Diffusion XL via Replicate API for custom/rare breed images
 - **🌍 12 Languages**: Full internationalization - English, Spanish, French, German, Chinese (Simplified & Traditional), Vietnamese, Portuguese, Arabic, Japanese, Russian, Italian
 - **🔤 LLM-Powered Translation**: Dynamic breed info translation using AI with client-side caching
-- **👁️ Vision Verification**: LLM vision models validate breed images for accuracy
+- **👁️ Vision Verification**: LLaVA-1.5 vision model validates breed images for accuracy
 - **📱 Mobile-First**: Responsive design with touch-optimized UI (min 44px tap targets)
 - **🗂️ 61 Breeds**: Comprehensive profiles for 31 dog + 30 cat breeds
 - **🖼️ Smart Images**: Automatic breed image fetching with AI generation fallback, caching and compression
 - **⚡ Production-Ready**: Docker deployment with health checks, rollback, and monitoring
 
 ### Technical Features
-- **Multi-Provider LLM**: Automatic fallback across LLM providers (Together AI → OpenRouter)
-- **Vision AI**: Image verification using Llama-3.2-11B-Vision-Instruct-Turbo
+- **Multi-Provider LLM**: Automatic fallback chain with 5 free-tier providers
+  - Primary: Groq (Llama-3.3-70B-Versatile)
+  - Fallback 1: Together AI (ServiceNow Apriel-1.5-15B-Thinker + LLaVA-1.5 vision)
+  - Fallback 2: Hugging Face (Llama-3.2-3B-Instruct)
+  - Fallback 3: Cohere (Command-R-Plus)
+  - Fallback 4: OpenRouter (Step-3.5-Flash)
+- **Vision AI**: Image verification using LLaVA-1.5-7B via Together AI
 - **Dynamic Translation**: Real-time breed content translation with caching
 - **RTL Support**: Right-to-left layout for Arabic
 - **Cookie Persistence**: Language preference saved across sessions
@@ -98,8 +103,8 @@ vscode_2/
 - **Framework**: Next.js 16.1.3, React 19, TypeScript
 - **Styling**: Tailwind CSS with mobile breakpoints
 - **i18n**: next-intl v4.7 with cookie persistence + LLM translation
-- **LLM**: Together AI, OpenRouter with vision model support
-- **Vision AI**: Llama-3.2-11B-Vision-Instruct-Turbo for image verification
+- **LLM Providers**: Groq, Together AI, Hugging Face, Cohere, OpenRouter (free tier chain)
+- **Vision AI**: LLaVA-1.5-7B via Together AI for image verification
 - **Deployment**: Docker, Caddy, Let's Encrypt SSL
 - **Validation**: Comprehensive health checks (66 automated tests)
 - **Monitoring**: Health checks, automated rollback, image verification
@@ -109,7 +114,7 @@ vscode_2/
 ### Prerequisites
 - Node.js 20+ (required for Next.js 16)
 - npm or yarn
-- Free LLM API key (Groq or Together AI recommended)
+- Free LLM API key (Groq recommended, or Together AI/Hugging Face backup)
 
 ### 1. Install Dependencies
 ```bash
@@ -121,11 +126,16 @@ npm install
 # Copy environment template
 cp .env.example .env.local
 
-# Get a free API key from:
-# - Groq: https://console.groq.com/keys (recommended)
-# - Together AI: https://api.together.xyz/settings/api-keys
+# Get free API keys from (in priority order):
+# 1. Groq: https://console.groq.com/keys (RECOMMENDED - Fastest)
+# 2. Together AI: https://api.together.xyz/settings/api-keys
+# 3. Hugging Face: https://huggingface.co/settings/tokens
+# 4. Cohere: https://cohere.com/
+# 5. OpenRouter: https://openrouter.ai/ (fallback)
 
-# Edit .env.local and add your key:
+# Add at least one key to .env.local:
+# GROQ_API_KEY=your_key_here
+# OR
 # TOGETHER_API_KEY=your_key_here
 ```
 
