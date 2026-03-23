@@ -107,12 +107,17 @@ export class GroqProvider implements LLMProvider {
  * Together AI Provider
  * Multiple open-source models, good free tier
  * API: https://api.together.xyz/
+ * 
+ * NOTE: Using models compatible with free tier (serverless)
+ * Some larger models require dedicated endpoints
  */
 export class TogetherProvider implements LLMProvider {
   name = 'Together AI';
   private apiKey: string;
-  private textModel = 'meta-llama/Meta-Llama-3.1-8B-Instruct-Turbo';
-  private visionModel = 'meta-llama/Llama-3.2-11B-Vision-Instruct-Turbo';
+  // Using ServiceNow Apriel (Free tier serverless model)
+  private textModel = 'ServiceNow-AI/Apriel-1.5-15b-Thinker';
+  // Using LLaVA for vision (compatible with free tier)
+  private visionModel = 'llava-hf/llava-1.5-7b-hf';
   private baseUrl = 'https://api.together.xyz/v1/chat/completions';
 
   constructor(apiKey?: string) {
@@ -188,14 +193,16 @@ export class TogetherProvider implements LLMProvider {
 
 /**
  * Hugging Face Provider
- * Access to many models via Inference API
+ * Access to many models via Inference API (Router)
  * API: https://huggingface.co/inference-api
+ * 
+ * NOTE: Updated to use new router endpoint (old api-inference.huggingface.co is deprecated)
  */
 export class HuggingFaceProvider implements LLMProvider {
   name = 'Hugging Face';
   private apiKey: string;
   private model = 'meta-llama/Llama-3.2-3B-Instruct';
-  private baseUrl = 'https://api-inference.huggingface.co/models/meta-llama/Llama-3.2-3B-Instruct';
+  private baseUrl = 'https://router.huggingface.co/models/meta-llama/Llama-3.2-3B-Instruct';
 
   constructor(apiKey?: string) {
     this.apiKey = apiKey || process.env.HUGGINGFACE_API_KEY || '';
@@ -336,7 +343,7 @@ export class CohereProvider implements LLMProvider {
 export class OpenRouterProvider implements LLMProvider {
   name = 'OpenRouter';
   private apiKey: string;
-  private model = 'openai/gpt-3.5-turbo';
+  private model = 'stepfun/step-3.5-flash:free'; // Free model from Step AI (via OpenRouter)
   private baseUrl = 'https://openrouter.ai/api/v1/chat/completions';
 
   constructor(apiKey?: string) {

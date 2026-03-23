@@ -1,0 +1,14 @@
+{
+    "recommendations": [
+        "ms-python.python",
+        "ms-python.black-formatter",
+        "ms-python.pylance",
+        "editorconfig.editorconfig",
+        "eamodio.gitlens",
+        "mhutchie.git-graph",
+        "donjayamanne.githistory",
+        "redhat.vscode-yaml",
+        "ms-vscode.live-server",
+        "github.copilot"
+    ]
+}

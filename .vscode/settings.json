@@ -1,0 +1,24 @@
+{
+  "// ===== Peacock Color Configuration =====": "Pet Tracking System — Gold",
+  "peacock.color": "#FFD700",
+  "peacock.remoteColor": "#FFD700",
+  "workbench.colorCustomizations": {
+    "activityBar.activeBackground": "#FFED4E",
+    "activityBar.background": "#FFD700",
+    "activityBar.foreground": "#1a1a1a",
+    "activityBar.inactiveForeground": "#1a1a1a99",
+    "activityBarBadge.background": "#A0522D",
+    "activityBarBadge.foreground": "#ffffff",
+    "commandCenter.border": "#1a1a1a99",
+    "sash.hoverBorder": "#FFD700",
+    "statusBar.background": "#FFD700",
+    "statusBar.foreground": "#1a1a1a",
+    "statusBarItem.hoverBackground": "#FFED4E",
+    "statusBarItem.remoteBackground": "#FFD700",
+    "statusBarItem.remoteForeground": "#1a1a1a",
+    "titleBar.activeBackground": "#FFD700",
+    "titleBar.activeForeground": "#1a1a1a",
+    "titleBar.inactiveBackground": "#FFD70099",
+    "titleBar.inactiveForeground": "#1a1a1a99"
+  }
+}

@@ -1,0 +1,59 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Trading Bot Main",
+            "type": "python",
+            "request": "launch",
+            "program": "c:\\Users\\haujo\\projects\\DEV\\Trading\\main.py",
+            "console": "integratedTerminal",
+            "justMyCode": true,
+            "python": "c:\\Users\\haujo\\projects\\DEV\\Trading\\.venv\\Scripts\\python.exe",
+            "cwd": "c:\\Users\\haujo\\projects\\DEV\\Trading",
+            "env": {
+                "PYTHONUNBUFFERED": "1",
+                "OPENCLAW_GATEWAY_PORT": "18000"
+            }
+        },
+        {
+            "name": "OpenClaw Memory Manager",
+            "type": "python",
+            "request": "launch",
+            "program": "c:\\Users\\haujo\\projects\\DEV\\Trading\\openclaw_integration.py",
+            "console": "integratedTerminal",
+            "justMyCode": true,
+            "python": "c:\\Users\\haujo\\projects\\DEV\\Trading\\.venv\\Scripts\\python.exe",
+            "cwd": "c:\\Users\\haujo\\projects\\DEV\\Trading",
+            "env": {
+                "OPENCLAW_GATEWAY_PORT": "18000"
+            }
+        },
+        {
+            "name": "Run OpenClaw Gateway",
+            "type": "python",
+            "request": "launch",
+            "program": "c:\\Users\\haujo\\projects\\DEV\\Trading\\setup_openclaw_vscode.py",
+            "console": "integratedTerminal",
+            "python": "c:\\Users\\haujo\\projects\\DEV\\Trading\\.venv\\Scripts\\python.exe",
+            "cwd": "c:\\Users\\haujo\\projects\\DEV\\Trading",
+            "args": [
+                "--start-gateway",
+                "--port",
+                "18000"
+            ],
+            "justMyCode": false
+        },
+        {
+            "name": "pytest: Current File",
+            "type": "python",
+            "request": "launch",
+            "module": "pytest",
+            "args": [
+                "${file}",
+                "-v"
+            ],
+            "console": "integratedTerminal",
+            "justMyCode": false
+        }
+    ]
+}

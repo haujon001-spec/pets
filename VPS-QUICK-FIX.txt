@@ -1,0 +1,123 @@
+╔════════════════════════════════════════════════════════════════════════════╗
+║                    🔧 VPS FIX - QUICK REFERENCE CARD                      ║
+╚════════════════════════════════════════════════════════════════════════════╝
+
+⏱️  TIME NEEDED: 5 minutes
+💰 COST: $0.00 (completely FREE)
+🎯 GOAL: Update API keys on VPS and restart Docker
+
+
+═══════════════════════════════════════════════════════════════════════════════
+
+THE PROBLEM:
+───────────
+Website loads at https://aibreed-demo.com
+But chat shows: "All LLM providers failed. 401 Unauthorized"
+
+ROOT CAUSE:
+VPS file .env.production missing or has wrong API keys
+
+THE FIX (4 steps):
+
+═══════════════════════════════════════════════════════════════════════════════
+
+1️⃣  SSH TO VPS
+───────────────
+
+ssh root@159.223.63.117
+
+
+2️⃣  UPDATE .ENV FILE
+──────────────────
+
+cd /app && cat > .env.production << 'EOF'
+NODE_ENV=production
+NEXT_PUBLIC_API_URL=https://aibreed-demo.com
+TOGETHER_API_KEY=ec41214373c0da02905e9356b232c4964388c30d82126dcf8f203514799012c5
+OPENROUTER_API_KEY=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
+LLM_PROVIDER_ORDER=openrouter,together
+CAT_API_KEY=your_cat_api_key_here
+UNSPLASH_ACCESS_KEY=your_unsplash_key_here
+PEXELS_API_KEY=your_pexels_key_here
+CACHE_EXPIRATION_DAYS=7
+EOF
+
+
+3️⃣  RESTART DOCKER
+──────────────────
+
+docker-compose down && sleep 2 && docker-compose up -d
+
+
+4️⃣  VERIFY (Wait 3 seconds, then run)
+────────────────────────────────────────
+
+docker exec pets-app sh -c "echo Together: \${#TOGETHER_API_KEY} chars, OpenRouter: \${#OPENROUTER_API_KEY} chars"
+
+✅ Expected output:
+    Together: 64 chars, OpenRouter: 73 chars
+
+
+═══════════════════════════════════════════════════════════════════════════════
+
+TEST IT:
+────────
+
+1. Visit: https://aibreed-demo.com
+2. Select dog breed
+3. Ask: "Tell me about this breed"
+4. Wait 2-4 seconds
+
+✅ Should see AI response about the breed
+❌ Should NOT see "401 Unauthorized"
+
+
+═══════════════════════════════════════════════════════════════════════════════
+
+IF SOMETHING GOES WRONG:
+─────────────────────────
+
+Check keys loaded:
+    docker exec pets-app printenv | grep API_KEY
+
+View logs:
+    docker-compose logs -f app
+
+Restart from scratch:
+    docker-compose down
+    docker-compose rm -f
+    docker-compose up -d
+    sleep 3
+    docker-compose logs --tail=20 app
+
+
+═══════════════════════════════════════════════════════════════════════════════
+
+API KEY INFO:
+──────────────
+
+Together AI: ec41214373c0da02905e9356b232c4964388c30d82126dcf8f203514799012c5
+  Provider: ServiceNow-AI/Apriel-1.5-15b-Thinker (FREE)
+  Format: 64 characters
+
+OpenRouter: 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
+  Provider: Step 3.5 Flash (FREE)
+  Format: 73 characters, starts with sk-or-v1-
+
+Both tested locally ✅ and working 200 OK
+
+═══════════════════════════════════════════════════════════════════════════════
+
+KEY FACTS:
+──────────
+
+✅ Together AI works: Tested locally, returns pet breed info
+✅ OpenRouter configured: Free model selected
+✅ Code is ready: No code changes needed
+✅ Cost: $0.00/month (both providers FREE)
+❌ Only issue: VPS .env.production not updated yet
+
+═══════════════════════════════════════════════════════════════════════════════
+
+Done! Questions? Check the full guide in scripts/VPS-COPY-PASTE-FIX.js
+

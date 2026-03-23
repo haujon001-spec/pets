@@ -1,0 +1,114 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "OpenClaw: Start Long Memory Gateway",
+            "type": "shell",
+            "command": "powershell.exe",
+            "args": [
+                "-NoProfile",
+                "-ExecutionPolicy",
+                "Bypass",
+                "-File",
+                "${workspaceFolder}/vscode_startup_memory.ps1"
+            ],
+            "presentation": {
+                "reveal": "silent",
+                "panel": "shared",
+                "focus": false,
+                "echo": false
+            },
+            "runOptions": {
+                "runOn": "folderOpen"
+            },
+            "isBackground": true,
+            "problemMatcher": []
+        },
+        {
+            "label": "OpenClaw: Check Memory Status",
+            "type": "shell",
+            "command": "powershell.exe",
+            "args": [
+                "-NoProfile",
+                "-ExecutionPolicy",
+                "Bypass",
+                "-File",
+                "${workspaceFolder}/check_memory_status.ps1"
+            ],
+            "presentation": {
+                "reveal": "always",
+                "panel": "new"
+            },
+            "problemMatcher": [],
+            "group": {
+                "kind": "test",
+                "isDefault": false
+            }
+        },
+        {
+            "label": "OpenClaw: Restart Gateway",
+            "type": "shell",
+            "command": "powershell.exe",
+            "args": [
+                "-NoProfile",
+                "-ExecutionPolicy",
+                "Bypass",
+                "-Command",
+                "Get-Process python -ErrorAction SilentlyContinue | Where-Object {$_.CommandLine -like '*openclaw*'} | Stop-Process -Force; Start-Sleep -Seconds 2; & '${workspaceFolder}/vscode_startup_memory.ps1'"
+            ],
+            "presentation": {
+                "reveal": "always",
+                "panel": "new"
+            },
+            "problemMatcher": []
+        },
+        {
+            "label": "soul.md: Full QA",
+            "type": "shell",
+            "command": "bash",
+            "args": ["${workspaceFolder}/scripts/run_full_qa.sh"],
+            "presentation": {
+                "reveal": "always",
+                "panel": "new"
+            },
+            "problemMatcher": [],
+            "group": {
+                "kind": "test",
+                "isDefault": true
+            }
+        },
+        {
+            "label": "soul.md: Generate Dashboard",
+            "type": "shell",
+            "command": "python",
+            "args": ["${workspaceFolder}/dashboard.py"],
+            "presentation": {
+                "reveal": "always",
+                "panel": "new"
+            },
+            "problemMatcher": []
+        },
+        {
+            "label": "soul.md: Check Folder Structure",
+            "type": "shell",
+            "command": "bash",
+            "args": ["${workspaceFolder}/scripts/check_structure.sh"],
+            "presentation": {
+                "reveal": "always",
+                "panel": "new"
+            },
+            "problemMatcher": []
+        },
+        {
+            "label": "soul.md: Open Local Page (Visual QA)",
+            "type": "shell",
+            "command": "bash",
+            "args": ["${workspaceFolder}/scripts/open_local_page.sh"],
+            "presentation": {
+                "reveal": "always",
+                "panel": "new"
+            },
+            "problemMatcher": []
+        }
+    ]
+}
