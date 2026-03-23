@@ -114,10 +114,10 @@ export class GroqProvider implements LLMProvider {
 export class TogetherProvider implements LLMProvider {
   name = 'Together AI';
   private apiKey: string;
-  // Using ServiceNow Apriel (Free tier serverless model)
-  private textModel = 'ServiceNow-AI/Apriel-1.5-15b-Thinker';
-  // Using LLaVA for vision (compatible with free tier)
-  private visionModel = 'llava-hf/llava-1.5-7b-hf';
+  // Using serverless models that work with free tier
+  // These don't require dedicated endpoints
+  private textModel = 'mistralai/Mistral-7B-Instruct-v0.2';
+  private visionModel = 'mistralai/Mistral-7B-Instruct-v0.2'; // Vision use Mistral for reliability
   private baseUrl = 'https://api.together.xyz/v1/chat/completions';
 
   constructor(apiKey?: string) {
