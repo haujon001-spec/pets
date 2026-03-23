@@ -114,30 +114,37 @@ vscode_2/
 ### Prerequisites
 - Node.js 20+ (required for Next.js 16)
 - npm or yarn
-- Free LLM API key (Groq recommended, or Together AI/Hugging Face backup)
+- LLM API key (OpenRouter or Together AI recommended)
 
 ### 1. Install Dependencies
 ```bash
 npm install
 ```
 
-### 2. Configure Environment
+### 2. Configure LLM Provider
+```bash
+# Get your API key from:
+# - OpenRouter: https://openrouter.ai/ (RECOMMENDED)
+# - Together AI: https://api.together.xyz/settings/api-keys
+```
+
+### 3. Configure Environment
 ```bash
 # Copy environment template
 cp .env.example .env.local
 
 # Get free API keys from (in priority order):
-# 1. Groq: https://console.groq.com/keys (RECOMMENDED - Fastest)
-# 2. Together AI: https://api.together.xyz/settings/api-keys
-# 3. Hugging Face: https://huggingface.co/settings/tokens
-# 4. Cohere: https://cohere.com/
-# 5. OpenRouter: https://openrouter.ai/ (fallback)
-
-# Add at least one key to .env.local:
-# GROQ_API_KEY=your_key_here
-# OR
-# TOGETHER_API_KEY=your_key_here
+# 1. OpenRouter: https://openrouter.ai/ (RECOMMENDED - Global coverage)
+# 2. Together AI: https://api.together.xyz/settings/api-keys (Free tier, reliable)
+# 3. Groq: https://console.groq.com/keys (Fast inference)
+# 4. Hugging Face: https://huggingface.co/settings/tokens (Alternative)
+# 5. Cohere: https://cohere.com/ (Fallback)
+4. Run Development Server
+```bash
+npm run dev
 ```
+
+### 5
 
 ### 3. Run Development Server
 ```bash
