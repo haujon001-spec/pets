@@ -18,6 +18,13 @@ repos:
 
   - repo: local
     hooks:
+      - id: detect-api-keys
+        name: Detect Exposed API Keys
+        entry: bash scripts/detect-api-keys.sh
+        language: system
+        pass_filenames: false
+        stages: [commit]
+
       - id: enforce-folder-structure
         name: Enforce soul.md Folder Structure
         entry: bash scripts/check_structure.sh

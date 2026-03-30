@@ -30,13 +30,24 @@ yarn-debug.log*
 yarn-error.log*
 .pnpm-debug.log*
 
-# env files (can opt-in for committing if needed)
+# env files (NEVER commit .env files with real API keys)
 .env
 .env.local
 .env*.local
-# Allow production and staging env files for deployment (private repo only!)
-!.env.production
-!.env.staging
+.env.production
+.env.staging
+.env.*.production
+.env.*.staging
+
+# secrets directory (ALL API keys must go here)
+/secrets/
+secrets/
+.secrets/
+
+# Other sensitive files
+*.key
+*.pem
+*.p12
 
 # vercel
 .vercel

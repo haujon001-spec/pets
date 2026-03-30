@@ -58,11 +58,56 @@ Before merging:
 
 ---
 
-## 4. Security & Secrets
+## 4. Security & Secrets - CRITICAL POLICY
 
-- Player data is sensitive — never log IDs
-- Game API keys → `/secrets/` (gitignored)
-- Use environment variables
+**This section is NON-NEGOTIABLE. Violations constitute critical security breaches.**
+
+### 4.1 API Key Storage Rules (MANDATORY)
+- ✅ DO: Store real API keys ONLY in:
+  - `/secrets/` directory (gitignored) - for local development
+  - GitHub Secrets - for CI/CD pipelines
+  - VPS environment variables - set manually on production server
+- ❌ DO NOT:
+  - Hardcode API keys in code (even as fallback defaults)
+  - Commit `.env`, `.env.production`, `.env.staging` with real keys
+  - Paste real keys in documentation, guides, or test files
+  - Use real keys in example configurations shown in files
+  - Log or print API keys to console
+  - Store keys in notebooks, markdown files, or scripts
+
+### 4.2 Environment File Policy
+- All `.env*` files are gitignored - exceptions require security review
+- `.env.example` (template only) shows placeholder structure:
+  ```env
+  TOGETHER_API_KEY=your_together_api_key_here
+  OPENROUTER_API_KEY=your_openrouter_api_key_here
+  GROQ_API_KEY=your_groq_api_key_here
+  ```
+- Real files use either `/secrets/.env` or GitHub Actions secrets
+- NO `.env.production` or `.env.staging` committed with real values
+
+### 4.3 Code-Level Protection
+- All scripts checking code must BLOCK patterns like:
+  - `sk-or-v1-` followed by hex characters (OpenRouter keys)
+  - `hf_` followed by alphanumerics (Hugging Face tokens)
+  - Email patterns with API prefixes
+  - Any hardcoded string matching API key formats
+- Use pre-commit hooks to validate before commit
+- CI/CD automatically scans for leaked credentials
+
+### 4.4 If Credentials Are Exposed
+1. Immediately revoke compromised API keys on provider websites
+2. Rotate all keys in GitHub Secrets
+3. Update `/secrets/.env` with new keys
+4. Create new keys if existing ones were hardcoded
+5. Force-push cleanup commit (after code fixes)
+6. Document incident and preventive measures
+
+### 4.5 Documentation Standards
+- All guides/examples use PLACEHOLDER values
+- Example files clearly marked: `[REDACTED - See /secrets/.env]`
+- Quick-fix scripts must NOT contain working credentials
+- Historical scripts showing real keys must be updated retroactively
 
 ---
 
