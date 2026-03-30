@@ -108,16 +108,16 @@ export class GroqProvider implements LLMProvider {
  * Multiple open-source models, good free tier
  * API: https://api.together.xyz/
  * 
- * NOTE: Using models compatible with free tier (serverless)
- * Some larger models require dedicated endpoints
+ * NOTE: Using ServiceNow Apriel 1.5 (FREE SERVERLESS)
+ * This model works with free tier accounts and requires no dedicated endpoints
  */
 export class TogetherProvider implements LLMProvider {
   name = 'Together AI';
   private apiKey: string;
   // Using serverless models that work with free tier
   // These don't require dedicated endpoints
-  private textModel = 'mistralai/Mistral-7B-Instruct-v0.2';
-  private visionModel = 'mistralai/Mistral-7B-Instruct-v0.2'; // Vision use Mistral for reliability
+  private textModel = 'ServiceNow-AI/Apriel-1.5-15b-Thinker';
+  private visionModel = 'ServiceNow-AI/Apriel-1.5-15b-Thinker'; // Free serverless model
   private baseUrl = 'https://api.together.xyz/v1/chat/completions';
 
   constructor(apiKey?: string) {
