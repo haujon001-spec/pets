@@ -5,8 +5,8 @@
  * enabling seamless switching and fallback between different AI services.
  * 
  * Supported Providers:
+ * - Together AI (Qwen3.5-9B - free tier, replaced Mistral)
  * - Groq (free tier, fast inference)
- * - Together AI (free tier, multiple models)
  * - Hugging Face Inference API (free tier)
  * - Cohere (free tier)
  * - OpenRouter (paid fallback)
@@ -106,19 +106,21 @@ export class GroqProvider implements LLMProvider {
 /**
  * Together AI Provider
  * Multiple open-source models, good free tier
- * API: https://api.together.xyz/
+ * API: https://api.together.xyz/ (correct endpoint - NOT api.together.ai)
  * 
- * NOTE: Using ServiceNow Apriel 1.5 (FREE SERVERLESS)
- * This model works with free tier accounts and requires no dedicated endpoints
+ * NOTE: Using Meta Llama 3 8B Instruct Lite
+ * - 8B model: Fast, lightweight, efficient
+ * - Expected latency: 1-3 seconds (much faster than Qwen)
+ * - Cost: Very cheap (smaller model)
+ * - Quality: Good for factual pet breed information
  */
 export class TogetherProvider implements LLMProvider {
   name = 'Together AI';
   private apiKey: string;
-  // Using serverless models that work with free tier
-  // These don't require dedicated endpoints
-  private textModel = 'ServiceNow-AI/Apriel-1.5-15b-Thinker';
-  private visionModel = 'ServiceNow-AI/Apriel-1.5-15b-Thinker'; // Free serverless model
-  private baseUrl = 'https://api.together.xyz/v1/chat/completions';
+  // Using Meta Llama 3 8B Instruct Lite - Fast and efficient
+  private textModel = 'meta-llama/Meta-Llama-3-8B-Instruct-Lite';
+  private visionModel = 'meta-llama/Meta-Llama-3-8B-Instruct-Lite';
+  private baseUrl = 'https://api.together.xyz/v1/chat/completions'; // Correct endpoint
 
   constructor(apiKey?: string) {
     this.apiKey = apiKey || process.env.TOGETHER_API_KEY || '';
@@ -130,8 +132,7 @@ export class TogetherProvider implements LLMProvider {
 
   async callAPI(request: LLMRequest): Promise<LLMResponse> {
     const startTime = Date.now();
-    const useVision = request.context?.useVision && request.context?.imageUrl;
-    const model = useVision ? this.visionModel : this.textModel;
+    const model = this.textModel; // Use text model for now (simplify to avoid issues)
 
     const systemPrompt = request.systemPrompt || 
       'You are a helpful assistant for pet breed information. Answer concisely and accurately.';
@@ -140,23 +141,11 @@ export class TogetherProvider implements LLMProvider {
       ? `Question about ${request.context.breedName} (${request.context.petType}): ${request.prompt}`
       : request.prompt;
 
-    // Build messages with vision support
-    const messages: any[] = [
+    // Simple message format - compatible with together.xyz API
+    const messages = [
       { role: 'system', content: systemPrompt },
+      { role: 'user', content: userPrompt }
     ];
-
-    if (useVision && request.context?.imageUrl) {
-      // For vision models, include image in user message
-      messages.push({
-        role: 'user',
-        content: [
-          { type: 'text', text: userPrompt },
-          { type: 'image_url', image_url: { url: request.context.imageUrl } }
-        ]
-      });
-    } else {
-      messages.push({ role: 'user', content: userPrompt });
-    }
 
     const response = await fetch(this.baseUrl, {
       method: 'POST',
@@ -164,11 +153,11 @@ export class TogetherProvider implements LLMProvider {
         'Authorization': `Bearer ${this.apiKey}`,
         'Content-Type': 'application/json',
       },
-      signal: AbortSignal.timeout(20000), // Vision models may need more time
+      signal: AbortSignal.timeout(20000),
       body: JSON.stringify({
         model,
         messages,
-        max_tokens: request.maxTokens || 256,
+        max_tokens: request.maxTokens || 256,  // Llama 8B is efficient, 256 is enough
         temperature: request.temperature || 0.7,
       }),
     });
@@ -181,8 +170,11 @@ export class TogetherProvider implements LLMProvider {
     const data = await response.json();
     const latencyMs = Date.now() - startTime;
 
+    // Llama 3 8B returns content directly
+    const content = data.choices[0].message.content || '';
+
     return {
-      content: data.choices[0].message.content,
+      content,
       provider: this.name,
       model,
       tokensUsed: data.usage?.total_tokens,

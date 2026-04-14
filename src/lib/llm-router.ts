@@ -35,15 +35,15 @@ export class LLMRouter {
   constructor() {
     // Initialize all providers
     const allProviders = [
-      new GroqProvider(),
       new TogetherProvider(),
+      new GroqProvider(),
       new HuggingFaceProvider(),
       new CohereProvider(),
       new OpenRouterProvider(),
     ];
 
     // Get provider order from environment or use default
-    const envOrder = process.env.LLM_PROVIDER_ORDER || 'groq,together,huggingface,cohere,openrouter';
+    const envOrder = process.env.LLM_PROVIDER_ORDER || 'together,groq,huggingface,cohere,openrouter';
     this.providerOrder = envOrder.split(',').map(p => p.trim().toLowerCase());
 
     // Sort providers according to the specified order and filter out unconfigured ones
@@ -145,7 +145,7 @@ export class LLMRouter {
    * Get provider statistics (useful for monitoring)
    */
   getProviderStats(): { name: string; configured: boolean; priority: number }[] {
-    const allProviderNames = ['groq', 'together', 'huggingface', 'cohere', 'openrouter'];
+    const allProviderNames = ['together', 'groq', 'huggingface', 'cohere', 'openrouter'];
     
     return allProviderNames.map((name, index) => {
       const provider = this.providers.find(p => 
